@@ -3239,11 +3239,15 @@ function loadTex(path) {
     texLoader.load(path, tex => {
       tex.colorSpace = THREE.SRGBColorSpace;
       tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-      tex.repeat.set(1, 1);
+      tex.repeat.set(3, 3);
       tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
       texCache[path] = tex;
+      console.log('[BRUTA] Textura OK:', path);
       resolve(tex);
-    }, undefined, () => resolve(null));
+    }, undefined, err => {
+      console.error('[BRUTA] Textura FALLÓ:', path, err);
+      resolve(null);
+    });
   });
 }
 
