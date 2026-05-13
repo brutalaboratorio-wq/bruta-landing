@@ -3204,21 +3204,26 @@ function findMeshes(root) {
   const meshes = [];
   root.traverse(o => { if (o.isMesh) meshes.push(o); });
 
+  // Log para debug — ver nombres reales del GLB
+  console.log('[BRUTA] Meshes en el modelo:', meshes.map(m => `"${m.name}"`).join(', '));
+
   let tapa = null, patas = null;
   for (const m of meshes) {
     const n = m.name.toLowerCase();
-    if (!tapa  && (n.includes('tapa') || n.includes('top') || n.includes('superficie'))) tapa = m;
-    if (!patas && (n.includes('pata') || n.includes('leg') || n.includes('hierro') || n.includes('base'))) patas = m;
+    if (!tapa  && (n.includes('tapa') || n.includes('top') || n.includes('terrazo') || n.includes('superficie') || n.includes('piedra') || n.includes('marmol'))) tapa = m;
+    if (!patas && (n.includes('pata') || n.includes('leg') || n.includes('hierro') || n.includes('metal') || n.includes('iron') || n.includes('base') || n.includes('soporte'))) patas = m;
   }
 
-  // fallback: orden por altura (más alto = tapa, más bajo = patas)
+  // fallback: más alto = tapa (terrazo), más bajo = patas (hierro)
   if (!tapa && meshes.length >= 2) {
     const sorted = [...meshes].sort((a, b) => {
-      return new THREE.Box3().setFromObject(b).max.y
-           - new THREE.Box3().setFromObject(a).max.y;
+      const ca = new THREE.Box3().setFromObject(a).getCenter(new THREE.Vector3());
+      const cb = new THREE.Box3().setFromObject(b).getCenter(new THREE.Vector3());
+      return cb.y - ca.y;
     });
     tapa  = sorted[0];
     patas = sorted[1];
+    console.log('[BRUTA] Fallback — tapa:', tapa.name, '| patas:', patas.name);
   } else if (!tapa && meshes.length === 1) {
     tapa = meshes[0];
   }
@@ -3234,7 +3239,8 @@ function loadTex(path) {
     texLoader.load(path, tex => {
       tex.colorSpace = THREE.SRGBColorSpace;
       tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-      tex.repeat.set(3, 3);
+      tex.repeat.set(1, 1);
+      tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
       texCache[path] = tex;
       resolve(tex);
     }, undefined, () => resolve(null));
