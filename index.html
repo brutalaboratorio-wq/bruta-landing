@@ -853,17 +853,19 @@
     position: relative;
     overflow: hidden;
   }
-  /* marca "foto" en esquina del placeholder */
-  .foto-producto::after {
-    content: "FOTO";
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    font-family: var(--ff-mono);
-    font-size: 9px;
-    letter-spacing: 0.32em;
-    color: var(--porfido);
-    opacity: 0.7;
+  .foto-producto::after { content: none; }
+  .foto-producto__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .dibujo-tecnico__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    padding: 12px;
   }
   /* glifo central que insina la pieza — placeholder honesto */
   .foto-producto__glyph {
@@ -1557,6 +1559,13 @@
   .galeria__marquee:hover .galeria__track {
     animation-play-state: paused;
   }
+  .galeria__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
 
   /* ítem — figura con foto placeholder */
   .galeria__item {
@@ -1956,49 +1965,34 @@ HIERRO MACIZO</div>
 
   <div class="materiales__stage" id="materiales-stage">
 
-    <article class="material-card" style="--c: #D4CEBE;" data-color="Tiza" data-hex="#D4CEBE">
+    <article class="material-card" style="--c:#D4CEBE;background-image:url('assets/material-textures/terrazo-tiza.jpg');background-size:cover;background-position:center;" data-color="Tiza" data-hex="#D4CEBE">
       <div class="material-card__hex">#D4CEBE</div>
       <div class="material-card__num">01</div>
-      <div class="material-card__name">
-        <h3>Tiza</h3>
-        <small>Cemento pigmentado</small>
-      </div>
+      <div class="material-card__name"><h3>Tiza</h3><small>Cemento pigmentado</small></div>
     </article>
 
-    <article class="material-card" style="--c: #7E8E94;" data-color="Pórfido" data-hex="#7E8E94">
+    <article class="material-card" style="--c:#7E8E94;background-image:url('assets/material-textures/terrazo-porfido.jpg');background-size:cover;background-position:center;" data-color="Pórfido" data-hex="#7E8E94">
       <div class="material-card__hex">#7E8E94</div>
       <div class="material-card__num">02</div>
-      <div class="material-card__name">
-        <h3>Pórfido</h3>
-        <small>Mineral de Córdoba</small>
-      </div>
+      <div class="material-card__name"><h3>Pórfido</h3><small>Mineral de Córdoba</small></div>
     </article>
 
-    <article class="material-card material-card--ring material-card--dark" data-color="Basalto" data-hex="#3A3835">
+    <article class="material-card material-card--ring material-card--dark" style="background-image:url('assets/material-textures/terrazo-basalto.jpg');background-size:cover;background-position:center;" data-color="Basalto" data-hex="#3A3835">
       <div class="material-card__hex">#3A3835</div>
       <div class="material-card__num">03</div>
-      <div class="material-card__name">
-        <h3>Basalto</h3>
-        <small>Roca volcánica</small>
-      </div>
+      <div class="material-card__name"><h3>Basalto</h3><small>Roca volcánica</small></div>
     </article>
 
-    <article class="material-card" style="--c: #91A891;" data-color="Musgo" data-hex="#91A891">
+    <article class="material-card" style="--c:#91A891;background-image:url('assets/material-textures/terrazo-musgo.jpg');background-size:cover;background-position:center;" data-color="Musgo" data-hex="#91A891">
       <div class="material-card__hex">#91A891</div>
       <div class="material-card__num">04</div>
-      <div class="material-card__name">
-        <h3>Musgo</h3>
-        <small>Verde apagado</small>
-      </div>
+      <div class="material-card__name"><h3>Musgo</h3><small>Verde apagado</small></div>
     </article>
 
-    <article class="material-card" style="--c: #C4967E;" data-color="Terracota" data-hex="#C4967E">
+    <article class="material-card" style="--c:#C4967E;background-image:url('assets/material-textures/terrazo-terracota.jpg');background-size:cover;background-position:center;" data-color="Terracota" data-hex="#C4967E">
       <div class="material-card__hex">#C4967E</div>
       <div class="material-card__num">05</div>
-      <div class="material-card__name">
-        <h3>Terracota</h3>
-        <small>Tierra cocida</small>
-      </div>
+      <div class="material-card__name"><h3>Terracota</h3><small>Tierra cocida</small></div>
     </article>
 
   </div>
@@ -2028,44 +2022,29 @@ HIERRO MACIZO</div>
 
   <div class="catalogo__grid" id="catalogo-grid">
 
-    <!-- 1 · Mesita COMPA -->
-    <article class="pieza" tabindex="0" aria-label="Mesita COMPA">
+    <!-- 1 · Mesita -->
+    <article class="pieza" tabindex="0" aria-label="Mesita">
       <div class="pieza__flip">
         <div class="pieza__cara pieza__frente">
           <div class="foto-producto">
-            <div class="foto-producto__glyph" aria-hidden="true">
-              <svg viewBox="0 0 100 120" fill="none" stroke="currentColor" stroke-width="1.2">
-                <ellipse cx="50" cy="38" rx="34" ry="8"/>
-                <line x1="22" y1="40" x2="30" y2="104"/>
-                <line x1="78" y1="40" x2="70" y2="104"/>
-                <line x1="50" y1="46" x2="50" y2="108"/>
-              </svg>
-            </div>
+            <img src="assets/models-cards/mesita.jpg" alt="Mesita" class="foto-producto__img">
           </div>
           <div class="pieza__meta">
-            <div class="pieza__nombre">Mesita <em>COMPA</em></div>
-            <div class="pieza__precio">$ 89.000</div>
+            <div class="pieza__nombre">Mesita</div>
+            <div class="pieza__precio">$ 96.000 <small>c/ transferencia</small></div>
           </div>
         </div>
         <div class="pieza__cara pieza__dorso">
           <div class="pieza__dorso-head">
-            <div class="pieza__dorso-nombre">Mesita COMPA</div>
+            <div class="pieza__dorso-nombre">Mesita</div>
             <div class="pieza__dorso-tag">Plano · 01</div>
           </div>
           <div class="dibujo-tecnico">
-            <svg viewBox="0 0 120 140" fill="none" stroke="currentColor" stroke-width="1">
-              <ellipse cx="60" cy="30" rx="44" ry="10"/>
-              <line x1="16" y1="32" x2="30" y2="126"/>
-              <line x1="104" y1="32" x2="90" y2="126"/>
-              <line x1="60" y1="40" x2="60" y2="130"/>
-              <line x1="30" y1="126" x2="90" y2="126" stroke-dasharray="2 3"/>
-            </svg>
+            <img src="assets/model-plans/mesita-plano.png" alt="Plano Mesita" class="dibujo-tecnico__img">
           </div>
           <div class="pieza__medidas">
-            <span>Ø 44 cm</span>
-            <span>H 52 cm</span>
-            <span>Terrazo + Hierro</span>
-            <span>3,8 kg</span>
+            <span>Ø 44 cm</span><span>H 52 cm</span>
+            <span>Terrazo + Hierro</span><span>3,8 kg</span>
           </div>
         </div>
       </div>
@@ -2076,16 +2055,11 @@ HIERRO MACIZO</div>
       <div class="pieza__flip">
         <div class="pieza__cara pieza__frente">
           <div class="foto-producto">
-            <div class="foto-producto__glyph" aria-hidden="true">
-              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.2">
-                <circle cx="50" cy="50" r="42"/>
-                <circle cx="50" cy="50" r="30"/>
-              </svg>
-            </div>
+            <img src="assets/models-cards/plato.jpg" alt="Plato decorativo" class="foto-producto__img">
           </div>
           <div class="pieza__meta">
             <div class="pieza__nombre">Plato decorativo</div>
-            <div class="pieza__precio">$ 32.000</div>
+            <div class="pieza__precio">$ 26.400 <small>c/ transferencia</small></div>
           </div>
         </div>
         <div class="pieza__cara pieza__dorso">
@@ -2094,17 +2068,11 @@ HIERRO MACIZO</div>
             <div class="pieza__dorso-tag">Plano · 02</div>
           </div>
           <div class="dibujo-tecnico">
-            <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1">
-              <circle cx="60" cy="60" r="52"/>
-              <circle cx="60" cy="60" r="40" stroke-dasharray="2 3"/>
-              <line x1="8" y1="60" x2="112" y2="60" stroke-dasharray="2 4"/>
-            </svg>
+            <img src="assets/model-plans/plato-plano.png" alt="Plano Plato" class="dibujo-tecnico__img">
           </div>
           <div class="pieza__medidas">
-            <span>Ø 28 cm</span>
-            <span>H 2,5 cm</span>
-            <span>Terrazo</span>
-            <span>1,2 kg</span>
+            <span>Ø 28 cm</span><span>H 2,5 cm</span>
+            <span>Terrazo</span><span>1,2 kg</span>
           </div>
         </div>
       </div>
@@ -2115,17 +2083,11 @@ HIERRO MACIZO</div>
       <div class="pieza__flip">
         <div class="pieza__cara pieza__frente">
           <div class="foto-producto">
-            <div class="foto-producto__glyph" aria-hidden="true">
-              <svg viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="1.2">
-                <rect x="10" y="34" width="100" height="6"/>
-                <line x1="14" y1="40" x2="14" y2="66"/>
-                <line x1="106" y1="40" x2="106" y2="66"/>
-              </svg>
-            </div>
+            <img src="assets/models-cards/estante.jpg" alt="Estante individual" class="foto-producto__img">
           </div>
           <div class="pieza__meta">
             <div class="pieza__nombre">Estante individual</div>
-            <div class="pieza__precio">$ 54.000</div>
+            <div class="pieza__precio">$ 63.200 <small>c/ transferencia</small></div>
           </div>
         </div>
         <div class="pieza__cara pieza__dorso">
@@ -2134,40 +2096,26 @@ HIERRO MACIZO</div>
             <div class="pieza__dorso-tag">Plano · 03</div>
           </div>
           <div class="dibujo-tecnico">
-            <svg viewBox="0 0 140 80" fill="none" stroke="currentColor" stroke-width="1">
-              <rect x="8" y="30" width="124" height="8"/>
-              <line x1="12" y1="38" x2="12" y2="66"/>
-              <line x1="128" y1="38" x2="128" y2="66"/>
-              <line x1="8" y1="72" x2="132" y2="72" stroke-dasharray="2 3"/>
-            </svg>
+            <img src="assets/model-plans/estante-plano.png" alt="Plano Estante" class="dibujo-tecnico__img">
           </div>
           <div class="pieza__medidas">
-            <span>60  18 cm</span>
-            <span>H 4 cm</span>
-            <span>Terrazo + Hierro</span>
-            <span>2,4 kg</span>
+            <span>60 × 18 cm</span><span>H 4 cm</span>
+            <span>Terrazo + Hierro</span><span>2,4 kg</span>
           </div>
         </div>
       </div>
     </article>
 
-    <!-- 4 · Estantera 2 niveles -->
+    <!-- 4 · Estantería 2 niveles -->
     <article class="pieza" tabindex="0" aria-label="Estantería 2 niveles">
       <div class="pieza__flip">
         <div class="pieza__cara pieza__frente">
           <div class="foto-producto">
-            <div class="foto-producto__glyph" aria-hidden="true">
-              <svg viewBox="0 0 100 120" fill="none" stroke="currentColor" stroke-width="1.2">
-                <rect x="14" y="30" width="72" height="5"/>
-                <rect x="14" y="72" width="72" height="5"/>
-                <line x1="18" y1="30" x2="18" y2="108"/>
-                <line x1="82" y1="30" x2="82" y2="108"/>
-              </svg>
-            </div>
+            <img src="assets/models-cards/estanteria.jpg" alt="Estantería 2 niveles" class="foto-producto__img">
           </div>
           <div class="pieza__meta">
             <div class="pieza__nombre">Estantería 2 niveles</div>
-            <div class="pieza__precio">$ 124.000</div>
+            <div class="pieza__precio">$ 181.600 <small>c/ transferencia</small></div>
           </div>
         </div>
         <div class="pieza__cara pieza__dorso">
@@ -2176,19 +2124,11 @@ HIERRO MACIZO</div>
             <div class="pieza__dorso-tag">Plano · 04</div>
           </div>
           <div class="dibujo-tecnico">
-            <svg viewBox="0 0 100 130" fill="none" stroke="currentColor" stroke-width="1">
-              <rect x="10" y="24" width="80" height="6"/>
-              <rect x="10" y="74" width="80" height="6"/>
-              <line x1="14" y1="30" x2="14" y2="118"/>
-              <line x1="86" y1="30" x2="86" y2="118"/>
-              <line x1="10" y1="122" x2="90" y2="122" stroke-dasharray="2 3"/>
-            </svg>
+            <img src="assets/model-plans/estanteria-plano.png" alt="Plano Estantería" class="dibujo-tecnico__img">
           </div>
           <div class="pieza__medidas">
-            <span>70  22 cm</span>
-            <span>H 80 cm</span>
-            <span>Terrazo + Hierro</span>
-            <span>9,6 kg</span>
+            <span>70 × 22 cm</span><span>H 80 cm</span>
+            <span>Terrazo + Hierro</span><span>9,6 kg</span>
           </div>
         </div>
       </div>
@@ -2199,20 +2139,11 @@ HIERRO MACIZO</div>
       <div class="pieza__flip">
         <div class="pieza__cara pieza__frente">
           <div class="foto-producto">
-            <div class="foto-producto__glyph" aria-hidden="true">
-              <svg viewBox="0 0 120 100" fill="none" stroke="currentColor" stroke-width="1.2">
-                <circle cx="24" cy="32" r="14"/>
-                <circle cx="60" cy="32" r="14"/>
-                <circle cx="96" cy="32" r="14"/>
-                <circle cx="24" cy="72" r="14"/>
-                <circle cx="60" cy="72" r="14"/>
-                <circle cx="96" cy="72" r="14"/>
-              </svg>
-            </div>
+            <img src="assets/models-cards/posavasos-x6.jpg" alt="Posavasos x6" class="foto-producto__img">
           </div>
           <div class="pieza__meta">
             <div class="pieza__nombre">Posavasos <em>x 6</em></div>
-            <div class="pieza__precio">$ 28.000</div>
+            <div class="pieza__precio">$ 63.200 <small>c/ transferencia</small></div>
           </div>
         </div>
         <div class="pieza__cara pieza__dorso">
@@ -2221,21 +2152,11 @@ HIERRO MACIZO</div>
             <div class="pieza__dorso-tag">Plano · 05</div>
           </div>
           <div class="dibujo-tecnico">
-            <svg viewBox="0 0 120 100" fill="none" stroke="currentColor" stroke-width="1">
-              <circle cx="24" cy="30" r="16"/>
-              <circle cx="60" cy="30" r="16"/>
-              <circle cx="96" cy="30" r="16"/>
-              <circle cx="24" cy="70" r="16"/>
-              <circle cx="60" cy="70" r="16"/>
-              <circle cx="96" cy="70" r="16"/>
-              <line x1="4" y1="30" x2="4" y2="70" stroke-dasharray="2 3"/>
-            </svg>
+            <img src="assets/model-plans/posavasos-x6-plano.png" alt="Plano Posavasos x6" class="dibujo-tecnico__img">
           </div>
           <div class="pieza__medidas">
-            <span>Ø 9 cm c/u</span>
-            <span>H 0,8 cm</span>
-            <span>Terrazo</span>
-            <span>0,9 kg set</span>
+            <span>Ø 9 cm c/u</span><span>H 0,8 cm</span>
+            <span>Terrazo</span><span>0,9 kg set</span>
           </div>
         </div>
       </div>
@@ -2246,18 +2167,11 @@ HIERRO MACIZO</div>
       <div class="pieza__flip">
         <div class="pieza__cara pieza__frente">
           <div class="foto-producto">
-            <div class="foto-producto__glyph" aria-hidden="true">
-              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.2">
-                <circle cx="30" cy="30" r="16"/>
-                <circle cx="70" cy="30" r="16"/>
-                <circle cx="30" cy="70" r="16"/>
-                <circle cx="70" cy="70" r="16"/>
-              </svg>
-            </div>
+            <img src="assets/models-cards/posavasos-x4.jpg" alt="Posavasos x4" class="foto-producto__img">
           </div>
           <div class="pieza__meta">
             <div class="pieza__nombre">Posavasos <em>x 4</em></div>
-            <div class="pieza__precio">$ 20.000</div>
+            <div class="pieza__precio">$ 48.000 <small>c/ transferencia</small></div>
           </div>
         </div>
         <div class="pieza__cara pieza__dorso">
@@ -2266,18 +2180,11 @@ HIERRO MACIZO</div>
             <div class="pieza__dorso-tag">Plano · 06</div>
           </div>
           <div class="dibujo-tecnico">
-            <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1">
-              <circle cx="30" cy="30" r="18"/>
-              <circle cx="70" cy="30" r="18"/>
-              <circle cx="30" cy="70" r="18"/>
-              <circle cx="70" cy="70" r="18"/>
-            </svg>
+            <img src="assets/model-plans/posavasos-x4-plano.png" alt="Plano Posavasos x4" class="dibujo-tecnico__img">
           </div>
           <div class="pieza__medidas">
-            <span>Ø 9 cm c/u</span>
-            <span>H 0,8 cm</span>
-            <span>Terrazo</span>
-            <span>0,6 kg set</span>
+            <span>Ø 9 cm c/u</span><span>H 0,8 cm</span>
+            <span>Terrazo</span><span>0,6 kg set</span>
           </div>
         </div>
       </div>
@@ -2288,16 +2195,11 @@ HIERRO MACIZO</div>
       <div class="pieza__flip">
         <div class="pieza__cara pieza__frente">
           <div class="foto-producto">
-            <div class="foto-producto__glyph" aria-hidden="true">
-              <svg viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="1.2">
-                <circle cx="40" cy="40" r="22"/>
-                <circle cx="82" cy="40" r="22"/>
-              </svg>
-            </div>
+            <img src="assets/models-cards/posavasos-x2.jpg" alt="Posavasos x2" class="foto-producto__img">
           </div>
           <div class="pieza__meta">
             <div class="pieza__nombre">Posavasos <em>x 2</em></div>
-            <div class="pieza__precio">$ 12.000</div>
+            <div class="pieza__precio">$ 35.000 <small>c/ transferencia</small></div>
           </div>
         </div>
         <div class="pieza__cara pieza__dorso">
@@ -2306,17 +2208,11 @@ HIERRO MACIZO</div>
             <div class="pieza__dorso-tag">Plano · 07</div>
           </div>
           <div class="dibujo-tecnico">
-            <svg viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="1">
-              <circle cx="40" cy="40" r="24"/>
-              <circle cx="82" cy="40" r="24"/>
-              <line x1="6" y1="40" x2="114" y2="40" stroke-dasharray="2 3"/>
-            </svg>
+            <img src="assets/model-plans/posavasos-x2-plano.png" alt="Plano Posavasos x2" class="dibujo-tecnico__img">
           </div>
           <div class="pieza__medidas">
-            <span>Ø 9 cm c/u</span>
-            <span>H 0,8 cm</span>
-            <span>Terrazo</span>
-            <span>0,3 kg set</span>
+            <span>Ø 9 cm c/u</span><span>H 0,8 cm</span>
+            <span>Terrazo</span><span>0,3 kg set</span>
           </div>
         </div>
       </div>
@@ -2369,11 +2265,11 @@ HIERRO MACIZO</div>
       <div class="config__group">
         <p class="config__col-title">Terrazo</p>
         <div class="config__swatches" id="swatches-terrazo">
-          <button class="swatch is-active" style="--c:#D4CEBE;" data-name="Tiza"      data-hex="#D4CEBE" data-texture="assets/textures/terrazo-tiza.jpg"></button>
-          <button class="swatch"           style="--c:#7E8E94;" data-name="Pórfido"   data-hex="#7E8E94" data-texture="assets/textures/terrazo-porfido.jpg"></button>
-          <button class="swatch swatch--ring" style="--c:#3A3835;" data-name="Basalto" data-hex="#3A3835" data-texture="assets/textures/terrazo-basalto.jpg"></button>
-          <button class="swatch"           style="--c:#91A891;" data-name="Musgo"     data-hex="#91A891" data-texture="assets/textures/terrazo-musgo.jpg"></button>
-          <button class="swatch"           style="--c:#C4967E;" data-name="Terracota" data-hex="#C4967E" data-texture="assets/textures/terrazo-terracota.jpg"></button>
+          <button class="swatch is-active" style="--c:#D4CEBE;" data-name="Tiza"      data-hex="#D4CEBE" data-texture="assets/textures/terrazo-tiza.png"></button>
+          <button class="swatch"           style="--c:#7E8E94;" data-name="Pórfido"   data-hex="#7E8E94" data-texture="assets/textures/terrazo-porfido.png"></button>
+          <button class="swatch swatch--ring" style="--c:#3A3835;" data-name="Basalto" data-hex="#3A3835" data-texture="assets/textures/terrazo-basalto.png"></button>
+          <button class="swatch"           style="--c:#91A891;" data-name="Musgo"     data-hex="#91A891" data-texture="assets/textures/terrazo-musgo.png"></button>
+          <button class="swatch"           style="--c:#C4967E;" data-name="Terracota" data-hex="#C4967E" data-texture="assets/textures/terrazo-terracota.png"></button>
         </div>
         <p class="config__swatch-name">Color · <strong id="terrazo-name">Tiza</strong></p>
       </div>
@@ -2391,7 +2287,7 @@ HIERRO MACIZO</div>
   </div>
 
   <div class="config__cta-row">
-    <a class="config__cta" href="https://wa.me/5493510000000?text=Hola%20BRUTA%2C%20quiero%20pedir%20una%20pieza" target="_blank" rel="noopener">
+    <a class="config__cta" href="https://www.bruta.com.ar/" target="_blank" rel="noopener">
       Pedí el tuyo →
     </a>
   </div>
@@ -2527,28 +2423,28 @@ HIERRO MACIZO</div>
   <div class="stats__grid">
     <div>
       <p class="stat__num">
-        <span class="stat__prefix">+</span><span class="stat__count" data-target="2000">0</span>
-        <span class="stat__suffix"> kg</span>
+        <span class="stat__prefix">+</span><span class="stat__count" data-target="150">0</span>
       </p>
-      <p class="stat__label">de vidrio rescatados</p>
+      <p class="stat__label">botellas no llegaron a la basura</p>
     </div>
     <div>
       <p class="stat__num">
-        <span class="stat__prefix">+</span><span class="stat__count" data-target="480">0</span>
+        <span class="stat__prefix">+</span><span class="stat__count" data-target="60">0</span>
+        <span class="stat__suffix"> kg</span>
+      </p>
+      <p class="stat__label">de vidrio recuperado</p>
+    </div>
+    <div>
+      <p class="stat__num">
+        <span class="stat__prefix">+</span><span class="stat__count" data-target="21">0</span>
       </p>
       <p class="stat__label">piezas fabricadas</p>
     </div>
     <div>
       <p class="stat__num">
-        <span class="stat__count" data-target="5">0</span>
+        <span class="stat__prefix">+</span><span class="stat__count" data-target="20">0</span>
       </p>
-      <p class="stat__label">colores de terrazo</p>
-    </div>
-    <div>
-      <p class="stat__num">
-        <span class="stat__count" data-target="100">0</span><span class="stat__suffix">%</span>
-      </p>
-      <p class="stat__label">hecho a mano</p>
+      <p class="stat__label">personas comprometidas en recuperar</p>
     </div>
   </div>
 </section>
@@ -2568,109 +2464,59 @@ HIERRO MACIZO</div>
     </div>
   </header>
 
-  <!-- marquee: el track contiene la lista 2 veces para loop infinito -->
+  <!-- marquee: JS-driven para wheel speed control -->
   <div class="galeria__marquee" id="galeria-marquee">
     <div class="galeria__track" id="galeria-track">
 
       <!-- pasada 1 -->
-      <figure class="galeria__item"             data-tag="Foto · 01" style="--c:#7E8E94;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Molienda</em><small>Vidrio · 02</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--tall"  data-tag="Foto · 02" style="--c:#3A3835;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Molde abierto</em><small>Hierro · 03</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--wide"  data-tag="Foto · 03" style="--c:#C4967E;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Terracota</em><small>Pigmento · 05</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--small" data-tag="Foto · 04" style="--c:#91A891;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Musgo</em><small>Mezcla · 03</small></figcaption>
-      </figure>
-      <figure class="galeria__item"             data-tag="Foto · 05" style="--c:#D4CEBE;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Superficie pulida</em><small>Tiza · 01</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--tall"  data-tag="Foto · 06" style="--c:#7A2E35;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Burdó</em><small>Edición · 01</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--wide"  data-tag="Foto · 07" style="--c:#2C2C2C;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Hierro forjado</em><small>Base · 04</small></figcaption>
-      </figure>
-      <figure class="galeria__item"             data-tag="Foto · 08" style="--c:#91A891;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Taller</em><small>Córdoba</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--small" data-tag="Foto · 09" style="--c:#C4967E;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Detalle</em><small>Borde · 02</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--tall"  data-tag="Foto · 10" style="--c:#D4CEBE;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Pieza en reposo</em><small>Curado</small></figcaption>
-      </figure>
-      <figure class="galeria__item"             data-tag="Foto · 11" style="--c:#7E8E94;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Pórfido</em><small>Mineral</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--wide"  data-tag="Foto · 12" style="--c:#3A3835;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Sombra de obra</em><small>Estudio</small></figcaption>
-      </figure>
+      <figure class="galeria__item"><img src="assets/galeria/estanteria-madre.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/IMG_0441.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/render-03.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/plato-blanco.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item"><img src="assets/galeria/estante-verde-celeste.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/20251122_112851.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/detalle-patas.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item"><img src="assets/galeria/IMG_0436.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/estanteria-norma-03.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/plato-verde.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item"><img src="assets/galeria/render-01.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/estante-blanco-costado.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item"><img src="assets/galeria/render-05.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/img-0435.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/estante-verde-costado.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item"><img src="assets/galeria/20260301_160725.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/estanteria-norma-04.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item"><img src="assets/galeria/visual-01.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/render-02.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/visual-02.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item"><img src="assets/galeria/galeria-04.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/render-04.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/visual-03.jpeg" alt="" loading="lazy"></figure>
 
-      <!-- pasada 2 (duplicada, aria-hidden para no contar 2× para lectores) -->
-      <figure class="galeria__item" aria-hidden="true"            data-tag="Foto · 01" style="--c:#7E8E94;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Molienda</em><small>Vidrio · 02</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"  data-tag="Foto · 02" style="--c:#3A3835;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Molde abierto</em><small>Hierro · 03</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--wide" aria-hidden="true"  data-tag="Foto · 03" style="--c:#C4967E;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Terracota</em><small>Pigmento · 05</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--small" aria-hidden="true" data-tag="Foto · 04" style="--c:#91A891;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Musgo</em><small>Mezcla · 03</small></figcaption>
-      </figure>
-      <figure class="galeria__item" aria-hidden="true"            data-tag="Foto · 05" style="--c:#D4CEBE;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Superficie pulida</em><small>Tiza · 01</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"  data-tag="Foto · 06" style="--c:#7A2E35;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Burdó</em><small>Edición · 01</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--wide" aria-hidden="true"  data-tag="Foto · 07" style="--c:#2C2C2C;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Hierro forjado</em><small>Base · 04</small></figcaption>
-      </figure>
-      <figure class="galeria__item" aria-hidden="true"            data-tag="Foto · 08" style="--c:#91A891;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Taller</em><small>Córdoba</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--small" aria-hidden="true" data-tag="Foto · 09" style="--c:#C4967E;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Detalle</em><small>Borde · 02</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"  data-tag="Foto · 10" style="--c:#D4CEBE;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Pieza en reposo</em><small>Curado</small></figcaption>
-      </figure>
-      <figure class="galeria__item" aria-hidden="true"            data-tag="Foto · 11" style="--c:#7E8E94;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Pórfido</em><small>Mineral</small></figcaption>
-      </figure>
-      <figure class="galeria__item galeria__item--wide" aria-hidden="true"  data-tag="Foto · 12" style="--c:#3A3835;">
-        <div class="galeria__foto"></div>
-        <figcaption class="galeria__cap"><em>Sombra de obra</em><small>Estudio</small></figcaption>
-      </figure>
+      <!-- pasada 2 (duplicada para loop infinito) -->
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/estanteria-madre.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/IMG_0441.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/render-03.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/plato-blanco.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/estante-verde-celeste.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/20251122_112851.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/detalle-patas.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/IMG_0436.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/estanteria-norma-03.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/plato-verde.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/render-01.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/estante-blanco-costado.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/render-05.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/img-0435.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/estante-verde-costado.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/20260301_160725.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/estanteria-norma-04.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/visual-01.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/render-02.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/visual-02.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/galeria-04.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/render-04.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/visual-03.jpeg" alt="" loading="lazy"></figure>
 
     </div>
   </div>
@@ -2691,7 +2537,7 @@ HIERRO MACIZO</div>
     <h2 class="encargos__title">¿Tenés algo en mente?</h2>
     <p class="encargos__sub">Hacemos piezas a medida. Contanos qué necesitás.</p>
     <a class="encargos__cta" href="https://wa.me/5493510000000?text=Hola%20BRUTA%2C%20tengo%20un%20encargo%20a%20medida" target="_blank" rel="noopener">
-      Escribinos →
+      Escribinos por WhatsApp →
     </a>
   </div>
 </section>
@@ -2708,9 +2554,9 @@ HIERRO MACIZO</div>
     <div class="footer__col">
       <h4>Encontranos</h4>
       <ul>
-        <li><a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a></li>
-        <li><a href="https://www.empretienda.com.ar/" target="_blank" rel="noopener">Empretienda</a></li>
-        <li><a href="mailto:hola@brutalab.ar">hola@brutalab.ar</a></li>
+        <li><a href="https://www.instagram.com/brutalaboratorio?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://www.facebook.com/profile.php?id=61579921914110&sk=about" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="mailto:brutalaboratorio@gmail.com">brutalaboratorio@gmail.com</a></li>
       </ul>
     </div>
     <div class="footer__col">
@@ -2725,7 +2571,7 @@ HIERRO MACIZO</div>
       <h4>Materia</h4>
       <ul>
         <li><span>Vidrio reciclado</span></li>
-        <li><span>Hierro forjado</span></li>
+        <li><span>Hierro macizo</span></li>
         <li><span>Cemento pigmentado</span></li>
       </ul>
     </div>
@@ -3050,6 +2896,33 @@ HIERRO MACIZO</div>
         toggleActions: "play none none none",
       },
     });
+
+  // Galería wheel → acelera el marquee
+  (function() {
+    const marquee = document.getElementById('galeria-marquee');
+    const track   = document.getElementById('galeria-track');
+    if (!marquee || !track) return;
+    let x = 0, wheelBoost = 0, paused = false;
+    const BASE = 0.6;
+    track.style.animation = 'none';
+    function halfW() { return track.scrollWidth / 2; }
+    marquee.addEventListener('mouseenter', () => { paused = true; });
+    marquee.addEventListener('mouseleave', () => { paused = false; });
+    marquee.addEventListener('wheel', e => {
+      e.preventDefault();
+      wheelBoost = Math.min(wheelBoost + Math.abs(e.deltaY) * 0.05, 14);
+    }, { passive: false });
+    (function tick() {
+      if (!paused) {
+        wheelBoost = Math.max(0, wheelBoost - 0.12);
+        x -= BASE + wheelBoost;
+        const hw = halfW();
+        if (hw > 0 && Math.abs(x) >= hw) x += hw;
+        track.style.transform = `translate3d(${x}px,0,0)`;
+      }
+      requestAnimationFrame(tick);
+    })();
+  })();
 
   // ANIM: galeria-foot — footer técnico aparece al final
   gsap.to(".galeria__foot", {

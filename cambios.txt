@@ -1,0 +1,13 @@
+actualizar imágenes en el "configurador" de la carpeta "texture"
+en el boton "pedí el tuyo" que redireccione a empretienda https://www.bruta.com.ar/
+carpeta "material texture" estan cargadas las texturas de terrazo para la seccion "materiales"
+las tarjetas de catalo cambiar los precios. $181.600,00 con transferencia estanteria / $63.200,00 con transferencia posavasos x6 / $48.000,00 con transferencia posavasos x4 / $35.000,00 con transferencia posavasos x2 / $26.400,00 con transferencia plato / $63.200,00 con transferencia estante / $96.000,00 con transferencia mesita / 
+En la carpeta "models cards" estan las imagenes de frente para la seccion "catalogo"
+En la carpeta "model plans" estan las imagenes de los planos para el dorso de las tarjetas de "catalogo" 
+En la seccion "cifras" vamos a cambiar las 4."+150 botelas no llegaron a la basura" ; "+60kg de vidrio recuperado" ; "+21 piezas fabricadas" ; "+20 personas comprometidas en recuperar"
+La seccion galeria que tenga forma de arrastras la rueda de imegenes con el mouse para que vaya mas rapido. y te sumé las imagenes de esta seccion en "galeria" ponelas random 
+En el boton "escribinos" que te direccion a hablar por wpp. no se como se hace eso. 
+y en el ultimo socalo que este instagram: https://www.instagram.com/brutalaboratorio?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw== 
+facebook https://www.facebook.com/profile.php?id=61579921914110&sk=about
+email brutalaboratorio@gmail.com
+en materia del socalo cambiar hierro forjado por hierro macizo
