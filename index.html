@@ -3331,7 +3331,7 @@ function loadModel(path) {
 
     // Aplicar materiales activos
     applyTex(tapaMesh,  activeTerrazoTex, '#D4CEBE', 0.88, 0.0);
-    applyTex(patasMesh, activeHierroTex,  '#2C2C2C', 0.35, 0.75);
+    applyTex(patasMesh, activeHierroTex,  '#2C2C2C', 0.6, 0.0);
 
     scene.add(model);
     currentModel = model;
@@ -3367,7 +3367,7 @@ function bindSwatches(groupId, nameId, isTerrazo) {
         applyTex(tapaMesh, tex, hex, 0.88, 0.0);
       } else {
         activeHierroTex = tex;
-        applyTex(patasMesh, tex, hex, 0.35, 0.75);
+        applyTex(patasMesh, tex, hex, 0.6, 0.0);
       }
     });
   });
