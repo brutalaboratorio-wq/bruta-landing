@@ -604,6 +604,18 @@
       0 30px 60px -28px rgba(0, 0, 0, 0.7),
       inset 0 0 0 1.5px var(--tiza);
   }
+  .material-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0);
+    transition: background 0.4s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .material-card:hover::before {
+    background: rgba(0,0,0,0.48);
+  }
   .material-card:hover {
     transform: translateY(-10px);
   }
@@ -668,6 +680,11 @@
   .material-card:hover .material-card__name {
     opacity: 1;
     transform: translateY(0);
+    color: #fff;
+    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%);
+  }
+  .material-card:hover .material-card__hex {
+    color: rgba(255,255,255,0.85);
   }
   .material-card__name h3 {
     font-family: var(--ff-display);
