@@ -1,0 +1,9 @@
+# Claude Design source files (no van al repo)
+design_download
+design_download.bin
+design_extracted/
+uploads/
+
+# OS
+.DS_Store
+Thumbs.db
