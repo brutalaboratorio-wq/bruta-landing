@@ -1663,6 +1663,43 @@
     color: var(--porfido);
   }
 
+  /* scrubber bar */
+  .galeria__scrub {
+    max-width: 1280px;
+    margin: 36px auto 0;
+    padding: 0 48px;
+  }
+  .galeria__scrub-track {
+    position: relative;
+    height: 2px;
+    background: rgba(126,142,148,0.22);
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .galeria__scrub-thumb {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    width: 52px;
+    height: 6px;
+    background: var(--porfido);
+    border-radius: 4px;
+    cursor: grab;
+    transition: height 0.15s, width 0.15s, background 0.15s;
+    pointer-events: none;
+  }
+  .galeria__scrub-track:hover .galeria__scrub-thumb,
+  .galeria__scrub-track.is-scrubbing .galeria__scrub-thumb {
+    width: 64px;
+    height: 9px;
+    background: var(--tiza);
+    cursor: grabbing;
+  }
+  @media (max-width: 720px) {
+    .galeria__scrub { padding: 0 22px; }
+  }
+
   /* footer técnico de la galería */
   .galeria__foot {
     max-width: 1280px;
@@ -2558,10 +2595,16 @@ HIERRO MACIZO</div>
     </div>
   </div>
 
+  <div class="galeria__scrub" id="galeria-scrub-wrap">
+    <div class="galeria__scrub-track" id="galeria-scrub">
+      <div class="galeria__scrub-thumb" id="galeria-scrub-thumb"></div>
+    </div>
+  </div>
+
   <div class="galeria__foot">
-    <span>Marquee</span>
+    <span>Galería</span>
     <hr />
-    <span>Hover para detener · agranda</span>
+    <span>Arrastrá · click para ampliar</span>
   </div>
 
 </section>
@@ -2971,9 +3014,47 @@ HIERRO MACIZO</div>
     });
     marquee.addEventListener('pointerup', () => { isDragging = false; });
 
+    // Scrubber
+    const scrubTrack = document.getElementById('galeria-scrub');
+    const scrubThumb = document.getElementById('galeria-scrub-thumb');
+    let isScrubbing = false;
+
+    function updateScrub() {
+      if (!scrubThumb) return;
+      const hw = halfW();
+      if (hw <= 0) return;
+      const pct = ((-x % hw + hw) % hw) / hw * 100;
+      scrubThumb.style.left = pct + '%';
+    }
+
+    function scrubSeek(clientX) {
+      if (!scrubTrack) return;
+      const rect = scrubTrack.getBoundingClientRect();
+      const pct  = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      x = -pct * halfW();
+      vel = 0;
+    }
+
+    scrubTrack && scrubTrack.addEventListener('pointerdown', e => {
+      isScrubbing = true;
+      scrubTrack.classList.add('is-scrubbing');
+      scrubTrack.setPointerCapture(e.pointerId);
+      scrubSeek(e.clientX);
+      targetVel = 0;
+    });
+    scrubTrack && scrubTrack.addEventListener('pointermove', e => {
+      if (!isScrubbing) return;
+      scrubSeek(e.clientX);
+    });
+    scrubTrack && scrubTrack.addEventListener('pointerup', () => {
+      isScrubbing = false;
+      scrubTrack.classList.remove('is-scrubbing');
+      targetVel = BASE;
+    });
+
     // Loop principal
     (function tick() {
-      if (!isDragging) {
+      if (!isDragging && !isScrubbing) {
         vel += (targetVel - vel) * 0.1;
         targetVel += (BASE - targetVel) * 0.028;
         x += vel;
@@ -2984,6 +3065,7 @@ HIERRO MACIZO</div>
         }
         track.style.transform = `translate3d(${x}px,0,0)`;
       }
+      updateScrub();
       requestAnimationFrame(tick);
     })();
 
