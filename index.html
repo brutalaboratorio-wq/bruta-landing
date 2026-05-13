@@ -3269,7 +3269,7 @@ const observer = new IntersectionObserver(entries => {
     bindProductos();
     // Precargar texturas activas por defecto
     Promise.all([
-      loadTex('assets/textures/terrazo-tiza.jpg'),
+      loadTex('assets/textures/terrazo-tiza.png'),
       loadTex('assets/textures/hierro-negro.jpg'),
     ]).then(([tTex, hTex]) => {
       activeTerrazoTex = tTex;
