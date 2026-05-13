@@ -3267,6 +3267,40 @@ function applyTex(meshOrArr, tex, hex, roughness, metalness) {
   }
 }
 
+// ── Diagnosticar / reparar UVs ───────────────────────────────────────────
+function ensureUVs(mesh) {
+  const geo = mesh.geometry;
+  const uv  = geo.attributes.uv;
+
+  if (!uv) {
+    // Sin UVs: proyección planar sobre XZ (horizontal → tapa) o XY
+    geo.computeBoundingBox();
+    const box = geo.boundingBox;
+    const sz  = box.getSize(new THREE.Vector3());
+    const min = box.min;
+    const pos = geo.attributes.position;
+    const arr = new Float32Array(pos.count * 2);
+    const scaleU = Math.max(sz.x, 0.001);
+    const scaleV = Math.max(sz.z || sz.y, 0.001);
+    for (let i = 0; i < pos.count; i++) {
+      arr[i*2]   = (pos.getX(i) - min.x) / scaleU;
+      arr[i*2+1] = (pos.getZ(i) - min.z) / scaleV;
+    }
+    geo.setAttribute('uv', new THREE.BufferAttribute(arr, 2));
+    console.log('[BRUTA] UVs generadas (planar XZ):', mesh.name);
+    return;
+  }
+
+  // Medir el rango real de las UVs
+  let minU = Infinity, maxU = -Infinity, minV = Infinity, maxV = -Infinity;
+  for (let i = 0; i < uv.count; i++) {
+    const u = uv.getX(i), v = uv.getY(i);
+    if (u < minU) minU = u; if (u > maxU) maxU = u;
+    if (v < minV) minV = v; if (v > maxV) maxV = v;
+  }
+  console.log(`[BRUTA] UV ${mesh.name}: U[${minU.toFixed(2)}→${maxU.toFixed(2)}] V[${minV.toFixed(2)}→${maxV.toFixed(2)}]`);
+}
+
 // ── Cargar modelo ────────────────────────────────────────────────────────
 function loadModel(path) {
   const loaderEl = document.getElementById('config-loader');
@@ -3291,6 +3325,9 @@ function loadModel(path) {
     const { tapa, patas } = findMeshes(model);
     tapaMesh  = tapa;
     patasMesh = patas;
+
+    // Diagnosticar y reparar UVs si es necesario
+    [tapa, ...patas].forEach(m => m && ensureUVs(m));
 
     // Aplicar materiales activos
     applyTex(tapaMesh,  activeTerrazoTex, '#D4CEBE', 0.88, 0.0);
