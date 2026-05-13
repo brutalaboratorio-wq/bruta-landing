@@ -1586,19 +1586,18 @@
   .galeria__marquee { cursor: grab; }
   .galeria__marquee:active { cursor: grabbing; }
   .galeria__item img {
-    width: 100%;
     height: 100%;
-    object-fit: cover;
+    width: auto;
     display: block;
     pointer-events: none;
   }
 
-  /* ítem — figura con foto placeholder */
+  /* ítem — altura fija, ancho se adapta a la imagen */
   .galeria__item {
     position: relative;
     flex: 0 0 auto;
-    width: 320px;
-    height: 420px;
+    height: 400px;
+    width: auto;
     margin: 0;
     border-radius: 4px;
     overflow: hidden;
@@ -1613,10 +1612,10 @@
       z-index 0s linear 0.6s;
     transform-origin: center center;
   }
-  /* tamaños alternados para ritmo visual */
+  /* alturas alternadas para ritmo visual */
   .galeria__item--tall  { height: 460px; }
-  .galeria__item--wide  { width: 420px; height: 380px; }
-  .galeria__item--small { width: 280px; height: 360px; }
+  .galeria__item--wide  { height: 360px; }
+  .galeria__item--small { height: 320px; }
 
   /* hover: agranda */
   .galeria__item:hover {
@@ -1973,12 +1972,12 @@
   <div class="navbar__nav" role="tablist">
     <a class="navbar__link" href="#hero" data-nav="hero">INICIO</a>
     <a class="navbar__link" href="#manifiesto" data-nav="manifiesto">MANIFIESTO</a>
+    <a class="navbar__link" href="#galeria" data-nav="galeria">Galería</a>
     <a class="navbar__link" href="#materiales" data-nav="materiales">Materiales</a>
     <a class="navbar__link" href="#catalogo" data-nav="catalogo">Catálogo</a>
     <a class="navbar__link" href="#configurador" data-nav="configurador">Configurador</a>
     <a class="navbar__link" href="#proceso" data-nav="proceso">Proceso</a>
     <a class="navbar__link" href="#stats" data-nav="stats">Cifras</a>
-    <a class="navbar__link" href="#galeria" data-nav="galeria">Galería</a>
     <a class="navbar__link" href="#encargos" data-nav="encargos">Encargos</a>
   </div>
   <div class="navbar__meta" style="opacity: 0">T. 2024
@@ -2068,6 +2067,92 @@ HIERRO MACIZO</div>
       <span>Lo que ves es lo que es.</span>
     </div>
   </div>
+</section>
+
+<!-- ====================================================================
+     GALERÍA — marquee horizontal infinito, hover agranda
+     ==================================================================== -->
+<section class="galeria" id="galeria" aria-label="Galería">
+
+  <header class="galeria__head">
+    <div>
+      <p class="galeria__eyebrow">Galería · 03</p>
+      <h2 class="galeria__title">El taller en imágenes.</h2>
+    </div>
+    <div class="galeria__meta">
+      12 escenas<br />2024 — 2026
+    </div>
+  </header>
+
+  <!-- marquee: JS-driven para wheel speed control -->
+  <div class="galeria__marquee" id="galeria-marquee">
+    <div class="galeria__track" id="galeria-track">
+
+      <!-- pasada 1 -->
+      <figure class="galeria__item"><img src="assets/galeria/estanteria-madre.jpg" alt=""></figure>
+      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/IMG_0441.jpg" alt=""></figure>
+      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/render-03.png" alt=""></figure>
+      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/plato-blanco.jpg" alt=""></figure>
+      <figure class="galeria__item"><img src="assets/galeria/estante-verde-celeste.jpg" alt=""></figure>
+      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/20251122_112851.jpg" alt=""></figure>
+      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/detalle-patas.jpg" alt=""></figure>
+      <figure class="galeria__item"><img src="assets/galeria/IMG_0436.jpg" alt=""></figure>
+      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/estanteria-norma-03.jpg" alt=""></figure>
+      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/plato-verde.jpg" alt=""></figure>
+      <figure class="galeria__item"><img src="assets/galeria/render-01.png" alt=""></figure>
+      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/estante-blanco-costado.jpg" alt=""></figure>
+      <figure class="galeria__item"><img src="assets/galeria/render-05.png" alt=""></figure>
+      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/img-0435.jpg" alt=""></figure>
+      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/estante-verde-costado.jpg" alt=""></figure>
+      <figure class="galeria__item"><img src="assets/galeria/20260301_160725.jpg" alt=""></figure>
+      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/estanteria-norma-04.jpg" alt=""></figure>
+      <figure class="galeria__item"><img src="assets/galeria/visual-01.png" alt=""></figure>
+      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/render-02.png" alt=""></figure>
+      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/visual-02.png" alt=""></figure>
+      <figure class="galeria__item"><img src="assets/galeria/galeria-04.png" alt=""></figure>
+      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/render-04.png" alt=""></figure>
+      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/visual-03.jpeg" alt=""></figure>
+
+      <!-- pasada 2 (duplicada para loop infinito) -->
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/estanteria-madre.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/IMG_0441.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/render-03.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/plato-blanco.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/estante-verde-celeste.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/20251122_112851.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/detalle-patas.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/IMG_0436.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/estanteria-norma-03.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/plato-verde.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/render-01.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/estante-blanco-costado.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/render-05.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/img-0435.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/estante-verde-costado.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/20260301_160725.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/estanteria-norma-04.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/visual-01.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/render-02.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/visual-02.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/galeria-04.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/render-04.png" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/visual-03.jpeg" alt="" loading="lazy"></figure>
+
+    </div>
+  </div>
+
+  <div class="galeria__scrub" id="galeria-scrub-wrap">
+    <div class="galeria__scrub-track" id="galeria-scrub">
+      <div class="galeria__scrub-thumb" id="galeria-scrub-thumb"></div>
+    </div>
+  </div>
+
+  <div class="galeria__foot">
+    <span>Galería</span>
+    <hr />
+    <span>Arrastrá · click para ampliar</span>
+  </div>
+
 </section>
 
 <!-- ====================================================================
@@ -2564,92 +2649,6 @@ HIERRO MACIZO</div>
       <p class="stat__label">personas comprometidas en recuperar</p>
     </div>
   </div>
-</section>
-
-<!-- ====================================================================
-     GALERÍA — marquee horizontal infinito, hover agranda
-     ==================================================================== -->
-<section class="galeria" id="galeria" aria-label="Galería">
-
-  <header class="galeria__head">
-    <div>
-      <p class="galeria__eyebrow">Galería · 07</p>
-      <h2 class="galeria__title">El taller en imágenes.</h2>
-    </div>
-    <div class="galeria__meta">
-      12 escenas<br />2024 — 2026
-    </div>
-  </header>
-
-  <!-- marquee: JS-driven para wheel speed control -->
-  <div class="galeria__marquee" id="galeria-marquee">
-    <div class="galeria__track" id="galeria-track">
-
-      <!-- pasada 1 -->
-      <figure class="galeria__item"><img src="assets/galeria/estanteria-madre.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/IMG_0441.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/render-03.png" alt=""></figure>
-      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/plato-blanco.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/estante-verde-celeste.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/20251122_112851.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/detalle-patas.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/IMG_0436.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/estanteria-norma-03.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/plato-verde.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/render-01.png" alt=""></figure>
-      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/estante-blanco-costado.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/render-05.png" alt=""></figure>
-      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/img-0435.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/estante-verde-costado.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/20260301_160725.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/estanteria-norma-04.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/visual-01.png" alt=""></figure>
-      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/render-02.png" alt=""></figure>
-      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/visual-02.png" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/galeria-04.png" alt=""></figure>
-      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/render-04.png" alt=""></figure>
-      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/visual-03.jpeg" alt=""></figure>
-
-      <!-- pasada 2 (duplicada para loop infinito) -->
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/estanteria-madre.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/IMG_0441.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/render-03.png" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/plato-blanco.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/estante-verde-celeste.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/20251122_112851.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/detalle-patas.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/IMG_0436.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/estanteria-norma-03.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/plato-verde.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/render-01.png" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/estante-blanco-costado.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/render-05.png" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/img-0435.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/estante-verde-costado.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/20260301_160725.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/estanteria-norma-04.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/visual-01.png" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/render-02.png" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/visual-02.png" alt="" loading="lazy"></figure>
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/galeria-04.png" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/render-04.png" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/visual-03.jpeg" alt="" loading="lazy"></figure>
-
-    </div>
-  </div>
-
-  <div class="galeria__scrub" id="galeria-scrub-wrap">
-    <div class="galeria__scrub-track" id="galeria-scrub">
-      <div class="galeria__scrub-thumb" id="galeria-scrub-thumb"></div>
-    </div>
-  </div>
-
-  <div class="galeria__foot">
-    <span>Galería</span>
-    <hr />
-    <span>Arrastrá · click para ampliar</span>
-  </div>
-
 </section>
 
 <!-- ====================================================================
