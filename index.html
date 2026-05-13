@@ -2278,7 +2278,7 @@ HIERRO MACIZO</div>
         <div class="config__swatches" id="swatches-hierro">
           <button class="swatch is-active" style="--c:#2C2C2C;" data-name="Hierro Negro"  data-hex="#2C2C2C" data-texture="assets/textures/hierro-negro.jpg"></button>
           <button class="swatch swatch--ring" style="--c:#E8E4DE;" data-name="Hierro Blanco" data-hex="#E8E4DE" data-texture="assets/textures/hierro-blanco.jpg"></button>
-          <button class="swatch"           style="--c:#7A2E35;" data-name="Burdó"        data-hex="#7A2E35" data-texture="assets/textures/hierro-bordo.jpg"></button>
+          <button class="swatch"           style="--c:#7A2E35;" data-name="Burdó"        data-hex="#7A2E35" data-texture="assets/textures/hierro-bordo.jpg" data-roughness="0.2"></button>
         </div>
         <p class="config__swatch-name">Acabado · <strong id="hierro-name">Hierro Negro</strong></p>
       </div>
@@ -3236,7 +3236,8 @@ function bindSwatches(groupId, nameId, isTerrazo) {
         applyTex(tapaMesh, tex, hex, 0.88, 0.0);
       } else {
         activeHierroTex = tex;
-        applyTex(patasMesh, tex, hex, 0.6, 0.0);
+        const roughness = sw.dataset.roughness ? parseFloat(sw.dataset.roughness) : 0.6;
+        applyTex(patasMesh, tex, hex, roughness, 0.0);
       }
     });
   });
