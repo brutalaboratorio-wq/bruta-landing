@@ -162,15 +162,24 @@
     isolation: isolate;
   }
 
-  /* video de fondo — mesita flotando, sin máscara oscura */
+  /* video mesita — lado derecho, contenido, no full-bleed */
   .hero__video {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52%;
+    height: 88%;
+    object-fit: contain;
+    object-position: right center;
     z-index: 0;
     opacity: 1;
+  }
+  @media (max-width: 900px) {
+    .hero__video { width: 65%; opacity: 0.45; }
+  }
+  @media (max-width: 720px) {
+    .hero__video { width: 90%; opacity: 0.3; }
   }
   /* canvas Three.js (placeholder, queda para futura iteración con vidrio) */
   #hero-canvas {
