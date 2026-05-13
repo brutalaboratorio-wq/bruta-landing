@@ -3256,49 +3256,45 @@ function applyTex(meshOrArr, tex, hex, roughness, metalness) {
   const targets = Array.isArray(meshOrArr) ? meshOrArr : (meshOrArr ? [meshOrArr] : []);
   for (const mesh of targets) {
     if (!mesh) continue;
-    if (!mesh.material || Array.isArray(mesh.material)) {
-      mesh.material = new THREE.MeshStandardMaterial();
-    }
-    mesh.material.map       = tex || null;
-    mesh.material.color.set(tex ? 0xffffff : hex);
-    mesh.material.roughness = roughness;
-    mesh.material.metalness = metalness;
-    mesh.material.needsUpdate = true;
+    mesh.material = new THREE.MeshStandardMaterial({
+      map:       tex || null,
+      color:     tex ? 0xffffff : hex,
+      roughness,
+      metalness,
+    });
   }
 }
 
 // ── Diagnosticar / reparar UVs ───────────────────────────────────────────
 function ensureUVs(mesh) {
   const geo = mesh.geometry;
-  const uv  = geo.attributes.uv;
-
-  if (!uv) {
-    // Sin UVs: proyección planar sobre XZ (horizontal → tapa) o XY
-    geo.computeBoundingBox();
-    const box = geo.boundingBox;
-    const sz  = box.getSize(new THREE.Vector3());
-    const min = box.min;
-    const pos = geo.attributes.position;
-    const arr = new Float32Array(pos.count * 2);
-    const scaleU = Math.max(sz.x, 0.001);
-    const scaleV = Math.max(sz.z || sz.y, 0.001);
-    for (let i = 0; i < pos.count; i++) {
-      arr[i*2]   = (pos.getX(i) - min.x) / scaleU;
-      arr[i*2+1] = (pos.getZ(i) - min.z) / scaleV;
+  if (geo.attributes.uv) {
+    let minU=Infinity,maxU=-Infinity,minV=Infinity,maxV=-Infinity;
+    const uv = geo.attributes.uv;
+    for (let i=0;i<uv.count;i++){
+      const u=uv.getX(i),v=uv.getY(i);
+      if(u<minU)minU=u;if(u>maxU)maxU=u;if(v<minV)minV=v;if(v>maxV)maxV=v;
     }
-    geo.setAttribute('uv', new THREE.BufferAttribute(arr, 2));
-    console.log('[BRUTA] UVs generadas (planar XZ):', mesh.name);
+    console.log(`[BRUTA] UV ${mesh.name}: U[${minU.toFixed(2)}→${maxU.toFixed(2)}] V[${minV.toFixed(2)}→${maxV.toFixed(2)}]`);
     return;
   }
-
-  // Medir el rango real de las UVs
-  let minU = Infinity, maxU = -Infinity, minV = Infinity, maxV = -Infinity;
-  for (let i = 0; i < uv.count; i++) {
-    const u = uv.getX(i), v = uv.getY(i);
-    if (u < minU) minU = u; if (u > maxU) maxU = u;
-    if (v < minV) minV = v; if (v > maxV) maxV = v;
+  // Sin UVs: proyección planar usando los 2 ejes con más variación
+  geo.computeBoundingBox();
+  const sz  = geo.boundingBox.getSize(new THREE.Vector3());
+  const min = geo.boundingBox.min;
+  const pos = geo.attributes.position;
+  const axes = [{a:'x',s:sz.x},{a:'y',s:sz.y},{a:'z',s:sz.z}].sort((a,b)=>b.s-a.s);
+  const ua = axes[0].a, va = axes[1].a;
+  const us = Math.max(axes[0].s,0.001), vs = Math.max(axes[1].s,0.001);
+  const get = (i,a) => a==='x'?pos.getX(i):a==='y'?pos.getY(i):pos.getZ(i);
+  const mn  = a => a==='x'?min.x:a==='y'?min.y:min.z;
+  const arr = new Float32Array(pos.count*2);
+  for(let i=0;i<pos.count;i++){
+    arr[i*2]  =(get(i,ua)-mn(ua))/us;
+    arr[i*2+1]=(get(i,va)-mn(va))/vs;
   }
-  console.log(`[BRUTA] UV ${mesh.name}: U[${minU.toFixed(2)}→${maxU.toFixed(2)}] V[${minV.toFixed(2)}→${maxV.toFixed(2)}]`);
+  geo.setAttribute('uv', new THREE.BufferAttribute(arr,2));
+  console.log(`[BRUTA] UVs generadas (planar ${ua}${va}):`, mesh.name);
 }
 
 // ── Cargar modelo ────────────────────────────────────────────────────────
