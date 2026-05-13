@@ -3199,36 +3199,36 @@ function initThree() {
   })();
 }
 
-// ── Identificar meshes por nombre o posición ─────────────────────────────
+// ── Identificar meshes por nombre (convención: "Material_-_producto") ────
 function findMeshes(root) {
   const meshes = [];
   root.traverse(o => { if (o.isMesh) meshes.push(o); });
 
-  // Log para debug — ver nombres reales del GLB
-  console.log('[BRUTA] Meshes en el modelo:', meshes.map(m => `"${m.name}"`).join(', '));
+  let tapa = null;
+  const patasArr = [];
 
-  let tapa = null, patas = null;
   for (const m of meshes) {
     const n = m.name.toLowerCase();
-    if (!tapa  && (n.includes('tapa') || n.includes('top') || n.includes('terrazo') || n.includes('superficie') || n.includes('piedra') || n.includes('marmol'))) tapa = m;
-    if (!patas && (n.includes('pata') || n.includes('leg') || n.includes('hierro') || n.includes('metal') || n.includes('iron') || n.includes('base') || n.includes('soporte'))) patas = m;
+    if (n.startsWith('terrazo')) {
+      tapa = m;
+    } else {
+      // hierro, plastico, metal, pata, soporte, base, etc. → grupo hierro
+      patasArr.push(m);
+    }
   }
 
-  // fallback: más alto = tapa (terrazo), más bajo = patas (hierro)
-  if (!tapa && meshes.length >= 2) {
+  // Fallback posicional si ningún mesh empieza con "terrazo"
+  if (!tapa && meshes.length >= 1) {
     const sorted = [...meshes].sort((a, b) => {
       const ca = new THREE.Box3().setFromObject(a).getCenter(new THREE.Vector3());
       const cb = new THREE.Box3().setFromObject(b).getCenter(new THREE.Vector3());
       return cb.y - ca.y;
     });
-    tapa  = sorted[0];
-    patas = sorted[1];
-    console.log('[BRUTA] Fallback — tapa:', tapa.name, '| patas:', patas.name);
-  } else if (!tapa && meshes.length === 1) {
-    tapa = meshes[0];
+    tapa = sorted[0];
+    sorted.slice(1).forEach(m => { if (!patasArr.includes(m)) patasArr.push(m); });
   }
 
-  return { tapa, patas };
+  return { tapa, patas: patasArr };
 }
 
 // ── Cargar textura (con cache) ───────────────────────────────────────────
@@ -3247,17 +3247,20 @@ function loadTex(path) {
   });
 }
 
-// ── Aplicar textura a un mesh ────────────────────────────────────────────
-function applyTex(mesh, tex, hex, roughness, metalness) {
-  if (!mesh) return;
-  if (!mesh.material || Array.isArray(mesh.material)) {
-    mesh.material = new THREE.MeshStandardMaterial();
+// ── Aplicar textura a un mesh o array de meshes ──────────────────────────
+function applyTex(meshOrArr, tex, hex, roughness, metalness) {
+  const targets = Array.isArray(meshOrArr) ? meshOrArr : (meshOrArr ? [meshOrArr] : []);
+  for (const mesh of targets) {
+    if (!mesh) continue;
+    if (!mesh.material || Array.isArray(mesh.material)) {
+      mesh.material = new THREE.MeshStandardMaterial();
+    }
+    mesh.material.map       = tex || null;
+    mesh.material.color.set(tex ? 0xffffff : hex);
+    mesh.material.roughness = roughness;
+    mesh.material.metalness = metalness;
+    mesh.material.needsUpdate = true;
   }
-  mesh.material.map       = tex || null;
-  mesh.material.color.set(tex ? 0xffffff : hex);
-  mesh.material.roughness = roughness;
-  mesh.material.metalness = metalness;
-  mesh.material.needsUpdate = true;
 }
 
 // ── Cargar modelo ────────────────────────────────────────────────────────
@@ -3266,7 +3269,7 @@ function loadModel(path) {
   loaderEl.classList.remove('hidden');
 
   if (currentModel) { scene.remove(currentModel); currentModel = null; }
-  tapaMesh = null; patasMesh = null;
+  tapaMesh = null; patasMesh = [];
 
   loader.load(path, gltf => {
     const model = gltf.scene;
