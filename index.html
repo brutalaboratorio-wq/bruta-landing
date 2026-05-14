@@ -1877,60 +1877,50 @@
     .footer__grid { grid-template-columns: 1fr; }
     .footer { padding: 72px 22px 44px; }
   }
-  /* LIGHTBOX */
+  /* LIGHTBOX — pantalla completa */
   #galeria-lightbox {
     position: fixed;
     inset: 0;
-    background: rgba(20,18,17,0.97);
+    background: #000;
     z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.35s ease;
+    transition: opacity 0.25s ease;
   }
   #galeria-lightbox.is-open {
     opacity: 1;
     pointer-events: all;
   }
   #galeria-lightbox img {
-    max-width: 92vw;
-    max-height: 92vh;
+    width: 100vw;
+    height: 100vh;
     object-fit: contain;
-    border-radius: 3px;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+    display: block;
     pointer-events: none;
-    transform: scale(0.94);
-    transition: transform 0.35s cubic-bezier(.2,.8,.2,1);
-  }
-  #galeria-lightbox.is-open img {
-    transform: scale(1);
   }
   #galeria-lightbox-close {
     position: absolute;
-    top: 24px;
-    right: 28px;
-    width: 44px;
-    height: 44px;
+    top: 20px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(232,228,222,0.1);
-    border: 1px solid rgba(232,228,222,0.2);
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.3);
     border-radius: 50%;
-    font-family: var(--ff-mono);
-    font-size: 18px;
-    color: var(--tiza);
+    font-size: 22px;
+    color: #fff;
     cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s, background 0.2s;
+    transition: background 0.2s;
     line-height: 1;
+    z-index: 2;
   }
-  #galeria-lightbox-close:hover {
-    opacity: 1;
-    background: rgba(232,228,222,0.18);
-  }
+  #galeria-lightbox-close:hover { background: rgba(255,255,255,0.15); }
 </style>
 </head>
 <body>
@@ -2084,7 +2074,7 @@ HIERRO MACIZO</div>
       <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/visual-02.jpg" alt=""></figure>
       <figure class="galeria__item"><img src="assets/galeria/galeria-04.jpg" alt=""></figure>
       <figure class="galeria__item galeria__item--small"><img src="assets/galeria/render-04.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/visual-03.jpeg" alt=""></figure>
+      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/visual-03.jpg" alt=""></figure>
 
       <!-- pasada 2 (duplicada para loop infinito) -->
       <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/estanteria-madre.jpg" alt="" loading="lazy"></figure>
@@ -2109,7 +2099,7 @@ HIERRO MACIZO</div>
       <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/visual-02.jpg" alt="" loading="lazy"></figure>
       <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/galeria-04.jpg" alt="" loading="lazy"></figure>
       <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/render-04.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/visual-03.jpeg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/visual-03.jpg" alt="" loading="lazy"></figure>
 
     </div>
   </div>
@@ -2986,7 +2976,7 @@ HIERRO MACIZO</div>
       },
     });
 
-  // ANIM: galeria-marquee — drag + wheel + lightbox
+  // ANIM: galeria-marquee — solo drag, click abre lightbox
   (function() {
     const marquee = document.getElementById('galeria-marquee');
     const track   = document.getElementById('galeria-track');
@@ -2999,15 +2989,9 @@ HIERRO MACIZO</div>
     track.style.animation = 'none';
     function halfW() { return track.scrollWidth / 2; }
 
-    // Wheel: dirección y velocidad proporcional
-    marquee.addEventListener('wheel', e => {
-      e.preventDefault();
-      targetVel = Math.max(-16, Math.min(4, targetVel - e.deltaY * 0.06));
-    }, { passive: false });
-
-    // Drag con pointer
+    // Solo drag — sin wheel
     marquee.addEventListener('pointerdown', e => {
-      if (e.button !== 0) return;
+      if (e.button !== 0 && e.pointerType === 'mouse') return;
       isDragging = true;
       dragMovedPx = 0;
       dragLastX = e.clientX;
@@ -3017,17 +3001,23 @@ HIERRO MACIZO</div>
       if (!isDragging) return;
       const dx = e.clientX - dragLastX;
       dragMovedPx += Math.abs(dx);
-      x += dx * 1.4;
-      targetVel = dx * 0.9;
+      x += dx * 1.6;
+      targetVel = dx * 1.0;
       dragLastX = e.clientX;
+      const hw = halfW();
+      if (hw > 0) {
+        while (x < -hw) x += hw;
+        while (x > 0)   x -= hw;
+      }
+      track.style.transform = `translate3d(${x}px,0,0)`;
     });
     marquee.addEventListener('pointerup', () => { isDragging = false; });
 
-    // Loop principal
+    // Loop — autoplay cuando no se arrastra
     (function tick() {
       if (!isDragging) {
-        vel += (targetVel - vel) * 0.1;
-        targetVel += (BASE - targetVel) * 0.028;
+        vel += (targetVel - vel) * 0.08;
+        targetVel += (BASE - targetVel) * 0.03;
         x += vel;
         const hw = halfW();
         if (hw > 0) {
@@ -3039,7 +3029,7 @@ HIERRO MACIZO</div>
       requestAnimationFrame(tick);
     })();
 
-    // Lightbox — click sobre ítem real (no duplicado)
+    // Lightbox — click sin arrastre abre la imagen a pantalla completa
     const lb      = document.getElementById('galeria-lightbox');
     const lbImg   = lb && lb.querySelector('img');
     const lbClose = lb && lb.querySelector('#galeria-lightbox-close');
@@ -3048,7 +3038,7 @@ HIERRO MACIZO</div>
       document.body.style.overflow = '';
     }
     marquee.addEventListener('click', e => {
-      if (dragMovedPx > 6) return;
+      if (dragMovedPx > 8) return;
       const item = e.target.closest('.galeria__item:not([aria-hidden])');
       if (!item || !lb) return;
       lbImg.src = item.querySelector('img').src;
@@ -3056,7 +3046,6 @@ HIERRO MACIZO</div>
       document.body.style.overflow = 'hidden';
     });
     lbClose && lbClose.addEventListener('click', closeLb);
-    lb && lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
   })();
 
