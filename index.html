@@ -1879,27 +1879,21 @@
   }
   /* LIGHTBOX — pantalla completa */
   #galeria-lightbox {
+    display: none;
     position: fixed;
-    inset: 0;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     background: #000;
     z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease;
   }
   #galeria-lightbox.is-open {
-    opacity: 1;
-    pointer-events: all;
+    display: block;
   }
   #galeria-lightbox img {
-    width: 100vw;
-    height: 100vh;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     object-fit: contain;
-    display: block;
-    pointer-events: none;
   }
   #galeria-lightbox-close {
     position: absolute;
@@ -1910,17 +1904,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.6);
-    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.4);
     border-radius: 50%;
-    font-size: 22px;
+    font-size: 24px;
     color: #fff;
     cursor: pointer;
-    transition: background 0.2s;
-    line-height: 1;
     z-index: 2;
+    line-height: 1;
+    padding: 0;
   }
-  #galeria-lightbox-close:hover { background: rgba(255,255,255,0.15); }
+  #galeria-lightbox-close:hover { background: rgba(255,255,255,0.2); }
 </style>
 </head>
 <body>
@@ -3031,17 +3025,20 @@ HIERRO MACIZO</div>
 
     // Lightbox — click sin arrastre abre la imagen a pantalla completa
     const lb      = document.getElementById('galeria-lightbox');
-    const lbImg   = lb && lb.querySelector('img');
-    const lbClose = lb && lb.querySelector('#galeria-lightbox-close');
+    const lbImg   = document.querySelector('#galeria-lightbox img');
+    const lbClose = document.getElementById('galeria-lightbox-close');
     function closeLb() {
+      if (!lb) return;
       lb.classList.remove('is-open');
       document.body.style.overflow = '';
     }
     marquee.addEventListener('click', e => {
       if (dragMovedPx > 8) return;
-      const item = e.target.closest('.galeria__item:not([aria-hidden])');
-      if (!item || !lb) return;
-      lbImg.src = item.querySelector('img').src;
+      const item = e.target.closest('.galeria__item');
+      if (!item || item.hasAttribute('aria-hidden') || !lb || !lbImg) return;
+      const src = item.querySelector('img') && item.querySelector('img').src;
+      if (!src) return;
+      lbImg.src = src;
       lb.classList.add('is-open');
       document.body.style.overflow = 'hidden';
     });
