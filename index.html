@@ -1699,43 +1699,6 @@
     color: var(--porfido);
   }
 
-  /* scrubber bar */
-  .galeria__scrub {
-    max-width: 1280px;
-    margin: 36px auto 0;
-    padding: 0 48px;
-  }
-  .galeria__scrub-track {
-    position: relative;
-    height: 3px;
-    background: rgba(232,228,222,0.22);
-    border-radius: 2px;
-    cursor: pointer;
-  }
-  .galeria__scrub-thumb {
-    position: absolute;
-    top: 50%;
-    left: 0%;
-    transform: translate(-50%, -50%);
-    width: 52px;
-    height: 7px;
-    background: var(--tiza);
-    border-radius: 4px;
-    cursor: grab;
-    transition: height 0.15s, width 0.15s, background 0.15s;
-    pointer-events: none;
-  }
-  .galeria__scrub-track:hover .galeria__scrub-thumb,
-  .galeria__scrub-track.is-scrubbing .galeria__scrub-thumb {
-    width: 64px;
-    height: 10px;
-    background: #fff;
-    cursor: grabbing;
-  }
-  @media (max-width: 720px) {
-    .galeria__scrub { padding: 0 22px; }
-  }
-
   /* footer técnico de la galería */
   .galeria__foot {
     max-width: 1280px;
@@ -2148,12 +2111,6 @@ HIERRO MACIZO</div>
       <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/render-04.jpg" alt="" loading="lazy"></figure>
       <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/visual-03.jpeg" alt="" loading="lazy"></figure>
 
-    </div>
-  </div>
-
-  <div class="galeria__scrub" id="galeria-scrub-wrap">
-    <div class="galeria__scrub-track" id="galeria-scrub">
-      <div class="galeria__scrub-thumb" id="galeria-scrub-thumb"></div>
     </div>
   </div>
 
@@ -3035,8 +2992,8 @@ HIERRO MACIZO</div>
     const track   = document.getElementById('galeria-track');
     if (!marquee || !track) return;
 
-    let x = 0, vel = -0.7, targetVel = -0.7;
-    const BASE = -0.7;
+    let x = 0, vel = -1.5, targetVel = -1.5;
+    const BASE = -1.5;
     let isDragging = false, dragLastX = 0, dragMovedPx = 0;
 
     track.style.animation = 'none';
@@ -3066,49 +3023,9 @@ HIERRO MACIZO</div>
     });
     marquee.addEventListener('pointerup', () => { isDragging = false; });
 
-    // Scrubber
-    const scrubTrack = document.getElementById('galeria-scrub');
-    const scrubThumb = document.getElementById('galeria-scrub-thumb');
-    let isScrubbing = false;
-
-    function updateScrub() {
-      if (!scrubThumb) return;
-      const hw = halfW();
-      if (hw <= 0) return;
-      const pct = ((-x % hw + hw) % hw) / hw * 100;
-      scrubThumb.style.left = pct + '%';
-    }
-
-    function scrubSeek(clientX) {
-      if (!scrubTrack) return;
-      const rect = scrubTrack.getBoundingClientRect();
-      const pct  = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-      x = -pct * halfW();
-      vel = 0;
-      track.style.transform = `translate3d(${x}px,0,0)`;
-      updateScrub();
-    }
-
-    scrubTrack && scrubTrack.addEventListener('pointerdown', e => {
-      isScrubbing = true;
-      scrubTrack.classList.add('is-scrubbing');
-      scrubTrack.setPointerCapture(e.pointerId);
-      scrubSeek(e.clientX);
-      targetVel = 0;
-    });
-    scrubTrack && scrubTrack.addEventListener('pointermove', e => {
-      if (!isScrubbing) return;
-      scrubSeek(e.clientX);
-    });
-    scrubTrack && scrubTrack.addEventListener('pointerup', () => {
-      isScrubbing = false;
-      scrubTrack.classList.remove('is-scrubbing');
-      targetVel = BASE;
-    });
-
     // Loop principal
     (function tick() {
-      if (!isDragging && !isScrubbing) {
+      if (!isDragging) {
         vel += (targetVel - vel) * 0.1;
         targetVel += (BASE - targetVel) * 0.028;
         x += vel;
@@ -3119,7 +3036,6 @@ HIERRO MACIZO</div>
         }
         track.style.transform = `translate3d(${x}px,0,0)`;
       }
-      updateScrub();
       requestAnimationFrame(tick);
     })();
 
