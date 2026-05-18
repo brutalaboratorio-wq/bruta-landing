@@ -1,0 +1,87 @@
+/* BRUTA Lab - CSS Custom para Empretienda */
+
+/* == FUENTES == */
+h1, h2, h3, h4, h5, h6,
+.uk-section-block__title,
+.uk-section__title,
+.block-products-feed__title {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-weight: 600 !important;
+}
+
+body, p, span, li, label, a, input, select, textarea, button {
+  font-family: "Inter", system-ui, sans-serif !important;
+}
+
+.uk-navbar-nav > li > a,
+.list_installments,
+.list_transfer,
+.field__label,
+[class*="eyebrow"],
+[class*="tag"],
+[class*="badge"] {
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+}
+
+/* == TARJETAS DE PRODUCTO == */
+.block-products-feed__product-wrapper {
+  background-color: #D4CEBE !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+}
+
+.block-products-feed__product-media {
+  background-color: #ffffff !important;
+}
+
+.block-products-feed__product-image {
+  width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+.block-products-feed__product-name {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-style: italic !important;
+  font-size: 0.95rem !important;
+  font-weight: 400 !important;
+  padding: 0.7rem 0.85rem 0.2rem !important;
+  margin: 0 !important;
+  background-color: #D4CEBE !important;
+  color: #2C2C2C !important;
+}
+
+.block-products-feed__product-name a,
+.block-products-feed__product-name .text--primary {
+  font-style: italic !important;
+  text-decoration: none !important;
+  color: #2C2C2C !important;
+}
+
+.block-products-feed__product-price {
+  display: none !important;
+}
+
+.list_installments,
+.block-products-feed__product-installments,
+[class*="installment"] {
+  display: none !important;
+}
+
+.list_transfer {
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-size: 0.72rem !important;
+  font-weight: 400 !important;
+  padding: 0.1rem 0.85rem 0.75rem !important;
+  margin: 0 !important;
+  background-color: #D4CEBE !important;
+  color: #2C2C2C !important;
+}
+
+/* == BORDES REDONDEADOS - eliminar == */
+.border-radius, input, select, textarea,
+.uk-input, .uk-select, .uk-textarea,
+.uk-button, button {
+  border-radius: 0 !important;
+}

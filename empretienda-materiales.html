@@ -1,0 +1,242 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400;1,500&family=Inter:wght@300;400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+.brm {
+  position: relative;
+  width: 100%;
+  min-height: 90vh;
+  background: #3A3835;
+  color: #E8E4DE;
+  padding: 100px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+.brm * { box-sizing: border-box; margin: 0; padding: 0; }
+
+.brm__head {
+  text-align: center;
+  max-width: 1100px;
+  margin: 0 auto 28px;
+  padding: 0 24px;
+}
+
+.brm__eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: #7E8E94;
+  margin-bottom: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.brm__eyebrow::before, .brm__eyebrow::after {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: #7E8E94;
+  flex-shrink: 0;
+}
+
+.brm__title {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-style: italic !important;
+  font-weight: 500 !important;
+  font-size: clamp(36px, 4.6vw, 72px) !important;
+  line-height: 1.04 !important;
+  letter-spacing: -0.015em !important;
+  color: #E8E4DE !important;
+}
+
+/* grilla de 5 tarjetas */
+.brm__stage {
+  width: 100%;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  padding: 0 24px;
+  margin: 0 auto;
+  max-width: 1600px;
+}
+
+.brm__card {
+  position: relative;
+  width: 100%;
+  min-height: 460px;
+  border-radius: 3px;
+  overflow: hidden;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 24px 52px -20px rgba(0,0,0,0.55), 0 6px 16px -8px rgba(0,0,0,0.4);
+  transition: transform 0.5s cubic-bezier(.2,.8,.2,1);
+}
+
+.brm__card--ring {
+  box-shadow: 0 24px 52px -20px rgba(0,0,0,0.7), inset 0 0 0 1.5px #D4CEBE;
+}
+
+.brm__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  transition: background 0.4s ease;
+  z-index: 1;
+}
+.brm__card:hover::before { background: rgba(0,0,0,0.48); }
+.brm__card:hover { transform: translateY(-10px); }
+
+.brm__card-hex {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(44,44,44,0.65);
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+.brm__card--dark .brm__card-hex { color: rgba(232,228,222,0.6); }
+.brm__card:hover .brm__card-hex { color: rgba(255,255,255,0.85); }
+
+.brm__card-num {
+  position: absolute;
+  bottom: 22px;
+  left: 22px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 28px;
+  color: rgba(44,44,44,0.55);
+  z-index: 2;
+  transition: opacity 0.4s ease;
+}
+.brm__card--dark .brm__card-num { color: rgba(232,228,222,0.55); }
+.brm__card:hover .brm__card-num { opacity: 0; }
+
+.brm__card-name {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 26px 24px 28px;
+  background: linear-gradient(to top, rgba(0,0,0,0.32) 0%, rgba(0,0,0,0) 100%);
+  color: #fff;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(.2,.8,.2,1);
+  z-index: 2;
+}
+.brm__card:hover .brm__card-name {
+  opacity: 1;
+  transform: translateY(0);
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%);
+}
+
+.brm__card-name h3 {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-style: italic !important;
+  font-weight: 500 !important;
+  font-size: clamp(26px, 2.8vw, 42px) !important;
+  line-height: 1 !important;
+  color: #fff !important;
+  margin-bottom: 8px !important;
+}
+
+.brm__card-name small {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  opacity: 0.78;
+  color: #fff;
+}
+
+.brm__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin: 24px auto 0;
+  padding: 0 24px;
+  width: 100%;
+  max-width: 1600px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #7E8E94;
+}
+.brm__foot hr {
+  flex: 1;
+  border: 0;
+  height: 1px;
+  background: rgba(126,142,148,0.25);
+}
+
+@media (max-width: 900px) {
+  .brm { padding: 80px 16px 16px; }
+  .brm__stage { grid-template-columns: 1fr; gap: 10px; padding: 0; }
+  .brm__card { min-height: 200px; aspect-ratio: 16 / 9; }
+}
+</style>
+
+<section class="brm" aria-label="Materiales BRUTA">
+
+  <header class="brm__head">
+    <p class="brm__eyebrow">Materiales vivos · 03</p>
+    <h2 class="brm__title">El material lo es todo.</h2>
+  </header>
+
+  <div class="brm__stage">
+
+    <article class="brm__card"
+      style="background-image:url('https://bruta-landing.vercel.app/assets/material-textures/terrazo-tiza.jpg')">
+      <div class="brm__card-hex">#D4CEBE</div>
+      <div class="brm__card-num">01</div>
+      <div class="brm__card-name"><h3>Tiza</h3><small>Blanco cálido</small></div>
+    </article>
+
+    <article class="brm__card"
+      style="background-image:url('https://bruta-landing.vercel.app/assets/material-textures/terrazo-porfido.jpg')">
+      <div class="brm__card-hex">#7E8E94</div>
+      <div class="brm__card-num">02</div>
+      <div class="brm__card-name"><h3>Pórfido</h3><small>Mineral de Córdoba</small></div>
+    </article>
+
+    <article class="brm__card brm__card--ring brm__card--dark"
+      style="background-image:url('https://bruta-landing.vercel.app/assets/material-textures/terrazo-basalto.jpg')">
+      <div class="brm__card-hex">#3A3835</div>
+      <div class="brm__card-num">03</div>
+      <div class="brm__card-name"><h3>Basalto</h3><small>Roca volcánica</small></div>
+    </article>
+
+    <article class="brm__card"
+      style="background-image:url('https://bruta-landing.vercel.app/assets/material-textures/terrazo-musgo.jpg')">
+      <div class="brm__card-hex">#91A891</div>
+      <div class="brm__card-num">04</div>
+      <div class="brm__card-name"><h3>Musgo</h3><small>Verde apagado</small></div>
+    </article>
+
+    <article class="brm__card"
+      style="background-image:url('https://bruta-landing.vercel.app/assets/material-textures/terrazo-terracota.jpg')">
+      <div class="brm__card-hex">#C4967E</div>
+      <div class="brm__card-num">05</div>
+      <div class="brm__card-name"><h3>Terracota</h3><small>Tierra cocida</small></div>
+    </article>
+
+  </div>
+
+  <div class="brm__foot">
+    <span>05 colores</span>
+    <hr />
+    <span>Paleta única</span>
+  </div>
+
+</section>

@@ -1,0 +1,109 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400;1,500&family=Inter:wght@300;400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+.bre {
+  position: relative;
+  width: 100%;
+  background: #C4967E;
+  color: #2C2C2C;
+  padding: 120px 48px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.bre * { box-sizing: border-box; margin: 0; padding: 0; }
+
+.bre__inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.bre__eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: rgba(44, 44, 44, 0.55);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.bre__eyebrow::before,
+.bre__eyebrow::after {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: rgba(44, 44, 44, 0.3);
+  flex-shrink: 0;
+}
+
+.bre__title {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-style: italic !important;
+  font-weight: 500 !important;
+  font-size: clamp(44px, 7vw, 108px) !important;
+  line-height: 1.04 !important;
+  letter-spacing: -0.02em !important;
+  color: #2C2C2C !important;
+  margin: 0 0 28px !important;
+}
+
+.bre__sub {
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 300;
+  font-size: clamp(15px, 1.3vw, 18px);
+  line-height: 1.6;
+  color: rgba(44, 44, 44, 0.8);
+  max-width: 48ch;
+  margin: 0 auto 52px;
+}
+
+.bre__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: #2C2C2C;
+  color: #D4CEBE;
+  text-decoration: none;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  padding: 20px 40px;
+  border-radius: 999px;
+  transition: transform 0.25s ease, letter-spacing 0.25s ease, background 0.25s ease;
+}
+
+.bre__cta:hover {
+  transform: translateY(-2px);
+  letter-spacing: 0.38em;
+  background: #3A3835;
+  color: #D4CEBE;
+}
+
+@media (max-width: 720px) {
+  .bre { padding: 80px 24px; }
+  .bre__cta { padding: 18px 28px; font-size: 11px; }
+}
+</style>
+
+<section class="bre" aria-label="Encargos BRUTA">
+  <div class="bre__inner">
+
+    <p class="bre__eyebrow">Encargos · A medida</p>
+
+    <h2 class="bre__title">¿Tenés algo en mente?</h2>
+
+    <p class="bre__sub">Hacemos piezas a medida. Elegís el color del terrazo, la terminación del hierro y el tamaño. Contanos qué necesitás.</p>
+
+    <a class="bre__cta" href="https://wa.me/5493513458105?text=Hola%20BRUTA%2C%20quiero%20hacer%20un%20encargo%20a%20medida" target="_blank" rel="noopener">
+      Escribinos por WhatsApp →
+    </a>
+
+  </div>
+</section>

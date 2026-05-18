@@ -1,0 +1,228 @@
+<style>
+.brg {
+  position: relative;
+  width: 100%;
+  background: #7E8E94;
+  color: #E8E4DE;
+  padding: 100px 0 120px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.brg * { box-sizing: border-box; margin: 0; padding: 0; }
+
+.brg::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent 0, rgba(232,228,222,0.18) 50%, transparent 100%);
+}
+
+.brg__head {
+  max-width: 1280px;
+  margin: 0 auto 56px;
+  padding: 0 48px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.brg__eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: rgba(232,228,222,0.55);
+  margin: 0 0 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.brg__eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: rgba(232,228,222,0.4);
+  flex-shrink: 0;
+}
+
+.brg__title {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-weight: 500 !important;
+  font-style: italic !important;
+  font-size: clamp(36px, 5vw, 80px) !important;
+  line-height: 1.04 !important;
+  letter-spacing: -0.02em !important;
+  color: #E8E4DE !important;
+}
+
+.brg__meta {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(232,228,222,0.45);
+  text-align: right;
+  line-height: 1.7;
+  padding-bottom: 14px;
+  flex-shrink: 0;
+}
+
+/* marquee */
+.brg__marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 40px 0;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
+}
+.brg__marquee:active { cursor: grabbing; }
+
+.brg__track {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: max-content;
+  will-change: transform;
+}
+
+.brg__item {
+  flex: 0 0 auto;
+  height: 380px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #6a7a80;
+  box-shadow: 0 24px 52px -20px rgba(0,0,0,0.5), 0 6px 16px -8px rgba(0,0,0,0.4);
+  transition: transform 0.5s cubic-bezier(.2,.8,.2,1), box-shadow 0.5s ease;
+}
+.brg__item--tall  { height: 440px; }
+.brg__item--wide  { height: 340px; }
+.brg__item--small { height: 300px; }
+
+.brg__item:hover {
+  transform: scale(1.08);
+  z-index: 5;
+  box-shadow: 0 48px 80px -28px rgba(0,0,0,0.65), 0 16px 36px -12px rgba(0,0,0,0.5);
+}
+
+.brg__item img {
+  height: 100%;
+  width: auto;
+  display: block;
+  pointer-events: none;
+  object-fit: cover;
+}
+
+@media (max-width: 720px) {
+  .brg__head { padding: 0 24px; flex-direction: column; align-items: flex-start; }
+  .brg__meta { text-align: left; }
+  .brg__item       { height: 300px; }
+  .brg__item--tall  { height: 340px; }
+  .brg__item--wide  { height: 260px; }
+  .brg__item--small { height: 240px; }
+  .brg__track { gap: 16px; }
+}
+</style>
+
+<section class="brg" aria-label="Galería BRUTA">
+
+  <div class="brg__head">
+    <div>
+      <p class="brg__eyebrow">Galería · 02</p>
+      <h2 class="brg__title">Cada pieza,<br>irrepetible.</h2>
+    </div>
+    <p class="brg__meta">TERRAZO · VIDRIO<br>CÓRDOBA · ARG</p>
+  </div>
+
+  <div class="brg__marquee" id="brg-marquee">
+    <div class="brg__track" id="brg-track">
+
+      <figure class="brg__item"><img src="https://bruta-landing.vercel.app/assets/galeria/estanteria-madre.jpg" alt=""></figure>
+      <figure class="brg__item brg__item--tall"><img src="https://bruta-landing.vercel.app/assets/galeria/IMG_0441.jpg" alt=""></figure>
+      <figure class="brg__item brg__item--wide"><img src="https://bruta-landing.vercel.app/assets/galeria/render-03.jpg" alt=""></figure>
+      <figure class="brg__item brg__item--small"><img src="https://bruta-landing.vercel.app/assets/galeria/plato-blanco.jpg" alt=""></figure>
+      <figure class="brg__item"><img src="https://bruta-landing.vercel.app/assets/galeria/estante-verde-celeste.jpg" alt=""></figure>
+      <figure class="brg__item brg__item--tall"><img src="https://bruta-landing.vercel.app/assets/galeria/20251122_112851.jpg" alt=""></figure>
+      <figure class="brg__item brg__item--wide"><img src="https://bruta-landing.vercel.app/assets/galeria/detalle-patas.jpg" alt=""></figure>
+      <figure class="brg__item"><img src="https://bruta-landing.vercel.app/assets/galeria/IMG_0436.jpg" alt=""></figure>
+      <figure class="brg__item brg__item--small"><img src="https://bruta-landing.vercel.app/assets/galeria/estanteria-norma-03.jpg" alt=""></figure>
+      <figure class="brg__item brg__item--tall"><img src="https://bruta-landing.vercel.app/assets/galeria/plato-verde.jpg" alt=""></figure>
+      <figure class="brg__item"><img src="https://bruta-landing.vercel.app/assets/galeria/render-01.jpg" alt=""></figure>
+      <figure class="brg__item brg__item--wide"><img src="https://bruta-landing.vercel.app/assets/galeria/estante-blanco-costado.jpg" alt=""></figure>
+
+      <!-- duplicado para loop infinito -->
+      <figure class="brg__item" aria-hidden="true"><img src="https://bruta-landing.vercel.app/assets/galeria/estanteria-madre.jpg" alt="" loading="lazy"></figure>
+      <figure class="brg__item brg__item--tall" aria-hidden="true"><img src="https://bruta-landing.vercel.app/assets/galeria/IMG_0441.jpg" alt="" loading="lazy"></figure>
+      <figure class="brg__item brg__item--wide" aria-hidden="true"><img src="https://bruta-landing.vercel.app/assets/galeria/render-03.jpg" alt="" loading="lazy"></figure>
+      <figure class="brg__item brg__item--small" aria-hidden="true"><img src="https://bruta-landing.vercel.app/assets/galeria/plato-blanco.jpg" alt="" loading="lazy"></figure>
+      <figure class="brg__item" aria-hidden="true"><img src="https://bruta-landing.vercel.app/assets/galeria/estante-verde-celeste.jpg" alt="" loading="lazy"></figure>
+      <figure class="brg__item brg__item--tall" aria-hidden="true"><img src="https://bruta-landing.vercel.app/assets/galeria/20251122_112851.jpg" alt="" loading="lazy"></figure>
+      <figure class="brg__item brg__item--wide" aria-hidden="true"><img src="https://bruta-landing.vercel.app/assets/galeria/detalle-patas.jpg" alt="" loading="lazy"></figure>
+      <figure class="brg__item" aria-hidden="true"><img src="https://bruta-landing.vercel.app/assets/galeria/IMG_0436.jpg" alt="" loading="lazy"></figure>
+      <figure class="brg__item brg__item--small" aria-hidden="true"><img src="https://bruta-landing.vercel.app/assets/galeria/estanteria-norma-03.jpg" alt="" loading="lazy"></figure>
+      <figure class="brg__item brg__item--tall" aria-hidden="true"><img src="https://bruta-landing.vercel.app/assets/galeria/plato-verde.jpg" alt="" loading="lazy"></figure>
+      <figure class="brg__item" aria-hidden="true"><img src="https://bruta-landing.vercel.app/assets/galeria/render-01.jpg" alt="" loading="lazy"></figure>
+      <figure class="brg__item brg__item--wide" aria-hidden="true"><img src="https://bruta-landing.vercel.app/assets/galeria/estante-blanco-costado.jpg" alt="" loading="lazy"></figure>
+
+    </div>
+  </div>
+
+</section>
+
+<script>
+(function() {
+  const marquee = document.getElementById('brg-marquee');
+  const track   = document.getElementById('brg-track');
+  if (!marquee || !track) return;
+
+  let x = 0, vel = -1.5, targetVel = -1.5;
+  const BASE = -1.5;
+  let isDragging = false, dragLastX = 0;
+
+  function halfW() { return track.scrollWidth / 2; }
+
+  marquee.addEventListener('pointerdown', e => {
+    if (e.button !== 0 && e.pointerType === 'mouse') return;
+    isDragging = true;
+    dragLastX = e.clientX;
+    marquee.setPointerCapture(e.pointerId);
+  });
+
+  marquee.addEventListener('pointermove', e => {
+    if (!isDragging) return;
+    const dx = e.clientX - dragLastX;
+    x += dx * 1.6;
+    targetVel = dx * 1.0;
+    dragLastX = e.clientX;
+    const hw = halfW();
+    if (hw > 0) {
+      while (x < -hw) x += hw;
+      while (x > 0)   x -= hw;
+    }
+    track.style.transform = `translate3d(${x}px,0,0)`;
+  });
+
+  marquee.addEventListener('pointerup', () => { isDragging = false; });
+
+  (function tick() {
+    if (!isDragging) {
+      vel += (targetVel - vel) * 0.08;
+      targetVel += (BASE - targetVel) * 0.03;
+      x += vel;
+      const hw = halfW();
+      if (hw > 0) {
+        while (x < -hw) x += hw;
+        while (x > 0)   x -= hw;
+      }
+      track.style.transform = `translate3d(${x}px,0,0)`;
+    }
+    requestAnimationFrame(tick);
+  })();
+})();
+</script>
