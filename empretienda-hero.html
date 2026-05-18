@@ -1,136 +1,122 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400;1,500&family=Inter:wght@300;400&family=JetBrains+Mono:wght@400;500&display=swap');
 
-.brh {
+.bsh {
   position: relative;
   width: 100%;
   height: 90vh;
-  min-height: 580px;
+  min-height: 560px;
   background: #3A3835;
   overflow: hidden;
-  font-family: "Inter", system-ui, sans-serif;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
+.bsh * { box-sizing: border-box; margin: 0; padding: 0; }
 
-.brh * { box-sizing: border-box; margin: 0; padding: 0; }
-
-/* video — lado derecho */
-.brh__video {
+/* video de fondo */
+.bsh__video {
   position: absolute;
-  right: 8vw;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 65%;
+  inset: 0;
+  width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: right center;
+  object-fit: cover;
+  object-position: center;
   z-index: 0;
-  opacity: 1;
 }
 
-/* degradé lateral */
-.brh::after {
+/* velo encima del video */
+.bsh::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background:
-    linear-gradient(90deg,
-      rgba(58,56,53,0.72) 0%,
-      rgba(58,56,53,0.35) 35%,
-      rgba(58,56,53,0.0)  58%,
-      rgba(58,56,53,0.0)  100%),
-    linear-gradient(180deg,
-      rgba(58,56,53,0.0)  0%,
-      rgba(58,56,53,0.0)  60%,
-      rgba(58,56,53,0.5)  100%);
+  background: rgba(58,56,53,0.58);
 }
 
-/* contenido izquierda */
-.brh__content {
+/* contenido central */
+.bsh__content {
   position: relative;
   z-index: 2;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 100px 48px 120px 12vw;
-  max-width: 55vw;
+  align-items: center;
+  gap: 0;
+  padding: 0 24px;
 }
 
-/* BRUTA */
-.brh__wordmark {
+/* BRUTA wordmark */
+.bsh__wordmark {
   font-family: "Playfair Display", Georgia, serif !important;
   font-weight: 600 !important;
   font-style: normal !important;
-  font-size: clamp(64px, 10vw, 160px) !important;
+  font-size: clamp(72px, 14vw, 200px) !important;
   line-height: 0.88 !important;
   letter-spacing: -0.02em !important;
   color: #E8E4DE !important;
-  text-shadow: 0 4px 32px rgba(0,0,0,0.35) !important;
+  text-shadow: 0 4px 40px rgba(0,0,0,0.4) !important;
   display: block !important;
 }
 
 /* eyebrow */
-.brh__eyebrow {
+.bsh__eyebrow {
   font-family: "JetBrains Mono", monospace;
   font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.36em;
   text-transform: uppercase;
   color: #D4CEBE;
-  margin: 28px 0 16px 0;
+  margin-top: 32px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 14px;
+  opacity: 0.85;
 }
-.brh__eyebrow::before {
+.bsh__eyebrow::before,
+.bsh__eyebrow::after {
   content: "";
-  width: 32px;
+  width: 28px;
   height: 1px;
   background: #D4CEBE;
-  opacity: 0.6;
+  opacity: 0.5;
   flex-shrink: 0;
 }
 
-/* headline itálica */
-.brh__headline {
-  font-family: "Playfair Display", Georgia, serif;
-  font-weight: 500;
-  font-style: italic;
-  font-size: clamp(22px, 2.4vw, 40px);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  color: #E8E4DE;
-  max-width: 18ch;
-  text-shadow: 0 2px 18px rgba(0,0,0,0.4);
-}
-
-/* subtítulo */
-.brh__subtitle {
+/* subtitulo materiales */
+.bsh__subtitle {
   font-family: "Inter", system-ui, sans-serif;
   font-weight: 300;
-  font-size: 13px;
-  letter-spacing: 0.22em;
+  font-size: 12px;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #D4CEBE;
-  margin-top: 28px;
+  color: rgba(212,206,190,0.7);
+  margin-top: 20px;
 }
-.brh__dot {
+.bsh__dot {
   display: inline-block;
   margin: 0 10px;
   color: #C4967E;
 }
 
-/* CTA abajo al centro */
-.brh__cta {
+/* CTA abajo */
+.bsh__cta-wrap {
   position: absolute;
   z-index: 3;
   left: 50%;
   bottom: 44px;
   transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.bsh__cta {
   font-family: "JetBrains Mono", monospace;
   font-size: 11px;
   font-weight: 500;
@@ -140,15 +126,32 @@
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   transition: color 0.3s ease, letter-spacing 0.3s ease;
 }
-.brh__cta:hover { color: #E8E4DE; letter-spacing: 0.38em; }
-.brh__cta-arrow { display: inline-block; transition: transform 0.4s ease; }
-.brh__cta:hover .brh__cta-arrow { transform: translateY(5px); }
+.bsh__cta:hover { color: #E8E4DE; letter-spacing: 0.38em; }
+.bsh__arrow { display: inline-block; transition: transform 0.4s ease; }
+.bsh__cta:hover .bsh__arrow { transform: translateY(5px); }
+
+/* linea base */
+.bsh__rule {
+  position: absolute;
+  z-index: 2;
+  left: 0; right: 0;
+  bottom: 108px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0,
+    rgba(232,228,222,0.07) 8%,
+    rgba(232,228,222,0.16) 50%,
+    rgba(232,228,222,0.07) 92%,
+    transparent 100%
+  );
+}
 
 /* esquinas */
-.brh__corner {
+.bsh__corner {
   position: absolute;
   z-index: 3;
   bottom: 40px;
@@ -160,82 +163,52 @@
   color: #7E8E94;
   line-height: 1.7;
 }
-.brh__corner--l { left: 48px; }
-.brh__corner--r { right: 48px; text-align: right; }
+.bsh__corner--l { left: 48px; }
+.bsh__corner--r { right: 48px; text-align: right; }
 
-/* línea base */
-.brh__rule {
-  position: absolute;
-  z-index: 2;
-  left: 0; right: 0;
-  bottom: 108px;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent 0,
-    rgba(232,228,222,0.06) 8%,
-    rgba(232,228,222,0.15) 50%,
-    rgba(232,228,222,0.06) 92%,
-    transparent 100%
-  );
-}
-
-/* responsive mobile */
 @media (max-width: 720px) {
-  .brh__video {
-    inset: 0; right: 0; top: 0;
-    width: 100%; height: 100%;
-    transform: none;
-    object-fit: cover;
-    object-position: center 20%;
-    opacity: 0.15;
-  }
-  .brh__content {
-    padding: 90px 24px 100px;
-    max-width: 100%;
-  }
-  .brh__corner { bottom: 82px; font-size: 8px; }
-  .brh__corner--l { left: 22px; }
-  .brh__corner--r { right: 22px; }
-  .brh__cta { bottom: 24px; }
-  .brh__rule { bottom: 74px; }
+  .bsh__corner { bottom: 82px; }
+  .bsh__corner--l { left: 22px; }
+  .bsh__corner--r { right: 22px; }
+  .bsh__cta-wrap { bottom: 24px; }
+  .bsh__rule { bottom: 74px; }
 }
 </style>
 
-<section class="brh" aria-label="Hero BRUTA Lab">
+<section class="bsh" aria-label="Hero BRUTA">
 
-  <video class="brh__video" autoplay muted loop playsinline>
-    <source src="https://bruta-landing.vercel.app/video-mesita-flotando.webm" type="video/webm" />
+  <video class="bsh__video" autoplay muted loop playsinline>
+    <source src="https://bruta-landing.vercel.app/vidrios-01.mp4" type="video/mp4" />
   </video>
 
-  <div class="brh__content">
-    <h2 class="brh__wordmark">BRUTA</h2>
+  <div class="bsh__content">
+    <h2 class="bsh__wordmark">BRUTA</h2>
 
-    <p class="brh__eyebrow">Laboratorio de diseño · CBA</p>
+    <p class="bsh__eyebrow">Laboratorio de diseño · CBA</p>
 
-    <p class="brh__headline">Lo que ves es lo que es.</p>
-
-    <p class="brh__subtitle">
+    <p class="bsh__subtitle">
       TERRAZO
-      <span class="brh__dot">·</span>
+      <span class="bsh__dot">·</span>
       VIDRIO RECICLADO
-      <span class="brh__dot">·</span>
+      <span class="bsh__dot">·</span>
       HIERRO
     </p>
   </div>
 
-  <div class="brh__corner brh__corner--l">
+  <div class="bsh__corner bsh__corner--l">
     Córdoba<br/>Argentina
   </div>
-  <div class="brh__corner brh__corner--r">
+  <div class="bsh__corner bsh__corner--r">
     VIDRIO<br/>RECICLADO
   </div>
 
-  <div class="brh__rule"></div>
+  <div class="bsh__rule"></div>
 
-  <a class="brh__cta" href="#productos">
-    VER PRODUCTOS
-    <span class="brh__cta-arrow">↓</span>
-  </a>
+  <div class="bsh__cta-wrap">
+    <a class="bsh__cta" href="#productos">
+      VER PRODUCTOS
+      <span class="bsh__arrow">↓</span>
+    </a>
+  </div>
 
 </section>
