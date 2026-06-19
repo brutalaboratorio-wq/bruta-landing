@@ -177,30 +177,33 @@
     .navbar { padding: 14px 18px; flex-wrap: nowrap; }
     .navbar__hamburger { display: flex; }
     .navbar__nav {
-      display: none;
+      display: none !important;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
+      flex-direction: column !important;
+      flex-wrap: nowrap !important;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       background: rgba(28, 26, 24, 0.97);
       backdrop-filter: blur(20px) saturate(120%);
       -webkit-backdrop-filter: blur(20px) saturate(120%);
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
       z-index: 200;
       padding: 80px 32px 48px;
     }
-    .navbar__nav.is-open { display: flex; }
+    .navbar__nav.is-open { display: flex !important; }
     .navbar__close { display: flex; }
     .navbar__link {
+      display: block;
       width: 100%;
-      max-width: 280px;
+      max-width: 260px;
       padding: 14px 24px;
       font-size: 11px;
       letter-spacing: 0.3em;
       text-align: center;
       border-radius: 8px;
       border-color: transparent;
+      white-space: normal;
     }
     .navbar__link:hover { border-color: rgba(232,228,222,0.18); }
   }
@@ -2247,6 +2250,34 @@ HIERRO MACIZO</div>
 
   <div class="catalogo__grid" id="catalogo-grid">
 
+    <!-- 4 · Estantería 2 niveles -->
+    <article class="pieza" tabindex="0" aria-label="Estantería 2 niveles">
+      <div class="pieza__flip">
+        <div class="pieza__cara pieza__frente">
+          <div class="foto-producto">
+            <img src="assets/models-cards/estanteria.jpg" alt="Estantería 2 niveles" class="foto-producto__img">
+          </div>
+          <div class="pieza__meta">
+            <div class="pieza__nombre">Estantería 2 niveles</div>
+            <div class="pieza__precio">$ 181.600 <small>c/ transferencia</small></div>
+          </div>
+        </div>
+        <div class="pieza__cara pieza__dorso">
+          <div class="pieza__dorso-head">
+            <div class="pieza__dorso-nombre">Estantería 2 niveles</div>
+            <div class="pieza__dorso-tag">Plano · 04</div>
+          </div>
+          <div class="dibujo-tecnico">
+            <img src="assets/model-plans/estanteria-plano.png" alt="Plano Estantería" class="dibujo-tecnico__img">
+          </div>
+          <div class="pieza__medidas">
+            <span>70cm × 70cm × 20cm</span>
+            <span>Terrazo + Hierro</span><span>9,6 kg</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
     <!-- 1 · Mesita -->
     <article class="pieza" tabindex="0" aria-label="Mesita">
       <div class="pieza__flip">
@@ -2270,34 +2301,6 @@ HIERRO MACIZO</div>
           <div class="pieza__medidas">
             <span>31cm Ø × 62cm</span>
             <span>Terrazo + Hierro</span><span>3,8 kg</span>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <!-- 2 · Plato decorativo -->
-    <article class="pieza" tabindex="0" aria-label="Plato decorativo">
-      <div class="pieza__flip">
-        <div class="pieza__cara pieza__frente">
-          <div class="foto-producto">
-            <img src="assets/models-cards/plato.jpg" alt="Plato decorativo" class="foto-producto__img">
-          </div>
-          <div class="pieza__meta">
-            <div class="pieza__nombre">Plato decorativo</div>
-            <div class="pieza__precio">$ 26.400 <small>c/ transferencia</small></div>
-          </div>
-        </div>
-        <div class="pieza__cara pieza__dorso">
-          <div class="pieza__dorso-head">
-            <div class="pieza__dorso-nombre">Plato decorativo</div>
-            <div class="pieza__dorso-tag">Plano · 02</div>
-          </div>
-          <div class="dibujo-tecnico">
-            <img src="assets/model-plans/plato-plano.png" alt="Plano Plato" class="dibujo-tecnico__img">
-          </div>
-          <div class="pieza__medidas">
-            <span>23cm Ø × 1cm</span>
-            <span>Terrazo</span><span>1,2 kg</span>
           </div>
         </div>
       </div>
@@ -2331,29 +2334,29 @@ HIERRO MACIZO</div>
       </div>
     </article>
 
-    <!-- 4 · Estantería 2 niveles -->
-    <article class="pieza" tabindex="0" aria-label="Estantería 2 niveles">
+    <!-- 2 · Plato decorativo -->
+    <article class="pieza" tabindex="0" aria-label="Plato decorativo">
       <div class="pieza__flip">
         <div class="pieza__cara pieza__frente">
           <div class="foto-producto">
-            <img src="assets/models-cards/estanteria.jpg" alt="Estantería 2 niveles" class="foto-producto__img">
+            <img src="assets/models-cards/plato.jpg" alt="Plato decorativo" class="foto-producto__img">
           </div>
           <div class="pieza__meta">
-            <div class="pieza__nombre">Estantería 2 niveles</div>
-            <div class="pieza__precio">$ 181.600 <small>c/ transferencia</small></div>
+            <div class="pieza__nombre">Plato decorativo</div>
+            <div class="pieza__precio">$ 26.400 <small>c/ transferencia</small></div>
           </div>
         </div>
         <div class="pieza__cara pieza__dorso">
           <div class="pieza__dorso-head">
-            <div class="pieza__dorso-nombre">Estantería 2 niveles</div>
-            <div class="pieza__dorso-tag">Plano · 04</div>
+            <div class="pieza__dorso-nombre">Plato decorativo</div>
+            <div class="pieza__dorso-tag">Plano · 02</div>
           </div>
           <div class="dibujo-tecnico">
-            <img src="assets/model-plans/estanteria-plano.png" alt="Plano Estantería" class="dibujo-tecnico__img">
+            <img src="assets/model-plans/plato-plano.png" alt="Plano Plato" class="dibujo-tecnico__img">
           </div>
           <div class="pieza__medidas">
-            <span>70cm × 70cm × 20cm</span>
-            <span>Terrazo + Hierro</span><span>9,6 kg</span>
+            <span>23cm Ø × 1cm</span>
+            <span>Terrazo</span><span>1,2 kg</span>
           </div>
         </div>
       </div>
