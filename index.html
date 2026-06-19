@@ -3141,17 +3141,20 @@ HIERRO MACIZO</div>
   function curtainReveal(selector, fromClip) {
     const el = document.querySelector(selector);
     if (!el) return;
+    // immediateRender:false — el clip inicial NO se aplica hasta que el trigger
+    // dispara, evitando que la sección quede negra/invisible antes de entrar
     gsap.fromTo(el,
       { clipPath: fromClip, webkitClipPath: fromClip },
       {
         clipPath: "inset(0% 0% 0% 0%)",
         webkitClipPath: "inset(0% 0% 0% 0%)",
         ease: "none",
+        immediateRender: false,
         scrollTrigger: {
           trigger: el,
-          start: "top 95%",
-          end: "top 35%",
-          scrub: 0.6,
+          start: "top bottom",
+          end: "top 30%",
+          scrub: 0.8,
         },
       });
   }
