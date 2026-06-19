@@ -1332,11 +1332,22 @@
     margin: 0;
   }
   .proceso__strip {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     width: calc(100% + 96px);
     margin: 72px -48px 0;
     height: clamp(240px, 38vh, 500px);
+  }
+  .proceso__progress {
+    position: absolute;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: rgba(212,206,190,0.85);
+    z-index: 20;
+    pointer-events: none;
+    will-change: width;
   }
   .proceso__col {
     position: relative;
@@ -2375,6 +2386,7 @@ HIERRO MACIZO</div>
   </header>
 
   <div class="proceso__strip">
+    <div class="proceso__progress" aria-hidden="true"></div>
 
     <!-- 01 · Vidrio reciclado -->
     <div class="proceso__col">
@@ -2932,38 +2944,44 @@ HIERRO MACIZO</div>
   bindSwatches("swatches-hierro",  "hierro-name",  false);
 
   // ===== PROCESO ===========================================================
-  // ANIM: proceso-columnas — wipe horizontal + zoom imagen
-  gsap.utils.toArray(".proceso__col").forEach((col, i) => {
-    // clip-path wipe de izquierda a derecha por columna
-    gsap.fromTo(col,
-      { clipPath: "inset(0 100% 0 0)" },
-      {
-        clipPath: "inset(0 0% 0 0)",
-        duration: 0.80, ease: "power3.inOut",
-        delay: i * 0.09,
-        scrollTrigger: {
-          trigger: ".proceso__strip",
-          start: "top 82%",
-          toggleActions: "play none none none",
-        },
-      });
-    // zoom sutil en la foto interior
-    const img = col.querySelector("img");
-    if (img) {
-      gsap.fromTo(img,
-        { scale: 1.10 },
-        {
-          scale: 1,
-          duration: 1.4, ease: "power2.out",
-          delay: i * 0.09,
-          scrollTrigger: {
-            trigger: ".proceso__strip",
-            start: "top 82%",
-            toggleActions: "play none none none",
-          },
-        });
-    }
-  });
+  // ANIM: proceso — scroll-driven progress: línea + iluminación por columna
+  (function () {
+    const strip    = document.querySelector(".proceso__strip");
+    const progress = document.querySelector(".proceso__progress");
+    const cols     = gsap.utils.toArray(".proceso__col");
+    if (!strip || !cols.length) return;
+
+    // Estado inicial: fotos muy oscuras, anotaciones invisibles
+    cols.forEach(col => {
+      gsap.set(col.querySelector("img"),          { filter: "brightness(0.22)" });
+      gsap.set(col.querySelector(".proceso__annot"), { opacity: 0 });
+      gsap.set(col.querySelector(".proceso__label"), { opacity: 0 });
+    });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".proceso",
+        start: "top 50%",
+        end: "center 30%",
+        scrub: 1.4,
+      }
+    });
+
+    // Línea de progreso corre de 0 → 100%
+    if (progress) tl.to(progress, { width: "100%", ease: "none" }, 0);
+
+    // Cada columna se ilumina cuando la línea la alcanza
+    const n = cols.length;
+    cols.forEach((col, i) => {
+      const t = i / n;            // momento del timeline (0–1)
+      const img   = col.querySelector("img");
+      const annot = col.querySelector(".proceso__annot");
+      const label = col.querySelector(".proceso__label");
+      if (img)   tl.to(img,   { filter: "brightness(0.72)", duration: 0.14, ease: "power2.out" }, t);
+      if (annot) tl.to(annot, { opacity: 1,                 duration: 0.10, ease: "none"       }, t + 0.02);
+      if (label) tl.to(label, { opacity: 1,                 duration: 0.12, ease: "power2.out" }, t + 0.04);
+    });
+  }());
 
   // ===== ESTADÍSTICAS ======================================================
   // ANIM: stats-contador — count up al entrar viewport
