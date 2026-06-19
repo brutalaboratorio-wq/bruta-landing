@@ -177,29 +177,34 @@
     .navbar { padding: 14px 18px; flex-wrap: nowrap; }
     .navbar__hamburger { display: flex; }
     .navbar__nav {
-      display: none !important;
+      display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      flex-direction: column !important;
-      flex-wrap: nowrap !important;
-      align-items: center;
-      justify-content: center;
-      gap: clamp(1px, 0.8vh, 6px);
-      overflow: hidden;
       background: rgba(28, 26, 24, 0.97);
       backdrop-filter: blur(20px) saturate(120%);
       -webkit-backdrop-filter: blur(20px) saturate(120%);
       z-index: 500;
-      padding: clamp(48px, 8vh, 72px) 32px clamp(24px, 4vh, 40px);
     }
-    .navbar__nav.is-open { display: flex !important; }
+    .navbar__nav.is-open { display: block; }
     .navbar__close { display: flex; }
+    .navbar__links-wrap {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+      padding: 0 32px;
+    }
     .navbar__link {
       display: block;
       width: 100%;
       max-width: 280px;
-      padding: clamp(5px, 1.1vh, 10px) 20px;
-      font-size: clamp(9px, 1.4vh, 11px);
+      padding: 10px 20px;
+      font-size: 10px;
       letter-spacing: 0.3em;
       text-align: center;
       border-radius: 8px;
@@ -2009,15 +2014,17 @@
   </a>
   <div class="navbar__nav" id="navbar-nav" role="tablist">
     <button class="navbar__close" id="navbar-close" aria-label="Cerrar menú">✕</button>
-    <a class="navbar__link" href="#hero" data-nav="hero">INICIO</a>
-    <a class="navbar__link" href="#galeria" data-nav="galeria">Galería</a>
-    <a class="navbar__link" href="#configurador" data-nav="configurador">Configurador</a>
-    <a class="navbar__link" href="#catalogo" data-nav="catalogo">Catálogo</a>
-    <a class="navbar__link" href="#proceso" data-nav="proceso">Proceso</a>
-    <a class="navbar__link" href="#materiales" data-nav="materiales">Materiales</a>
-    <a class="navbar__link" href="#encargos" data-nav="encargos">Encargos</a>
-    <a class="navbar__link" href="#manifiesto" data-nav="manifiesto">Manifiesto</a>
-    <a class="navbar__link" href="#stats" data-nav="stats">Cifras</a>
+    <div class="navbar__links-wrap">
+      <a class="navbar__link" href="#hero" data-nav="hero">INICIO</a>
+      <a class="navbar__link" href="#galeria" data-nav="galeria">Galería</a>
+      <a class="navbar__link" href="#configurador" data-nav="configurador">Configurador</a>
+      <a class="navbar__link" href="#catalogo" data-nav="catalogo">Catálogo</a>
+      <a class="navbar__link" href="#proceso" data-nav="proceso">Proceso</a>
+      <a class="navbar__link" href="#materiales" data-nav="materiales">Materiales</a>
+      <a class="navbar__link" href="#encargos" data-nav="encargos">Encargos</a>
+      <a class="navbar__link" href="#manifiesto" data-nav="manifiesto">Manifiesto</a>
+      <a class="navbar__link" href="#stats" data-nav="stats">Cifras</a>
+    </div>
   </div>
   <button class="navbar__hamburger" id="navbar-hamburger" aria-label="Abrir menú">☰</button>
   <div class="navbar__meta" style="opacity: 0">T. 2024
@@ -2800,7 +2807,7 @@ HIERRO MACIZO</div>
     hamburger.addEventListener("click", openMenu);
     navClose?.addEventListener("click", closeMenu);
     navMenu.querySelectorAll(".navbar__link").forEach(link => {
-      link.addEventListener("click", closeMenu);
+      link.addEventListener("click", () => { closeMenu(); });
     });
   })();
 
