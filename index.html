@@ -1292,7 +1292,7 @@
     width: 100%;
     background: var(--tiza);
     color: var(--hierro-negro);
-    padding: 160px 48px 180px;
+    padding: 160px 48px 0;
     overflow: hidden;
   }
   .proceso::before {
@@ -1331,95 +1331,91 @@
     color: var(--hierro-negro);
     margin: 0;
   }
-  .proceso__timeline {
-    position: relative;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-  .proceso__line {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-  }
-  .proceso__steps {
-    position: relative;
-    z-index: 2;
+  .proceso__strip {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 24px;
+    width: calc(100% + 96px);
+    margin: 72px -48px 0;
+    height: clamp(440px, 66vh, 800px);
   }
-  .paso {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    opacity: 0;
-  }
-  .paso__num {
-    font-family: var(--ff-display);
-    font-style: italic;
-    font-weight: 500;
-    font-size: 64px;
-    line-height: 1;
-    color: var(--porfido);
-    letter-spacing: -0.02em;
-  }
-  .paso__foto {
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    background: var(--hierro-blanco);
-    border: 1px solid rgba(44,44,44,0.12);
+  .proceso__col {
     position: relative;
     overflow: hidden;
   }
-  .paso__foto::after {
-    content: attr(data-tag);
+  .proceso__col + .proceso__col {
+    border-left: 1px solid rgba(255,255,255,0.10);
+  }
+  .proceso__col img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    filter: brightness(0.68);
+  }
+  .proceso__annot {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 10%;
+    left: 8%;
+    width: 84%;
+    height: 54%;
+    pointer-events: none;
+  }
+  .proceso__annot svg {
+    width: 100%;
+    height: 100%;
+  }
+  .proceso__label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 72px 16px 22px;
+    background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0) 100%);
+  }
+  .proceso__label-num {
     font-family: var(--ff-mono);
     font-size: 9px;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.30em;
+    color: rgba(255,255,255,0.50);
+    margin: 0 0 5px;
     text-transform: uppercase;
-    color: var(--porfido);
-    opacity: 0.7;
+    display: block;
   }
-  .paso__foto-glyph {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--porfido);
-    opacity: 0.6;
-  }
-  .paso__foto-glyph svg { width: 48%; height: auto; }
-  .paso__titulo {
+  .proceso__label-titulo {
     font-family: var(--ff-display);
     font-style: italic;
     font-weight: 500;
-    font-size: 20px;
+    font-size: clamp(13px, 1.2vw, 18px);
+    color: #fff;
+    margin: 0 0 6px;
     line-height: 1.15;
-    color: var(--hierro-negro);
-    margin: 0;
+    display: block;
   }
-  .paso__desc {
+  .proceso__label-desc {
     font-family: var(--ff-body);
-    font-size: 13px;
+    font-size: 10.5px;
     line-height: 1.5;
-    color: var(--hierro-negro);
-    opacity: 0.78;
+    color: rgba(255,255,255,0.65);
     margin: 0;
+    display: block;
   }
   @media (max-width: 1000px) {
-    .proceso__steps { grid-template-columns: 1fr; gap: 56px; }
-    .proceso { padding: 110px 22px 120px; }
-    .paso { flex-direction: row; align-items: flex-start; gap: 20px; }
-    .paso__num { font-size: 48px; min-width: 60px; }
-    .paso__foto { display: none; }
-    .paso__body { flex: 1; }
+    .proceso { padding: 110px 22px 0; }
+    .proceso__strip {
+      width: calc(100% + 44px);
+      margin-left: -22px;
+      margin-right: -22px;
+      grid-template-columns: repeat(3, 1fr);
+      height: auto;
+    }
+    .proceso__col { height: 46vw; }
+    .proceso__label-titulo { font-size: 12px; }
+    .proceso__label-desc { display: none; }
+  }
+  @media (max-width: 560px) {
+    .proceso__strip { grid-template-columns: repeat(2, 1fr); }
+    .proceso__col { height: 62vw; }
   }
 
   /* ======================================================================
@@ -2455,117 +2451,178 @@ HIERRO MACIZO</div>
     <h2 class="proceso__title">Así se hace.</h2>
   </header>
 
-  <div class="proceso__timeline" id="proceso-timeline">
-    <!-- línea conectora SVG · se dibuja con stroke-dashoffset -->
-    <svg class="proceso__line" id="proceso-line" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true">
-      <path id="proceso-line-path"
-            d="M 40 20 L 1160 20"
-            fill="none"
-            stroke="#7E8E94"
-            stroke-width="1.5"
-            stroke-dasharray="6 6"/>
-    </svg>
+  <div class="proceso__strip">
 
-    <div class="proceso__steps">
-      <article class="paso" data-paso="1">
-        <div class="paso__num">01</div>
-        <div class="paso__foto foto-proceso-1" data-tag="Foto · 01">
-          <div class="paso__foto-glyph" aria-hidden="true">
-            <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1">
-              <polygon points="10,50 22,18 34,40 46,12 50,50"/>
-            </svg>
-          </div>
-        </div>
-        <div class="paso__body">
-          <h3 class="paso__titulo">Vidrio reciclado</h3>
-          <p class="paso__desc">El descarte de otros es nuestro punto de partida.</p>
-        </div>
-      </article>
-
-      <article class="paso" data-paso="2">
-        <div class="paso__num">02</div>
-        <div class="paso__foto foto-proceso-2" data-tag="Foto · 02">
-          <div class="paso__foto-glyph" aria-hidden="true">
-            <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1">
-              <circle cx="20" cy="22" r="3"/><circle cx="34" cy="18" r="2"/>
-              <circle cx="42" cy="30" r="3"/><circle cx="26" cy="36" r="2"/>
-              <circle cx="14" cy="40" r="2"/><circle cx="38" cy="44" r="3"/>
-            </svg>
-          </div>
-        </div>
-        <div class="paso__body">
-          <h3 class="paso__titulo">Molido</h3>
-          <p class="paso__desc">El vidrio se fragmenta hasta el tamaño exacto.</p>
-        </div>
-      </article>
-
-      <article class="paso" data-paso="3">
-        <div class="paso__num">03</div>
-        <div class="paso__foto foto-proceso-3" data-tag="Foto · 03">
-          <div class="paso__foto-glyph" aria-hidden="true">
-            <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1">
-              <path d="M 12 42 Q 30 20 48 42"/>
-              <path d="M 18 36 Q 30 26 42 36"/>
-              <line x1="30" y1="14" x2="30" y2="32"/>
-            </svg>
-          </div>
-        </div>
-        <div class="paso__body">
-          <h3 class="paso__titulo">Mezclado</h3>
-          <p class="paso__desc">Cemento, pigmento y vidrio. A mano, siempre.</p>
-        </div>
-      </article>
-
-      <article class="paso" data-paso="4">
-        <div class="paso__num">04</div>
-        <div class="paso__foto foto-proceso-4" data-tag="Foto · 04">
-          <div class="paso__foto-glyph" aria-hidden="true">
-            <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1">
-              <rect x="10" y="20" width="40" height="24"/>
-              <line x1="10" y1="32" x2="50" y2="32" stroke-dasharray="2 3"/>
-            </svg>
-          </div>
-        </div>
-        <div class="paso__body">
-          <h3 class="paso__titulo">Moldeado</h3>
-          <p class="paso__desc">Cada molde define la forma. El vidrio define el resto.</p>
-        </div>
-      </article>
-
-      <article class="paso" data-paso="5">
-        <div class="paso__num">05</div>
-        <div class="paso__foto foto-proceso-5" data-tag="Foto · 05">
-          <div class="paso__foto-glyph" aria-hidden="true">
-            <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1">
-              <ellipse cx="30" cy="30" rx="20" ry="6"/>
-              <line x1="10" y1="30" x2="50" y2="30" stroke-dasharray="2 2"/>
-            </svg>
-          </div>
-        </div>
-        <div class="paso__body">
-          <h3 class="paso__titulo">Pulido</h3>
-          <p class="paso__desc">Varias pasadas hasta que la superficie revela lo que hay adentro.</p>
-        </div>
-      </article>
-
-      <article class="paso" data-paso="6">
-        <div class="paso__num">06</div>
-        <div class="paso__foto foto-proceso-6" data-tag="Foto · 06">
-          <div class="paso__foto-glyph" aria-hidden="true">
-            <svg viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1">
-              <ellipse cx="30" cy="22" rx="18" ry="4"/>
-              <line x1="14" y1="22" x2="18" y2="48"/>
-              <line x1="46" y1="22" x2="42" y2="48"/>
-              <line x1="18" y1="48" x2="42" y2="48"/>
-            </svg>
-          </div>
-        </div>
-        <div class="paso__body">
-          <h3 class="paso__titulo">Pieza terminada</h3>
-          <p class="paso__desc">Lista para ocupar su lugar.</p>
-        </div>
-      </article>
+    <!-- 01 · Vidrio reciclado -->
+    <div class="proceso__col">
+      <img src="assets/proceso/proceso-01.jpg" alt="Botellas de vidrio reciclado" loading="lazy">
+      <div class="proceso__annot" aria-hidden="true">
+        <svg viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="rgba(255,255,255,0.82)" stroke-width="1.2" fill="none">
+            <path d="M 30 14 L 30 28 C 22 34 18 46 18 62 L 18 86 C 18 90 21 93 25 93 L 55 93 C 59 93 62 90 62 86 L 62 62 C 62 46 58 34 50 28 L 50 14 Z"/>
+            <rect x="33" y="6" width="14" height="10" rx="1.5"/>
+            <line x1="21" y1="76" x2="59" y2="76" stroke-dasharray="2 2" stroke-width="0.7" stroke-opacity="0.45"/>
+          </g>
+        </svg>
+      </div>
+      <div class="proceso__label">
+        <span class="proceso__label-num">01</span>
+        <span class="proceso__label-titulo">Vidrio reciclado</span>
+        <span class="proceso__label-desc">El descarte de otros es nuestro punto de partida.</span>
+      </div>
     </div>
+
+    <!-- 02 · Molido -->
+    <div class="proceso__col">
+      <img src="assets/proceso/proceso-02.jpg" alt="Vidrio molido en distintos tamaños" loading="lazy">
+      <div class="proceso__annot" aria-hidden="true">
+        <svg viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="rgba(255,255,255,0.80)" stroke-width="1">
+            <circle cx="12" cy="18" r="5.5"/><circle cx="24" cy="14" r="5"/><circle cx="20" cy="27" r="4.5"/>
+            <line x1="32" y1="18" x2="42" y2="18" stroke-width="0.8"/>
+          </g>
+          <text x="44" y="22" font-size="7" fill="rgba(255,255,255,0.80)" font-family="'Courier New',monospace">Ø 8 mm</text>
+          <g stroke="rgba(255,255,255,0.80)" stroke-width="1">
+            <circle cx="11" cy="55" r="3.5"/><circle cx="21" cy="50" r="3"/><circle cx="17" cy="62" r="3.5"/><circle cx="28" cy="58" r="3"/>
+            <line x1="35" y1="55" x2="42" y2="55" stroke-width="0.8"/>
+          </g>
+          <text x="44" y="59" font-size="7" fill="rgba(255,255,255,0.80)" font-family="'Courier New',monospace">Ø 5 mm</text>
+          <g stroke="rgba(255,255,255,0.80)" stroke-width="1">
+            <circle cx="9" cy="90" r="2"/><circle cx="17" cy="86" r="2.5"/><circle cx="24" cy="92" r="2"/><circle cx="13" cy="97" r="2"/><circle cx="30" cy="88" r="1.8"/>
+            <line x1="35" y1="90" x2="42" y2="90" stroke-width="0.8"/>
+          </g>
+          <text x="44" y="94" font-size="7" fill="rgba(255,255,255,0.80)" font-family="'Courier New',monospace">Ø 3 mm</text>
+        </svg>
+      </div>
+      <div class="proceso__label">
+        <span class="proceso__label-num">02</span>
+        <span class="proceso__label-titulo">Molido</span>
+        <span class="proceso__label-desc">El vidrio se fragmenta hasta el tamaño exacto.</span>
+      </div>
+    </div>
+
+    <!-- 03 · Mezclado -->
+    <div class="proceso__col">
+      <img src="assets/proceso/proceso-03.jpg" alt="Mezcla de cemento, pigmento y vidrio" loading="lazy">
+      <div class="proceso__annot" aria-hidden="true">
+        <svg viewBox="0 0 120 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g font-family="'Courier New',monospace" stroke="none">
+            <text font-size="6.5" fill="rgba(255,255,255,0.70)"><tspan x="2" y="16">CEMENTO</tspan></text>
+            <text font-size="6.5" fill="rgba(255,255,255,0.70)"><tspan x="2" y="34">VIDRIO</tspan></text>
+            <text font-size="6.5" fill="rgba(255,255,255,0.70)"><tspan x="2" y="52">PIGMENTO</tspan></text>
+            <text font-size="6.5" fill="rgba(255,255,255,0.70)"><tspan x="2" y="70">AGUA</tspan></text>
+            <text font-size="8" fill="rgba(255,255,255,0.90)"><tspan x="50" y="16">60%</tspan></text>
+            <text font-size="8" fill="rgba(255,255,255,0.90)"><tspan x="50" y="34">30%</tspan></text>
+            <text font-size="8" fill="rgba(255,255,255,0.90)"><tspan x="50" y="52">10%</tspan></text>
+            <text font-size="8" fill="rgba(255,255,255,0.90)"><tspan x="50" y="70">c/n</tspan></text>
+          </g>
+          <g stroke="rgba(255,255,255,0.18)" stroke-width="0.5" fill="none">
+            <line x1="2" y1="19" x2="78" y2="19"/>
+            <line x1="2" y1="37" x2="78" y2="37"/>
+            <line x1="2" y1="55" x2="78" y2="55"/>
+            <line x1="2" y1="73" x2="78" y2="73"/>
+          </g>
+          <g stroke="rgba(255,255,255,0.80)" stroke-width="1.2" fill="none">
+            <ellipse cx="102" cy="26" rx="13" ry="4"/>
+            <line x1="91" y1="26" x2="89" y2="78"/>
+            <line x1="115" y1="26" x2="113" y2="78"/>
+            <path d="M 89 78 Q 89 84 102 84 Q 115 84 113 78"/>
+            <line x1="91.5" y1="62" x2="112.5" y2="62" stroke-dasharray="1.5 1.5" stroke-width="0.7" stroke-opacity="0.55"/>
+          </g>
+        </svg>
+      </div>
+      <div class="proceso__label">
+        <span class="proceso__label-num">03</span>
+        <span class="proceso__label-titulo">Mezclado</span>
+        <span class="proceso__label-desc">Cemento, pigmento y vidrio. A mano, siempre.</span>
+      </div>
+    </div>
+
+    <!-- 04 · Moldeado -->
+    <div class="proceso__col">
+      <img src="assets/proceso/proceso-04.jpg" alt="Moldeado de la pieza" loading="lazy">
+      <div class="proceso__annot" aria-hidden="true">
+        <svg viewBox="0 0 90 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="rgba(255,255,255,0.80)" stroke-width="1.2" fill="none">
+            <rect x="8" y="8" width="74" height="80" rx="1"/>
+            <path d="M 24 8 L 18 88 L 72 88 L 66 8"/>
+            <line x1="20" y1="64" x2="70" y2="64" stroke-dasharray="2 2" stroke-width="0.8" stroke-opacity="0.60"/>
+          </g>
+          <text x="45" y="98" font-size="5.5" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-family="'Courier New',monospace">SECCIÓN A·A</text>
+        </svg>
+      </div>
+      <div class="proceso__label">
+        <span class="proceso__label-num">04</span>
+        <span class="proceso__label-titulo">Moldeado</span>
+        <span class="proceso__label-desc">Cada molde define la forma. El vidrio define el resto.</span>
+      </div>
+    </div>
+
+    <!-- 05 · Pulido -->
+    <div class="proceso__col">
+      <img src="assets/proceso/proceso-05.jpg" alt="Pulido de la superficie" loading="lazy">
+      <div class="proceso__annot" aria-hidden="true">
+        <svg viewBox="0 0 130 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="rgba(255,255,255,0.80)" stroke-width="1" fill="none">
+            <rect x="8" y="8"  width="46" height="22"/>
+            <rect x="8" y="30" width="46" height="22"/>
+            <rect x="8" y="52" width="46" height="22"/>
+            <line x1="10" y1="13" x2="52" y2="13" stroke-width="0.5" stroke-opacity="0.40"/>
+            <line x1="10" y1="17" x2="52" y2="17" stroke-width="0.5" stroke-opacity="0.40"/>
+            <line x1="10" y1="21" x2="52" y2="21" stroke-width="0.5" stroke-opacity="0.40"/>
+            <line x1="54" y1="19" x2="62" y2="19"/>
+            <line x1="54" y1="41" x2="62" y2="41"/>
+            <line x1="54" y1="63" x2="62" y2="63"/>
+          </g>
+          <text font-family="'Courier New',monospace" font-size="5.5" fill="rgba(255,255,255,0.80)">
+            <tspan x="64" y="22">PULIDO GRUESO</tspan>
+            <tspan x="64" y="44">PULIDO FINO</tspan>
+            <tspan x="64" y="60">REVELADO</tspan>
+            <tspan x="64" y="68">DEL VIDRIO</tspan>
+          </text>
+        </svg>
+      </div>
+      <div class="proceso__label">
+        <span class="proceso__label-num">05</span>
+        <span class="proceso__label-titulo">Pulido</span>
+        <span class="proceso__label-desc">Varias pasadas hasta que la superficie revela lo que hay adentro.</span>
+      </div>
+    </div>
+
+    <!-- 06 · Pieza terminada -->
+    <div class="proceso__col">
+      <img src="assets/proceso/proceso-06.jpg" alt="Pieza terminada" loading="lazy">
+      <div class="proceso__annot" aria-hidden="true">
+        <svg viewBox="0 0 90 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="rgba(255,255,255,0.80)" stroke-width="1.2" fill="none">
+            <ellipse cx="45" cy="18" rx="22" ry="5.5"/>
+            <line x1="25" y1="18" x2="20" y2="88"/>
+            <line x1="65" y1="18" x2="70" y2="88"/>
+            <ellipse cx="45" cy="88" rx="26" ry="6" stroke-dasharray="2.5 2"/>
+            <line x1="4" y1="12" x2="4" y2="94" stroke-width="0.8" stroke-opacity="0.55"/>
+            <line x1="1" y1="12" x2="7" y2="12" stroke-width="0.8" stroke-opacity="0.55"/>
+            <line x1="1" y1="94" x2="7" y2="94" stroke-width="0.8" stroke-opacity="0.55"/>
+            <line x1="23" y1="7" x2="67" y2="7" stroke-width="0.8" stroke-opacity="0.55"/>
+            <line x1="23" y1="4" x2="23" y2="10" stroke-width="0.8" stroke-opacity="0.55"/>
+            <line x1="67" y1="4" x2="67" y2="10" stroke-width="0.8" stroke-opacity="0.55"/>
+            <line x1="19" y1="98" x2="71" y2="98" stroke-width="0.8" stroke-opacity="0.55"/>
+            <line x1="19" y1="95" x2="19" y2="101" stroke-width="0.8" stroke-opacity="0.55"/>
+            <line x1="71" y1="95" x2="71" y2="101" stroke-width="0.8" stroke-opacity="0.55"/>
+          </g>
+          <text font-family="'Courier New',monospace" font-size="6.5" fill="rgba(255,255,255,0.82)">
+            <tspan x="32" y="3">Ø 110</tspan>
+            <tspan x="7" y="56">h 90</tspan>
+          </text>
+          <text x="30" y="109" font-size="6.5" fill="rgba(255,255,255,0.72)" font-family="'Courier New',monospace">Ø 80</text>
+        </svg>
+      </div>
+      <div class="proceso__label">
+        <span class="proceso__label-num">06</span>
+        <span class="proceso__label-titulo">Pieza terminada</span>
+        <span class="proceso__label-desc">Lista para ocupar su lugar.</span>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -2871,34 +2928,17 @@ HIERRO MACIZO</div>
   bindSwatches("swatches-hierro",  "hierro-name",  false);
 
   // ===== PROCESO ===========================================================
-  // ANIM: proceso-linea — stroke-dashoffset scroll driven
-  const linePath = document.getElementById("proceso-line-path");
-  if (linePath) {
-    const len = linePath.getTotalLength();
-    linePath.style.strokeDasharray = len;
-    linePath.style.strokeDashoffset = len;
-    gsap.to(linePath, {
-      strokeDashoffset: 0,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".proceso__timeline",
-        start: "top 70%",
-        end: "bottom 60%",
-        scrub: 0.6,
-      },
-    });
-  }
-
-  // ANIM: proceso-pasos — fade stagger al avanzar la línea
-  gsap.utils.toArray(".proceso .paso").forEach((paso, i) => {
-    gsap.fromTo(paso,
-      { y: 40, opacity: 0 },
+  // ANIM: proceso-columnas — fade stagger al entrar el strip
+  gsap.utils.toArray(".proceso__col").forEach((col, i) => {
+    gsap.fromTo(col,
+      { opacity: 0, y: 20 },
       {
-        y: 0, opacity: 1,
-        duration: 0.8, ease: "power3.out",
+        opacity: 1, y: 0,
+        duration: 0.9, ease: "power3.out",
+        delay: i * 0.07,
         scrollTrigger: {
-          trigger: paso,
-          start: "top 88%",
+          trigger: ".proceso__strip",
+          start: "top 82%",
           toggleActions: "play none none none",
         },
       });
