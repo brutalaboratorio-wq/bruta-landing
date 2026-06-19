@@ -2795,8 +2795,8 @@ HIERRO MACIZO</div>
     const navMenu   = document.getElementById("navbar-nav");
     const navClose  = document.getElementById("navbar-close");
     if (!hamburger || !navMenu) return;
-    function openMenu()  { navMenu.classList.add("is-open");    document.body.style.overflow = "hidden"; }
-    function closeMenu() { navMenu.classList.remove("is-open"); document.body.style.overflow = ""; }
+    function openMenu()  { navMenu.classList.add("is-open"); }
+    function closeMenu() { navMenu.classList.remove("is-open"); }
     hamburger.addEventListener("click", openMenu);
     navClose?.addEventListener("click", closeMenu);
     navMenu.querySelectorAll(".navbar__link").forEach(link => {
