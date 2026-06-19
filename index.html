@@ -1427,8 +1427,18 @@
     .proceso__label-desc { display: none; }
   }
   @media (max-width: 560px) {
-    .proceso__strip { grid-template-columns: repeat(2, 1fr); }
-    .proceso__col { height: 62vw; }
+    .proceso__strip {
+      grid-template-columns: 1fr;
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .proceso__col { height: 58vw; }
+    .proceso__col img { filter: brightness(0.68) !important; }
+    .proceso__annot { opacity: 1 !important; }
+    .proceso__label { opacity: 1 !important; }
+    .proceso__label-desc { display: block; }
+    .proceso__progress { display: none; }
   }
 
   /* ======================================================================
@@ -2946,8 +2956,9 @@ HIERRO MACIZO</div>
   bindSwatches("swatches-hierro",  "hierro-name",  false);
 
   // ===== PROCESO ===========================================================
-  // ANIM: proceso — scroll-driven progress: línea + iluminación por columna
+  // ANIM: proceso — scroll-driven progress: línea + iluminación por columna (solo desktop)
   (function () {
+    if (window.innerWidth <= 560) return;
     const strip    = document.querySelector(".proceso__strip");
     const progress = document.querySelector(".proceso__progress");
     const cols     = gsap.utils.toArray(".proceso__col");
