@@ -2080,9 +2080,7 @@ HIERRO MACIZO</div>
   </div>
   <!-- /MODELO 3D -->
 
-  <!-- CTA -->
-  <a class="hero__cta" id="hero-cta" href="#materiales">VER MATERIALES
-↓</a>
+  <!-- CTA eliminado -->
 
 </section>
 
@@ -2816,7 +2814,7 @@ HIERRO MACIZO</div>
     .to("#hero-eyebrow",  { opacity: 1, y: 0, duration: 0.6 }, 0.55)
     .to(".hero__headline",{ opacity: 1, y: 0, duration: 0.9 }, 0.7)
     .to("#hero-subtitle", { opacity: 1, duration: 0.9 }, 0.95)
-    .to("#hero-cta",      { opacity: 1, duration: 0.8 }, 1.05);
+    ;
 
   // sutileza: cuando termina el typewriter, el caret se desplaza al final natural
   // (ya está, queda parpadeando junto a la última letra)
@@ -3144,7 +3142,7 @@ HIERRO MACIZO</div>
     marquee.addEventListener('click', e => {
       if (dragMovedPx > 8) return;
       const item = e.target.closest('.galeria__item');
-      if (!item || item.hasAttribute('aria-hidden') || !lb || !lbImg) return;
+      if (!item || !lb || !lbImg) return;
       const src = item.querySelector('img') && item.querySelector('img').src;
       if (!src) return;
       lbImg.src = src;
