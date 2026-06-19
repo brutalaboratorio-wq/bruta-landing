@@ -3084,13 +3084,12 @@ HIERRO MACIZO</div>
 
     let x = 0, vel = -1.5, targetVel = -1.5;
     const BASE = -1.5;
-    let paused = false;
+    let paused = false, dragging = false, dragDist = 0, lastX = 0;
 
     track.style.animation = 'none';
     function halfW() { return track.scrollWidth / 2; }
 
     // ── Autoplay loop ──────────────────────────────────────────
-    let dragging = false;
     (function tick() {
       if (!dragging && !paused) {
         vel += (targetVel - vel) * 0.08;
@@ -3102,6 +3101,38 @@ HIERRO MACIZO</div>
       }
       requestAnimationFrame(tick);
     })();
+
+    // ── Drag (mouse) ───────────────────────────────────────────
+    marquee.addEventListener('mousedown', e => {
+      if (e.button !== 0) return;
+      dragging = true; dragDist = 0; lastX = e.clientX;
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      const dx = e.clientX - lastX;
+      dragDist += Math.abs(dx);
+      x += dx * 1.6; targetVel = dx; lastX = e.clientX;
+      const hw = halfW();
+      if (hw > 0) { while (x < -hw) x += hw; while (x > 0) x -= hw; }
+      track.style.transform = `translate3d(${x}px,0,0)`;
+    });
+    window.addEventListener('mouseup', () => { dragging = false; });
+
+    // ── Drag (touch) ───────────────────────────────────────────
+    marquee.addEventListener('touchstart', e => {
+      dragging = true; dragDist = 0; lastX = e.touches[0].clientX;
+    }, { passive: true });
+    marquee.addEventListener('touchmove', e => {
+      if (!dragging) return;
+      const dx = e.touches[0].clientX - lastX;
+      dragDist += Math.abs(dx);
+      x += dx * 1.4; targetVel = dx * 0.8; lastX = e.touches[0].clientX;
+      const hw = halfW();
+      if (hw > 0) { while (x < -hw) x += hw; while (x > 0) x -= hw; }
+      track.style.transform = `translate3d(${x}px,0,0)`;
+    }, { passive: true });
+    marquee.addEventListener('touchend', () => { dragging = false; });
 
     // ── Lightbox ───────────────────────────────────────────────
     const lb      = document.getElementById('galeria-lightbox');
@@ -3120,73 +3151,17 @@ HIERRO MACIZO</div>
       lb.classList.remove('is-open');
       paused = false;
     }
+
+    // click nativo: el browser lo suprime automáticamente si hubo drag
+    marquee.addEventListener('click', e => {
+      if (dragDist > 10) return;
+      const item = e.target.closest('.galeria__item');
+      if (item) openLb(item);
+    });
+
     lb      && lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
     lbClose && lbClose.addEventListener('click', closeLb);
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
-
-    // ── TOUCH (mobile) ─────────────────────────────────────────
-    let t0x, t0y, t0item;
-    marquee.addEventListener('touchstart', e => {
-      const t = e.touches[0];
-      t0x    = t.clientX;
-      t0y    = t.clientY;
-      t0item = t.target.closest('.galeria__item');
-      dragging = false;
-    }, { passive: true });
-
-    marquee.addEventListener('touchmove', e => {
-      const t = e.touches[0];
-      const dx = t.clientX - t0x;
-      const dy = t.clientY - t0y;
-      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 5) {
-        // arrastre horizontal → mueve marquee
-        dragging = true;
-        t0item = null;
-        x += dx * 1.4;
-        targetVel = dx * 0.8;
-        t0x = t.clientX; t0y = t.clientY;
-        const hw = halfW();
-        if (hw > 0) { while (x < -hw) x += hw; while (x > 0) x -= hw; }
-        track.style.transform = `translate3d(${x}px,0,0)`;
-      }
-    }, { passive: true });
-
-    marquee.addEventListener('touchend', e => {
-      dragging = false;
-      if (!t0item) return;
-      const t = e.changedTouches[0];
-      const dx = Math.abs(t.clientX - t0x);
-      const dy = Math.abs(t.clientY - t0y);
-      if (dx < 12 && dy < 12) openLb(t0item); // fue tap
-      t0item = null;
-    }, { passive: true });
-
-    // ── MOUSE (desktop) ────────────────────────────────────────
-    let m0x, mDistX, mItem;
-    marquee.addEventListener('mousedown', e => {
-      if (e.button !== 0) return;
-      m0x   = e.clientX;
-      mDistX = 0;
-      mItem  = e.target.closest('.galeria__item');
-      dragging = true;
-      e.preventDefault();
-    });
-    window.addEventListener('mousemove', e => {
-      if (!dragging) return;
-      const dx = e.clientX - m0x;
-      mDistX += Math.abs(dx);
-      if (mDistX > 6) mItem = null;
-      x += dx * 1.6; targetVel = dx;
-      m0x = e.clientX;
-      const hw = halfW();
-      if (hw > 0) { while (x < -hw) x += hw; while (x > 0) x -= hw; }
-      track.style.transform = `translate3d(${x}px,0,0)`;
-    });
-    window.addEventListener('mouseup', () => {
-      if (!dragging) return;
-      dragging = false;
-      if (mItem) { openLb(mItem); mItem = null; }
-    });
   })();
 
   // ANIM: galeria-foot — footer técnico aparece al final
