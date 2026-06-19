@@ -3076,7 +3076,7 @@ HIERRO MACIZO</div>
       },
     });
 
-  // ANIM: galeria-marquee — solo drag, click abre lightbox
+  // ANIM: galeria-marquee — drag + tap abre lightbox
   (function() {
     const marquee = document.getElementById('galeria-marquee');
     const track   = document.getElementById('galeria-track');
@@ -3084,71 +3084,77 @@ HIERRO MACIZO</div>
 
     let x = 0, vel = -1.5, targetVel = -1.5;
     const BASE = -1.5;
-    let isDragging = false, dragLastX = 0, dragMovedPx = 0, paused = false;
+    let isDragging = false, dragLastX = 0, totalDrag = 0, paused = false;
+    let tapStartX = 0, tapStartY = 0, tapStartTime = 0;
 
     track.style.animation = 'none';
     function halfW() { return track.scrollWidth / 2; }
 
-    // Solo drag — sin wheel
+    // Drag
     marquee.addEventListener('pointerdown', e => {
       if (e.button !== 0 && e.pointerType === 'mouse') return;
       isDragging = true;
-      dragMovedPx = 0;
+      totalDrag = 0;
       dragLastX = e.clientX;
+      tapStartX = e.clientX;
+      tapStartY = e.clientY;
+      tapStartTime = Date.now();
       marquee.setPointerCapture(e.pointerId);
     });
     marquee.addEventListener('pointermove', e => {
       if (!isDragging) return;
       const dx = e.clientX - dragLastX;
-      dragMovedPx += Math.abs(dx);
+      totalDrag += Math.abs(dx);
       x += dx * 1.6;
       targetVel = dx * 1.0;
       dragLastX = e.clientX;
       const hw = halfW();
-      if (hw > 0) {
-        while (x < -hw) x += hw;
-        while (x > 0)   x -= hw;
-      }
+      if (hw > 0) { while (x < -hw) x += hw; while (x > 0) x -= hw; }
       track.style.transform = `translate3d(${x}px,0,0)`;
     });
-    marquee.addEventListener('pointerup', () => { isDragging = false; });
+    marquee.addEventListener('pointerup', e => {
+      isDragging = false;
+      const dt = Date.now() - tapStartTime;
+      const dist = Math.hypot(e.clientX - tapStartX, e.clientY - tapStartY);
+      // tap: movimiento < 18px y duración < 350ms
+      if (dist < 18 && dt < 350) {
+        const item = e.target.closest('.galeria__item');
+        if (item) openLb(item);
+      }
+    });
+    marquee.addEventListener('pointercancel', () => { isDragging = false; });
 
-    // Loop — autoplay cuando no se arrastra
+    // Loop
     (function tick() {
       if (!isDragging && !paused) {
         vel += (targetVel - vel) * 0.08;
         targetVel += (BASE - targetVel) * 0.03;
         x += vel;
         const hw = halfW();
-        if (hw > 0) {
-          while (x < -hw) x += hw;
-          while (x > 0)   x -= hw;
-        }
+        if (hw > 0) { while (x < -hw) x += hw; while (x > 0) x -= hw; }
         track.style.transform = `translate3d(${x}px,0,0)`;
       }
       requestAnimationFrame(tick);
     })();
 
-    // Lightbox — click sin arrastre abre la imagen a pantalla completa
+    // Lightbox
     const lb      = document.getElementById('galeria-lightbox');
     const lbImg   = document.querySelector('#galeria-lightbox img');
     const lbClose = document.getElementById('galeria-lightbox-close');
+
+    function openLb(item) {
+      const img = item.querySelector('img');
+      if (!img || !lb || !lbImg) return;
+      lbImg.src = img.src;
+      lb.classList.add('is-open');
+      paused = true;
+    }
     function closeLb() {
       if (!lb) return;
       lb.classList.remove('is-open');
       paused = false;
     }
-    marquee.addEventListener('click', e => {
-      if (dragMovedPx > 8) return;
-      const item = e.target.closest('.galeria__item');
-      if (!item || !lb || !lbImg) return;
-      const src = item.querySelector('img') && item.querySelector('img').src;
-      if (!src) return;
-      lbImg.src = src;
-      lb.classList.add('is-open');
-      paused = true;
-    });
-    lb && lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+    lb      && lb.addEventListener('click',   e => { if (e.target === lb) closeLb(); });
     lbClose && lbClose.addEventListener('click', closeLb);
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
   })();
