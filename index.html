@@ -108,9 +108,9 @@
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     z-index: 500;
-    background: rgba(28, 26, 24, 0.97);
-    backdrop-filter: blur(20px) saturate(120%);
-    -webkit-backdrop-filter: blur(20px) saturate(120%);
+    background: rgba(40, 37, 34, 0.72);
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
   }
   .navbar__nav.is-open { display: block; }
   .navbar__link {
@@ -1954,38 +1954,44 @@
   #galeria-lightbox {
     display: none;
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: #000;
+    inset: 0;
     z-index: 9999;
+    background: rgba(18, 16, 14, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
   }
-  #galeria-lightbox.is-open {
-    display: block;
-  }
+  #galeria-lightbox.is-open { display: flex; }
   #galeria-lightbox img {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    display: block;
+    max-width: min(90vw, 900px);
+    max-height: 85vh;
+    width: auto;
+    height: auto;
     object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 8px 24px rgba(0,0,0,0.4);
   }
   #galeria-lightbox-close {
     position: absolute;
     top: 20px;
     right: 24px;
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.5);
-    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(0,0,0,0.45);
+    border: 1px solid rgba(255,255,255,0.3);
     border-radius: 50%;
-    font-size: 24px;
+    font-size: 22px;
     color: #fff;
     cursor: pointer;
     z-index: 2;
     line-height: 1;
     padding: 0;
+    transition: background 0.2s;
   }
   #galeria-lightbox-close:hover { background: rgba(255,255,255,0.2); }
 </style>
@@ -3081,7 +3087,7 @@ HIERRO MACIZO</div>
 
     let x = 0, vel = -1.5, targetVel = -1.5;
     const BASE = -1.5;
-    let isDragging = false, dragLastX = 0, dragMovedPx = 0;
+    let isDragging = false, dragLastX = 0, dragMovedPx = 0, paused = false;
 
     track.style.animation = 'none';
     function halfW() { return track.scrollWidth / 2; }
@@ -3112,7 +3118,7 @@ HIERRO MACIZO</div>
 
     // Loop — autoplay cuando no se arrastra
     (function tick() {
-      if (!isDragging) {
+      if (!isDragging && !paused) {
         vel += (targetVel - vel) * 0.08;
         targetVel += (BASE - targetVel) * 0.03;
         x += vel;
@@ -3133,7 +3139,7 @@ HIERRO MACIZO</div>
     function closeLb() {
       if (!lb) return;
       lb.classList.remove('is-open');
-      document.body.style.overflow = '';
+      paused = false;
     }
     marquee.addEventListener('click', e => {
       if (dragMovedPx > 8) return;
@@ -3143,8 +3149,9 @@ HIERRO MACIZO</div>
       if (!src) return;
       lbImg.src = src;
       lb.classList.add('is-open');
-      document.body.style.overflow = 'hidden';
+      paused = true;
     });
+    lb && lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
     lbClose && lbClose.addEventListener('click', closeLb);
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
   })();
