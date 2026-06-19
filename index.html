@@ -2012,24 +2012,26 @@
   <a class="navbar__brand" href="#hero">
     BRUTA <small>Lab</small>
   </a>
-  <div class="navbar__nav" id="navbar-nav" role="tablist">
-    <button class="navbar__close" id="navbar-close" aria-label="Cerrar menú">✕</button>
-    <div class="navbar__links-wrap">
-      <a class="navbar__link" href="#hero" data-nav="hero">INICIO</a>
-      <a class="navbar__link" href="#galeria" data-nav="galeria">Galería</a>
-      <a class="navbar__link" href="#configurador" data-nav="configurador">Configurador</a>
-      <a class="navbar__link" href="#catalogo" data-nav="catalogo">Catálogo</a>
-      <a class="navbar__link" href="#proceso" data-nav="proceso">Proceso</a>
-      <a class="navbar__link" href="#materiales" data-nav="materiales">Materiales</a>
-      <a class="navbar__link" href="#encargos" data-nav="encargos">Encargos</a>
-      <a class="navbar__link" href="#manifiesto" data-nav="manifiesto">Manifiesto</a>
-      <a class="navbar__link" href="#stats" data-nav="stats">Cifras</a>
-    </div>
-  </div>
   <button class="navbar__hamburger" id="navbar-hamburger" aria-label="Abrir menú">☰</button>
   <div class="navbar__meta" style="opacity: 0">T. 2024
 31°25′S · 64°11′W</div>
 </nav>
+
+<!-- overlay menú mobile — fuera del <nav> para evitar que backdrop-filter lo confine -->
+<div class="navbar__nav" id="navbar-nav" role="dialog" aria-label="Menú de navegación">
+  <button class="navbar__close" id="navbar-close" aria-label="Cerrar menú">✕</button>
+  <div class="navbar__links-wrap">
+    <a class="navbar__link" href="#hero" data-nav="hero">INICIO</a>
+    <a class="navbar__link" href="#galeria" data-nav="galeria">Galería</a>
+    <a class="navbar__link" href="#configurador" data-nav="configurador">Configurador</a>
+    <a class="navbar__link" href="#catalogo" data-nav="catalogo">Catálogo</a>
+    <a class="navbar__link" href="#proceso" data-nav="proceso">Proceso</a>
+    <a class="navbar__link" href="#materiales" data-nav="materiales">Materiales</a>
+    <a class="navbar__link" href="#encargos" data-nav="encargos">Encargos</a>
+    <a class="navbar__link" href="#manifiesto" data-nav="manifiesto">Manifiesto</a>
+    <a class="navbar__link" href="#stats" data-nav="stats">Cifras</a>
+  </div>
+</div>
 
 <section class="hero" id="hero" aria-label="Hero — BRUTA Lab">
 
