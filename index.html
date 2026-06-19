@@ -183,21 +183,22 @@
       flex-direction: column !important;
       flex-wrap: nowrap !important;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
+      justify-content: flex-start;
+      gap: 4px;
+      overflow-y: auto;
       background: rgba(28, 26, 24, 0.97);
       backdrop-filter: blur(20px) saturate(120%);
       -webkit-backdrop-filter: blur(20px) saturate(120%);
-      z-index: 200;
-      padding: 80px 32px 48px;
+      z-index: 500;
+      padding: 72px 32px 40px;
     }
     .navbar__nav.is-open { display: flex !important; }
     .navbar__close { display: flex; }
     .navbar__link {
       display: block;
       width: 100%;
-      max-width: 260px;
-      padding: 14px 24px;
+      max-width: 280px;
+      padding: 12px 24px;
       font-size: 11px;
       letter-spacing: 0.3em;
       text-align: center;
@@ -2794,10 +2795,12 @@ HIERRO MACIZO</div>
     const navMenu   = document.getElementById("navbar-nav");
     const navClose  = document.getElementById("navbar-close");
     if (!hamburger || !navMenu) return;
-    hamburger.addEventListener("click", () => navMenu.classList.add("is-open"));
-    navClose?.addEventListener("click", () => navMenu.classList.remove("is-open"));
+    function openMenu()  { navMenu.classList.add("is-open");    document.body.style.overflow = "hidden"; }
+    function closeMenu() { navMenu.classList.remove("is-open"); document.body.style.overflow = ""; }
+    hamburger.addEventListener("click", openMenu);
+    navClose?.addEventListener("click", closeMenu);
     navMenu.querySelectorAll(".navbar__link").forEach(link => {
-      link.addEventListener("click", () => navMenu.classList.remove("is-open"));
+      link.addEventListener("click", closeMenu);
     });
   })();
 
