@@ -1362,7 +1362,7 @@
     object-fit: cover;
     object-position: center;
     display: block;
-    filter: brightness(0.68);
+    filter: brightness(0.22);
   }
   .proceso__annot {
     position: absolute;
@@ -1371,6 +1371,7 @@
     width: 84%;
     height: 54%;
     pointer-events: none;
+    opacity: 0;
   }
   .proceso__annot svg {
     width: 100%;
@@ -1383,6 +1384,7 @@
     right: 0;
     padding: 72px 16px 22px;
     background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0) 100%);
+    opacity: 0;
   }
   .proceso__label-num {
     font-family: var(--ff-mono);
@@ -2951,13 +2953,6 @@ HIERRO MACIZO</div>
     const cols     = gsap.utils.toArray(".proceso__col");
     if (!strip || !cols.length) return;
 
-    // Estado inicial: fotos muy oscuras, anotaciones invisibles
-    cols.forEach(col => {
-      gsap.set(col.querySelector("img"),          { filter: "brightness(0.22)" });
-      gsap.set(col.querySelector(".proceso__annot"), { opacity: 0 });
-      gsap.set(col.querySelector(".proceso__label"), { opacity: 0 });
-    });
-
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".proceso",
@@ -3168,7 +3163,7 @@ HIERRO MACIZO</div>
   // ANIM: configurador — sin clip-path; el fondo oscuro siempre presente.
   // El contenido (frase, layout, CTA) sube desde abajo con stagger.
   // ANIM: proceso entra como wipe diagonal desde la izquierda
-  curtainReveal("#proceso",      "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)");
+  // proceso: sin curtainReveal — la animación scroll-driven maneja el reveal
   // ANIM: stats entra desde los laterales hacia el centro
   curtainReveal("#stats",        "inset(0% 50% 0% 50%)");
   // ANIM: galería entra como wipe horizontal desde la derecha
