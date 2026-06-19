@@ -1336,7 +1336,7 @@
     grid-template-columns: repeat(6, 1fr);
     width: calc(100% + 96px);
     margin: 72px -48px 0;
-    height: clamp(440px, 66vh, 800px);
+    height: clamp(240px, 38vh, 500px);
   }
   .proceso__col {
     position: relative;
@@ -1924,14 +1924,14 @@
   </a>
   <div class="navbar__nav" role="tablist">
     <a class="navbar__link" href="#hero" data-nav="hero">INICIO</a>
-    <a class="navbar__link" href="#manifiesto" data-nav="manifiesto">MANIFIESTO</a>
     <a class="navbar__link" href="#galeria" data-nav="galeria">Galería</a>
-    <a class="navbar__link" href="#materiales" data-nav="materiales">Materiales</a>
-    <a class="navbar__link" href="#catalogo" data-nav="catalogo">Catálogo</a>
     <a class="navbar__link" href="#configurador" data-nav="configurador">Configurador</a>
+    <a class="navbar__link" href="#catalogo" data-nav="catalogo">Catálogo</a>
     <a class="navbar__link" href="#proceso" data-nav="proceso">Proceso</a>
-    <a class="navbar__link" href="#stats" data-nav="stats">Cifras</a>
+    <a class="navbar__link" href="#materiales" data-nav="materiales">Materiales</a>
     <a class="navbar__link" href="#encargos" data-nav="encargos">Encargos</a>
+    <a class="navbar__link" href="#manifiesto" data-nav="manifiesto">Manifiesto</a>
+    <a class="navbar__link" href="#stats" data-nav="stats">Cifras</a>
   </div>
   <div class="navbar__meta" style="opacity: 0">T. 2024
 31°25′S · 64°11′W</div>
@@ -1995,31 +1995,6 @@ HIERRO MACIZO</div>
   <a class="hero__cta" id="hero-cta" href="#materiales">VER MATERIALES
 ↓</a>
 
-</section>
-
-<!-- ====================================================================
-     MANIFIESTO — sección de texto, fondo Tiza
-     ==================================================================== -->
-<section class="manifiesto" id="manifiesto" aria-label="Manifiesto">
-  <div class="manifiesto__inner">
-    <p class="manifiesto__eyebrow">Manifiesto · 02</p>
-
-    <p class="manifiesto__lead">
-      Bruta nace de mirar el <em>material</em> antes que el objeto.
-    </p>
-
-    <div class="manifiesto__body">
-      <p>Del vidrio que otros descartan, aparecen fragmentos con historia, textura y peso. En lugar de desaparecer como residuo, esos fragmentos se transforman en terrazo y vuelven a ocupar un lugar en el mundo como objetos sólidos y duraderos.</p>
-      <p>Creemos en una belleza honesta. Las piezas no esconden su origen: el vidrio, el cemento y el hierro se muestran tal como son. Las texturas, los bordes y las imperfecciones forman parte del lenguaje. Cada objeto revela el proceso que lo hizo posible.</p>
-      <p>Diseñamos desde la materia y para el tiempo. No buscamos producir mucho, sino producir bien: objetos simples, resistentes y atemporales, pensados para acompañar los espacios durante años. Piezas que no responden a la velocidad de las modas, sino a la lógica de la permanencia.</p>
-    </div>
-
-    <div class="manifiesto__foot">
-      <span>BRUTA Lab</span>
-      <span>Córdoba · AR</span>
-      <span>Lo que ves es lo que es.</span>
-    </div>
-  </div>
 </section>
 
 <!-- ====================================================================
@@ -2103,55 +2078,75 @@ HIERRO MACIZO</div>
 </section>
 
 <!-- ====================================================================
-     MATERIALES VIVOS
+     CONFIGURADOR
      ==================================================================== -->
-<section class="materiales" id="materiales" aria-label="Materiales vivos">
-
-  <header class="materiales__head">
-    <p class="materiales__eyebrow">Materiales vivos · 02</p>
-    <h2 class="materiales__title">El material lo es todo.</h2>
+<section class="config" id="configurador" aria-label="Configurador">
+  <header class="config__head">
+    <p class="config__eyebrow">Configurador · 04</p>
+    <h2 class="config__title">Cada pieza es única.<br />La tuya también.</h2>
   </header>
 
-  <div class="materiales__stage" id="materiales-stage">
+  <div class="config__layout">
 
-    <article class="material-card" style="--c:#D4CEBE;background-image:url('assets/material-textures/terrazo-tiza.jpg');background-size:cover;background-position:center;" data-color="Tiza" data-hex="#D4CEBE">
-      <div class="material-card__hex">#D4CEBE</div>
-      <div class="material-card__num">01</div>
-      <div class="material-card__name"><h3>Tiza</h3><small>Blanco cálido</small></div>
-    </article>
+    <!-- IZQUIERDA · selector de producto -->
+    <aside>
+      <p class="config__col-title">Producto</p>
+      <ul class="config__list" id="config-productos" role="listbox" aria-label="Producto">
+        <li><button class="config__item is-active" data-prod="Mesita" data-model="assets/models/mesita.glb">Mesita</button></li>
+        <li><button class="config__item" data-prod="Plato decorativo" data-model="assets/models/plato.glb">Plato decorativo</button></li>
+        <li><button class="config__item" data-prod="Estante individual" data-model="assets/models/estante.glb">Estante individual</button></li>
+        <li><button class="config__item" data-prod="Estantería 2 niveles" data-model="assets/models/Estanteria.glb">Estantería 2 niveles</button></li>
+        <li><button class="config__item" data-prod="Posavasos x6" data-model="assets/models/posavasos-x6.glb">Posavasos <em>x 6</em></button></li>
+        <li><button class="config__item" data-prod="Posavasos x4" data-model="assets/models/posavasos-x4.glb">Posavasos <em>x 4</em></button></li>
+        <li><button class="config__item" data-prod="Posavasos x2" data-model="assets/models/posavasos-x2.glb">Posavasos <em>x 2</em></button></li>
+      </ul>
+    </aside>
 
-    <article class="material-card" style="--c:#7E8E94;background-image:url('assets/material-textures/terrazo-porfido.jpg');background-size:cover;background-position:center;" data-color="Pórfido" data-hex="#7E8E94">
-      <div class="material-card__hex">#7E8E94</div>
-      <div class="material-card__num">02</div>
-      <div class="material-card__name"><h3>Pórfido</h3><small>Mineral de Córdoba</small></div>
-    </article>
+    <!-- CENTRO · visor Three.js -->
+    <div class="config__viewer" id="config-viewer">
+      <canvas id="config-canvas"></canvas>
+      <!-- loader overlay -->
+      <div id="config-loader">
+        <span class="config-loader__dot"></span>
+        <span class="config-loader__dot"></span>
+        <span class="config-loader__dot"></span>
+      </div>
+      <span class="config__viewer-tag" id="config-viewer-tag">Vista · 3D</span>
+      <span class="config__viewer-coords">Rotar · Zoom · Tap</span>
+      <!-- THREEJS: configurador-3d -->
+    </div>
 
-    <article class="material-card material-card--ring material-card--dark" style="background-image:url('assets/material-textures/terrazo-basalto.jpg');background-size:cover;background-position:center;" data-color="Basalto" data-hex="#3A3835">
-      <div class="material-card__hex">#3A3835</div>
-      <div class="material-card__num">03</div>
-      <div class="material-card__name"><h3>Basalto</h3><small>Roca volcánica</small></div>
-    </article>
-
-    <article class="material-card" style="--c:#91A891;background-image:url('assets/material-textures/terrazo-musgo.jpg');background-size:cover;background-position:center;" data-color="Musgo" data-hex="#91A891">
-      <div class="material-card__hex">#91A891</div>
-      <div class="material-card__num">04</div>
-      <div class="material-card__name"><h3>Musgo</h3><small>Verde apagado</small></div>
-    </article>
-
-    <article class="material-card" style="--c:#C4967E;background-image:url('assets/material-textures/terrazo-terracota.jpg');background-size:cover;background-position:center;" data-color="Terracota" data-hex="#C4967E">
-      <div class="material-card__hex">#C4967E</div>
-      <div class="material-card__num">05</div>
-      <div class="material-card__name"><h3>Terracota</h3><small>Tierra cocida</small></div>
-    </article>
+    <!-- DERECHA · swatches -->
+    <aside>
+      <div class="config__group">
+        <p class="config__col-title">Terrazo</p>
+        <div class="config__swatches" id="swatches-terrazo">
+          <button class="swatch is-active" style="--c:#D4CEBE;" data-name="Tiza"      data-hex="#D4CEBE" data-texture="assets/textures/terrazo-tiza.png"></button>
+          <button class="swatch"           style="--c:#7E8E94;" data-name="Pórfido"   data-hex="#7E8E94" data-texture="assets/textures/terrazo-porfido.png"></button>
+          <button class="swatch swatch--ring" style="--c:#3A3835;" data-name="Basalto" data-hex="#3A3835" data-texture="assets/textures/terrazo-basalto.png"></button>
+          <button class="swatch"           style="--c:#91A891;" data-name="Musgo"     data-hex="#91A891" data-texture="assets/textures/terrazo-musgo.png"></button>
+          <button class="swatch"           style="--c:#C4967E;" data-name="Terracota" data-hex="#C4967E" data-texture="assets/textures/terrazo-terracota.png"></button>
+        </div>
+        <p class="config__swatch-name">Color · <strong id="terrazo-name">Tiza</strong></p>
+      </div>
+      <div class="config__group">
+        <p class="config__col-title">Hierro</p>
+        <div class="config__swatches" id="swatches-hierro">
+          <button class="swatch is-active" style="--c:#2C2C2C;" data-name="Hierro Negro"  data-hex="#2C2C2C" data-texture="assets/textures/hierro-negro.jpg"></button>
+          <button class="swatch swatch--ring" style="--c:#E8E4DE;" data-name="Hierro Blanco" data-hex="#E8E4DE" data-texture="assets/textures/hierro-blanco.jpg"></button>
+          <button class="swatch"           style="--c:#7A2E35;" data-name="Burdó"        data-hex="#7A2E35" data-texture="assets/textures/hierro-bordo.jpg" data-roughness="0.2"></button>
+        </div>
+        <p class="config__swatch-name">Acabado · <strong id="hierro-name">Hierro Negro</strong></p>
+      </div>
+    </aside>
 
   </div>
 
-  <div class="materiales__foot">
-    <span>05 muestras</span>
-    <hr />
-    <span>Paleta única</span>
+  <div class="config__cta-row">
+    <a class="config__cta" href="https://www.bruta.com.ar/" target="_blank" rel="noopener">
+      Pedí el tuyo →
+    </a>
   </div>
-
 </section>
 
 <!-- ====================================================================
@@ -2371,78 +2366,6 @@ HIERRO MACIZO</div>
 </section>
 
 <!-- ====================================================================
-     CONFIGURADOR
-     ==================================================================== -->
-<section class="config" id="configurador" aria-label="Configurador">
-  <header class="config__head">
-    <p class="config__eyebrow">Configurador · 04</p>
-    <h2 class="config__title">Cada pieza es única.<br />La tuya también.</h2>
-  </header>
-
-  <div class="config__layout">
-
-    <!-- IZQUIERDA · selector de producto -->
-    <aside>
-      <p class="config__col-title">Producto</p>
-      <ul class="config__list" id="config-productos" role="listbox" aria-label="Producto">
-        <li><button class="config__item is-active" data-prod="Mesita" data-model="assets/models/mesita.glb">Mesita</button></li>
-        <li><button class="config__item" data-prod="Plato decorativo" data-model="assets/models/plato.glb">Plato decorativo</button></li>
-        <li><button class="config__item" data-prod="Estante individual" data-model="assets/models/estante.glb">Estante individual</button></li>
-        <li><button class="config__item" data-prod="Estantería 2 niveles" data-model="assets/models/Estanteria.glb">Estantería 2 niveles</button></li>
-        <li><button class="config__item" data-prod="Posavasos x6" data-model="assets/models/posavasos-x6.glb">Posavasos <em>x 6</em></button></li>
-        <li><button class="config__item" data-prod="Posavasos x4" data-model="assets/models/posavasos-x4.glb">Posavasos <em>x 4</em></button></li>
-        <li><button class="config__item" data-prod="Posavasos x2" data-model="assets/models/posavasos-x2.glb">Posavasos <em>x 2</em></button></li>
-      </ul>
-    </aside>
-
-    <!-- CENTRO · visor Three.js -->
-    <div class="config__viewer" id="config-viewer">
-      <canvas id="config-canvas"></canvas>
-      <!-- loader overlay -->
-      <div id="config-loader">
-        <span class="config-loader__dot"></span>
-        <span class="config-loader__dot"></span>
-        <span class="config-loader__dot"></span>
-      </div>
-      <span class="config__viewer-tag" id="config-viewer-tag">Vista · 3D</span>
-      <span class="config__viewer-coords">Rotar · Zoom · Tap</span>
-      <!-- THREEJS: configurador-3d -->
-    </div>
-
-    <!-- DERECHA · swatches -->
-    <aside>
-      <div class="config__group">
-        <p class="config__col-title">Terrazo</p>
-        <div class="config__swatches" id="swatches-terrazo">
-          <button class="swatch is-active" style="--c:#D4CEBE;" data-name="Tiza"      data-hex="#D4CEBE" data-texture="assets/textures/terrazo-tiza.png"></button>
-          <button class="swatch"           style="--c:#7E8E94;" data-name="Pórfido"   data-hex="#7E8E94" data-texture="assets/textures/terrazo-porfido.png"></button>
-          <button class="swatch swatch--ring" style="--c:#3A3835;" data-name="Basalto" data-hex="#3A3835" data-texture="assets/textures/terrazo-basalto.png"></button>
-          <button class="swatch"           style="--c:#91A891;" data-name="Musgo"     data-hex="#91A891" data-texture="assets/textures/terrazo-musgo.png"></button>
-          <button class="swatch"           style="--c:#C4967E;" data-name="Terracota" data-hex="#C4967E" data-texture="assets/textures/terrazo-terracota.png"></button>
-        </div>
-        <p class="config__swatch-name">Color · <strong id="terrazo-name">Tiza</strong></p>
-      </div>
-      <div class="config__group">
-        <p class="config__col-title">Hierro</p>
-        <div class="config__swatches" id="swatches-hierro">
-          <button class="swatch is-active" style="--c:#2C2C2C;" data-name="Hierro Negro"  data-hex="#2C2C2C" data-texture="assets/textures/hierro-negro.jpg"></button>
-          <button class="swatch swatch--ring" style="--c:#E8E4DE;" data-name="Hierro Blanco" data-hex="#E8E4DE" data-texture="assets/textures/hierro-blanco.jpg"></button>
-          <button class="swatch"           style="--c:#7A2E35;" data-name="Burdó"        data-hex="#7A2E35" data-texture="assets/textures/hierro-bordo.jpg" data-roughness="0.2"></button>
-        </div>
-        <p class="config__swatch-name">Acabado · <strong id="hierro-name">Hierro Negro</strong></p>
-      </div>
-    </aside>
-
-  </div>
-
-  <div class="config__cta-row">
-    <a class="config__cta" href="https://www.bruta.com.ar/" target="_blank" rel="noopener">
-      Pedí el tuyo →
-    </a>
-  </div>
-</section>
-
-<!-- ====================================================================
      PROCESO
      ==================================================================== -->
 <section class="proceso" id="proceso" aria-label="Proceso">
@@ -2511,9 +2434,9 @@ HIERRO MACIZO</div>
             <text font-size="6.5" fill="rgba(255,255,255,0.70)"><tspan x="2" y="34">VIDRIO</tspan></text>
             <text font-size="6.5" fill="rgba(255,255,255,0.70)"><tspan x="2" y="52">PIGMENTO</tspan></text>
             <text font-size="6.5" fill="rgba(255,255,255,0.70)"><tspan x="2" y="70">AGUA</tspan></text>
-            <text font-size="8" fill="rgba(255,255,255,0.90)"><tspan x="50" y="16">60%</tspan></text>
-            <text font-size="8" fill="rgba(255,255,255,0.90)"><tspan x="50" y="34">30%</tspan></text>
-            <text font-size="8" fill="rgba(255,255,255,0.90)"><tspan x="50" y="52">10%</tspan></text>
+            <text font-size="8" fill="rgba(255,255,255,0.90)"><tspan x="50" y="16">20%</tspan></text>
+            <text font-size="8" fill="rgba(255,255,255,0.90)"><tspan x="50" y="34">80%</tspan></text>
+            <text font-size="8" fill="rgba(255,255,255,0.90)"><tspan x="50" y="52">c/n</tspan></text>
             <text font-size="8" fill="rgba(255,255,255,0.90)"><tspan x="50" y="70">c/n</tspan></text>
           </g>
           <g stroke="rgba(255,255,255,0.18)" stroke-width="0.5" fill="none">
@@ -2542,13 +2465,21 @@ HIERRO MACIZO</div>
     <div class="proceso__col">
       <img src="assets/proceso/proceso-04.jpg" alt="Moldeado de la pieza" loading="lazy">
       <div class="proceso__annot" aria-hidden="true">
-        <svg viewBox="0 0 90 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 110 60" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g stroke="rgba(255,255,255,0.80)" stroke-width="1.2" fill="none">
-            <rect x="8" y="8" width="74" height="80" rx="1"/>
-            <path d="M 24 8 L 18 88 L 72 88 L 66 8"/>
-            <line x1="20" y1="64" x2="70" y2="64" stroke-dasharray="2 2" stroke-width="0.8" stroke-opacity="0.60"/>
+            <rect x="4" y="10" width="102" height="28" rx="1"/>
+            <path d="M 14 10 L 12 36 L 98 36 L 96 10"/>
+            <line x1="13" y1="30" x2="97" y2="30" stroke-dasharray="2 2" stroke-width="0.8" stroke-opacity="0.55"/>
+            <line x1="2" y1="10" x2="2" y2="36" stroke-width="0.7" stroke-opacity="0.55"/>
+            <line x1="0" y1="10" x2="4" y2="10" stroke-width="0.7" stroke-opacity="0.55"/>
+            <line x1="0" y1="36" x2="4" y2="36" stroke-width="0.7" stroke-opacity="0.55"/>
+            <line x1="12" y1="46" x2="98" y2="46" stroke-width="0.7" stroke-opacity="0.55"/>
+            <line x1="12" y1="43" x2="12" y2="49" stroke-width="0.7" stroke-opacity="0.55"/>
+            <line x1="98" y1="43" x2="98" y2="49" stroke-width="0.7" stroke-opacity="0.55"/>
           </g>
-          <text x="45" y="98" font-size="5.5" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-family="'Courier New',monospace">SECCIÓN A·A</text>
+          <text x="5" y="26" font-size="5" fill="rgba(255,255,255,0.72)" font-family="'Courier New',monospace">h 20</text>
+          <text x="48" y="57" font-size="5.5" text-anchor="middle" fill="rgba(255,255,255,0.72)" font-family="'Courier New',monospace">Ø 300</text>
+          <text x="55" y="7" font-size="4.5" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="'Courier New',monospace">SECCIÓN A·A</text>
         </svg>
       </div>
       <div class="proceso__label">
@@ -2593,27 +2524,23 @@ HIERRO MACIZO</div>
     <div class="proceso__col">
       <img src="assets/proceso/proceso-06.jpg" alt="Pieza terminada" loading="lazy">
       <div class="proceso__annot" aria-hidden="true">
-        <svg viewBox="0 0 90 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g stroke="rgba(255,255,255,0.80)" stroke-width="1.2" fill="none">
-            <ellipse cx="45" cy="18" rx="22" ry="5.5"/>
-            <line x1="25" y1="18" x2="20" y2="88"/>
-            <line x1="65" y1="18" x2="70" y2="88"/>
-            <ellipse cx="45" cy="88" rx="26" ry="6" stroke-dasharray="2.5 2"/>
-            <line x1="4" y1="12" x2="4" y2="94" stroke-width="0.8" stroke-opacity="0.55"/>
-            <line x1="1" y1="12" x2="7" y2="12" stroke-width="0.8" stroke-opacity="0.55"/>
-            <line x1="1" y1="94" x2="7" y2="94" stroke-width="0.8" stroke-opacity="0.55"/>
-            <line x1="23" y1="7" x2="67" y2="7" stroke-width="0.8" stroke-opacity="0.55"/>
-            <line x1="23" y1="4" x2="23" y2="10" stroke-width="0.8" stroke-opacity="0.55"/>
-            <line x1="67" y1="4" x2="67" y2="10" stroke-width="0.8" stroke-opacity="0.55"/>
-            <line x1="19" y1="98" x2="71" y2="98" stroke-width="0.8" stroke-opacity="0.55"/>
-            <line x1="19" y1="95" x2="19" y2="101" stroke-width="0.8" stroke-opacity="0.55"/>
-            <line x1="71" y1="95" x2="71" y2="101" stroke-width="0.8" stroke-opacity="0.55"/>
+            <ellipse cx="50" cy="18" rx="44" ry="7"/>
+            <line x1="6" y1="18" x2="6" y2="28"/>
+            <line x1="94" y1="18" x2="94" y2="28"/>
+            <ellipse cx="50" cy="28" rx="44" ry="7" stroke-dasharray="2.5 2"/>
+            <line x1="6" y1="7" x2="94" y2="7" stroke-width="0.7" stroke-opacity="0.55"/>
+            <line x1="6" y1="4" x2="6" y2="10" stroke-width="0.7" stroke-opacity="0.55"/>
+            <line x1="94" y1="4" x2="94" y2="10" stroke-width="0.7" stroke-opacity="0.55"/>
+            <line x1="98" y1="17" x2="98" y2="29" stroke-width="0.7" stroke-opacity="0.55"/>
+            <line x1="95" y1="17" x2="101" y2="17" stroke-width="0.7" stroke-opacity="0.55"/>
+            <line x1="95" y1="29" x2="101" y2="29" stroke-width="0.7" stroke-opacity="0.55"/>
           </g>
-          <text font-family="'Courier New',monospace" font-size="6.5" fill="rgba(255,255,255,0.82)">
-            <tspan x="32" y="3">Ø 110</tspan>
-            <tspan x="7" y="56">h 90</tspan>
+          <text font-family="'Courier New',monospace" font-size="6" fill="rgba(255,255,255,0.82)">
+            <tspan x="36" y="4">Ø 300</tspan>
           </text>
-          <text x="30" y="109" font-size="6.5" fill="rgba(255,255,255,0.72)" font-family="'Courier New',monospace">Ø 80</text>
+          <text x="4" y="46" font-size="6" fill="rgba(255,255,255,0.72)" font-family="'Courier New',monospace">h 20</text>
         </svg>
       </div>
       <div class="proceso__label">
@@ -2623,6 +2550,96 @@ HIERRO MACIZO</div>
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- ====================================================================
+     MATERIALES VIVOS
+     ==================================================================== -->
+<section class="materiales" id="materiales" aria-label="Materiales vivos">
+
+  <header class="materiales__head">
+    <p class="materiales__eyebrow">Materiales vivos · 02</p>
+    <h2 class="materiales__title">El material lo es todo.</h2>
+  </header>
+
+  <div class="materiales__stage" id="materiales-stage">
+
+    <article class="material-card" style="--c:#D4CEBE;background-image:url('assets/material-textures/terrazo-tiza.jpg');background-size:cover;background-position:center;" data-color="Tiza" data-hex="#D4CEBE">
+      <div class="material-card__hex">#D4CEBE</div>
+      <div class="material-card__num">01</div>
+      <div class="material-card__name"><h3>Tiza</h3><small>Blanco cálido</small></div>
+    </article>
+
+    <article class="material-card" style="--c:#7E8E94;background-image:url('assets/material-textures/terrazo-porfido.jpg');background-size:cover;background-position:center;" data-color="Pórfido" data-hex="#7E8E94">
+      <div class="material-card__hex">#7E8E94</div>
+      <div class="material-card__num">02</div>
+      <div class="material-card__name"><h3>Pórfido</h3><small>Mineral de Córdoba</small></div>
+    </article>
+
+    <article class="material-card material-card--ring material-card--dark" style="background-image:url('assets/material-textures/terrazo-basalto.jpg');background-size:cover;background-position:center;" data-color="Basalto" data-hex="#3A3835">
+      <div class="material-card__hex">#3A3835</div>
+      <div class="material-card__num">03</div>
+      <div class="material-card__name"><h3>Basalto</h3><small>Roca volcánica</small></div>
+    </article>
+
+    <article class="material-card" style="--c:#91A891;background-image:url('assets/material-textures/terrazo-musgo.jpg');background-size:cover;background-position:center;" data-color="Musgo" data-hex="#91A891">
+      <div class="material-card__hex">#91A891</div>
+      <div class="material-card__num">04</div>
+      <div class="material-card__name"><h3>Musgo</h3><small>Verde apagado</small></div>
+    </article>
+
+    <article class="material-card" style="--c:#C4967E;background-image:url('assets/material-textures/terrazo-terracota.jpg');background-size:cover;background-position:center;" data-color="Terracota" data-hex="#C4967E">
+      <div class="material-card__hex">#C4967E</div>
+      <div class="material-card__num">05</div>
+      <div class="material-card__name"><h3>Terracota</h3><small>Tierra cocida</small></div>
+    </article>
+
+  </div>
+
+  <div class="materiales__foot">
+    <span>05 muestras</span>
+    <hr />
+    <span>Paleta única</span>
+  </div>
+
+</section>
+
+<!-- ====================================================================
+     ENCARGOS
+     ==================================================================== -->
+<section class="encargos" id="encargos" aria-label="Encargos">
+  <div class="encargos__inner">
+    <h2 class="encargos__title">¿Tenés algo en mente?</h2>
+    <p class="encargos__sub">Hacemos piezas a medida. Contanos qué necesitás.</p>
+    <a class="encargos__cta" href="https://wa.me/5493513428616?text=Hola%20BRUTA%2C%20tengo%20un%20encargo%20a%20medida" target="_blank" rel="noopener">
+      Escribinos por WhatsApp →
+    </a>
+  </div>
+</section>
+
+<!-- ====================================================================
+     MANIFIESTO — sección de texto, fondo Tiza
+     ==================================================================== -->
+<section class="manifiesto" id="manifiesto" aria-label="Manifiesto">
+  <div class="manifiesto__inner">
+    <p class="manifiesto__eyebrow">Manifiesto · 02</p>
+
+    <p class="manifiesto__lead">
+      Bruta nace de mirar el <em>material</em> antes que el objeto.
+    </p>
+
+    <div class="manifiesto__body">
+      <p>Del vidrio que otros descartan, aparecen fragmentos con historia, textura y peso. En lugar de desaparecer como residuo, esos fragmentos se transforman en terrazo y vuelven a ocupar un lugar en el mundo como objetos sólidos y duraderos.</p>
+      <p>Creemos en una belleza honesta. Las piezas no esconden su origen: el vidrio, el cemento y el hierro se muestran tal como son. Las texturas, los bordes y las imperfecciones forman parte del lenguaje. Cada objeto revela el proceso que lo hizo posible.</p>
+      <p>Diseñamos desde la materia y para el tiempo. No buscamos producir mucho, sino producir bien: objetos simples, resistentes y atemporales, pensados para acompañar los espacios durante años. Piezas que no responden a la velocidad de las modas, sino a la lógica de la permanencia.</p>
+    </div>
+
+    <div class="manifiesto__foot">
+      <span>BRUTA Lab</span>
+      <span>Córdoba · AR</span>
+      <span>Lo que ves es lo que es.</span>
+    </div>
   </div>
 </section>
 
@@ -2656,19 +2673,6 @@ HIERRO MACIZO</div>
       </p>
       <p class="stat__label">personas comprometidas en recuperar</p>
     </div>
-  </div>
-</section>
-
-<!-- ====================================================================
-     ENCARGOS
-     ==================================================================== -->
-<section class="encargos" id="encargos" aria-label="Encargos">
-  <div class="encargos__inner">
-    <h2 class="encargos__title">¿Tenés algo en mente?</h2>
-    <p class="encargos__sub">Hacemos piezas a medida. Contanos qué necesitás.</p>
-    <a class="encargos__cta" href="https://wa.me/5493513428616?text=Hola%20BRUTA%2C%20tengo%20un%20encargo%20a%20medida" target="_blank" rel="noopener">
-      Escribinos por WhatsApp →
-    </a>
   </div>
 </section>
 
