@@ -3076,54 +3076,23 @@ HIERRO MACIZO</div>
       },
     });
 
-  // ANIM: galeria-marquee — drag horizontal + tap abre lightbox
+  // ANIM: galeria-marquee
   (function() {
     const marquee = document.getElementById('galeria-marquee');
     const track   = document.getElementById('galeria-track');
     if (!marquee || !track) return;
 
-    // pan-y: deja que swipe vertical haga scroll de página normalmente
-    marquee.style.touchAction = 'pan-y';
-
     let x = 0, vel = -1.5, targetVel = -1.5;
     const BASE = -1.5;
-    let isDragging = false, dragLastX = 0, dragDistX = 0, paused = false;
-    let tapItem = null; // guardado en pointerdown, ANTES del capture
+    let paused = false;
 
     track.style.animation = 'none';
     function halfW() { return track.scrollWidth / 2; }
 
-    marquee.addEventListener('pointerdown', e => {
-      if (e.button !== 0 && e.pointerType === 'mouse') return;
-      isDragging = true;
-      dragDistX  = 0;
-      dragLastX  = e.clientX;
-      tapItem    = e.target.closest('.galeria__item'); // target real, antes del capture
-      marquee.setPointerCapture(e.pointerId);
-    });
-
-    marquee.addEventListener('pointermove', e => {
-      if (!isDragging) return;
-      const dx = e.clientX - dragLastX;
-      dragDistX += Math.abs(dx);
-      if (dragDistX > 8) tapItem = null; // fue drag, no tap
-      x += dx * 1.6;
-      targetVel  = dx * 1.0;
-      dragLastX  = e.clientX;
-      const hw = halfW();
-      if (hw > 0) { while (x < -hw) x += hw; while (x > 0) x -= hw; }
-      track.style.transform = `translate3d(${x}px,0,0)`;
-    });
-
-    marquee.addEventListener('pointerup', () => {
-      isDragging = false;
-      if (tapItem) { openLb(tapItem); tapItem = null; }
-    });
-    marquee.addEventListener('pointercancel', () => { isDragging = false; tapItem = null; });
-
-    // Loop autoplay
+    // ── Autoplay loop ──────────────────────────────────────────
+    let dragging = false;
     (function tick() {
-      if (!isDragging && !paused) {
+      if (!dragging && !paused) {
         vel += (targetVel - vel) * 0.08;
         targetVel += (BASE - targetVel) * 0.03;
         x += vel;
@@ -3134,7 +3103,7 @@ HIERRO MACIZO</div>
       requestAnimationFrame(tick);
     })();
 
-    // Lightbox
+    // ── Lightbox ───────────────────────────────────────────────
     const lb      = document.getElementById('galeria-lightbox');
     const lbImg   = document.querySelector('#galeria-lightbox img');
     const lbClose = document.getElementById('galeria-lightbox-close');
@@ -3154,6 +3123,70 @@ HIERRO MACIZO</div>
     lb      && lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
     lbClose && lbClose.addEventListener('click', closeLb);
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+    // ── TOUCH (mobile) ─────────────────────────────────────────
+    let t0x, t0y, t0item;
+    marquee.addEventListener('touchstart', e => {
+      const t = e.touches[0];
+      t0x    = t.clientX;
+      t0y    = t.clientY;
+      t0item = t.target.closest('.galeria__item');
+      dragging = false;
+    }, { passive: true });
+
+    marquee.addEventListener('touchmove', e => {
+      const t = e.touches[0];
+      const dx = t.clientX - t0x;
+      const dy = t.clientY - t0y;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 5) {
+        // arrastre horizontal → mueve marquee
+        dragging = true;
+        t0item = null;
+        x += dx * 1.4;
+        targetVel = dx * 0.8;
+        t0x = t.clientX; t0y = t.clientY;
+        const hw = halfW();
+        if (hw > 0) { while (x < -hw) x += hw; while (x > 0) x -= hw; }
+        track.style.transform = `translate3d(${x}px,0,0)`;
+      }
+    }, { passive: true });
+
+    marquee.addEventListener('touchend', e => {
+      dragging = false;
+      if (!t0item) return;
+      const t = e.changedTouches[0];
+      const dx = Math.abs(t.clientX - t0x);
+      const dy = Math.abs(t.clientY - t0y);
+      if (dx < 12 && dy < 12) openLb(t0item); // fue tap
+      t0item = null;
+    }, { passive: true });
+
+    // ── MOUSE (desktop) ────────────────────────────────────────
+    let m0x, mDistX, mItem;
+    marquee.addEventListener('mousedown', e => {
+      if (e.button !== 0) return;
+      m0x   = e.clientX;
+      mDistX = 0;
+      mItem  = e.target.closest('.galeria__item');
+      dragging = true;
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      const dx = e.clientX - m0x;
+      mDistX += Math.abs(dx);
+      if (mDistX > 6) mItem = null;
+      x += dx * 1.6; targetVel = dx;
+      m0x = e.clientX;
+      const hw = halfW();
+      if (hw > 0) { while (x < -hw) x += hw; while (x > 0) x -= hw; }
+      track.style.transform = `translate3d(${x}px,0,0)`;
+    });
+    window.addEventListener('mouseup', () => {
+      if (!dragging) return;
+      dragging = false;
+      if (mItem) { openLb(mItem); mItem = null; }
+    });
   })();
 
   // ANIM: galeria-foot — footer técnico aparece al final
