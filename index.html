@@ -102,13 +102,22 @@
     text-transform: uppercase;
     color: var(--porfido);
   }
+  /* desktop: overlay fuera del <nav>, se ubica sobre la banda fija con fixed */
   .navbar__nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 99;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
     flex-wrap: wrap;
-    justify-content: center;
+    padding: 18px 32px;
+    pointer-events: none;
+    transition: padding 0.4s ease;
   }
+  .navbar.is-stuck ~ .navbar__nav { padding: 14px 32px; }
+  .navbar__link { pointer-events: all; }
   .navbar__link {
     font-family: var(--ff-mono);
     font-size: 10px;
@@ -176,10 +185,13 @@
   @media (max-width: 820px) {
     .navbar { padding: 14px 18px; flex-wrap: nowrap; }
     .navbar__hamburger { display: flex; }
+    /* en mobile el overlay cubre toda la pantalla */
     .navbar__nav {
       display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      bottom: 0;
+      padding: 0;
+      pointer-events: all;
+      flex-wrap: nowrap;
       background: rgba(28, 26, 24, 0.97);
       backdrop-filter: blur(20px) saturate(120%);
       -webkit-backdrop-filter: blur(20px) saturate(120%);
@@ -210,6 +222,7 @@
       border-radius: 8px;
       border-color: transparent;
       white-space: nowrap;
+      pointer-events: all;
     }
     .navbar__link:hover { border-color: rgba(232,228,222,0.18); }
   }
