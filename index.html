@@ -72,14 +72,13 @@
     backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px);
     border-bottom: 1px solid transparent;
-    transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease, padding 0.4s ease;
+    transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
   }
   .navbar.is-stuck {
     background: rgba(58, 56, 53, 0.78);
     backdrop-filter: blur(14px) saturate(140%);
     -webkit-backdrop-filter: blur(14px) saturate(140%);
     border-bottom-color: rgba(232, 228, 222, 0.08);
-    padding: 14px 32px;
   }
   .navbar__brand {
     font-family: var(--ff-display);
@@ -108,9 +107,9 @@
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     z-index: 500;
-    background: rgba(40, 37, 34, 0.72);
-    backdrop-filter: blur(24px) saturate(140%);
-    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    background: rgba(40, 37, 34, 0.45);
+    backdrop-filter: blur(28px) saturate(150%);
+    -webkit-backdrop-filter: blur(28px) saturate(150%);
   }
   .navbar__nav.is-open { display: block; }
   .navbar__link {
