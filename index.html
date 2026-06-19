@@ -140,13 +140,69 @@
     text-align: right;
     line-height: 1.6;
   }
+  .navbar__hamburger {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid rgba(232, 228, 222, 0.18);
+    border-radius: 7px;
+    padding: 7px 10px;
+    cursor: pointer;
+    color: var(--porfido);
+    font-size: 17px;
+    line-height: 1;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .navbar__hamburger:hover { color: var(--hierro-blanco); border-color: rgba(232,228,222,0.4); }
+  .navbar__close {
+    display: none;
+    position: absolute;
+    top: 20px; right: 20px;
+    background: none;
+    border: 1px solid rgba(232, 228, 222, 0.18);
+    border-radius: 7px;
+    padding: 7px 10px;
+    cursor: pointer;
+    color: var(--porfido);
+    font-size: 17px;
+    line-height: 1;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .navbar__close:hover { color: var(--hierro-blanco); border-color: rgba(232,228,222,0.4); }
   @media (max-width: 1100px) {
     .navbar__meta { display: none; }
   }
   @media (max-width: 820px) {
-    .navbar { padding: 14px 18px; flex-wrap: wrap; }
-    .navbar__nav { width: 100%; order: 3; gap: 0; justify-content: flex-start; overflow-x: auto; }
-    .navbar__link { padding: 6px 10px; font-size: 9px; letter-spacing: 0.22em; }
+    .navbar { padding: 14px 18px; flex-wrap: nowrap; }
+    .navbar__hamburger { display: flex; }
+    .navbar__nav {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(28, 26, 24, 0.97);
+      backdrop-filter: blur(20px) saturate(120%);
+      -webkit-backdrop-filter: blur(20px) saturate(120%);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      z-index: 200;
+      padding: 80px 32px 48px;
+    }
+    .navbar__nav.is-open { display: flex; }
+    .navbar__close { display: flex; }
+    .navbar__link {
+      width: 100%;
+      max-width: 280px;
+      padding: 14px 24px;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-align: center;
+      border-radius: 8px;
+      border-color: transparent;
+    }
+    .navbar__link:hover { border-color: rgba(232,228,222,0.18); }
   }
 
   /* ======================================================================
@@ -1615,18 +1671,20 @@
   .galeria__marquee { cursor: grab; touch-action: none; user-select: none; }
   .galeria__marquee:active { cursor: grabbing; }
   .galeria__item img {
+    width: 100%;
     height: 100%;
-    width: auto;
     display: block;
+    object-fit: cover;
+    object-position: center;
     pointer-events: none;
   }
 
-  /* ítem — altura fija, ancho se adapta a la imagen */
+  /* ítem — tamaño fijo, imagen cubre sin espacios ni cortes */
   .galeria__item {
     position: relative;
     flex: 0 0 auto;
     height: 400px;
-    width: auto;
+    width: 300px;
     margin: 0;
     border-radius: 4px;
     overflow: hidden;
@@ -1641,10 +1699,10 @@
       z-index 0s linear 0.6s;
     transform-origin: center center;
   }
-  /* alturas alternadas para ritmo visual */
-  .galeria__item--tall  { height: 460px; }
-  .galeria__item--wide  { height: 360px; }
-  .galeria__item--small { height: 320px; }
+  /* tamaños alternativos para ritmo visual */
+  .galeria__item--tall  { height: 460px; width: 310px; }
+  .galeria__item--wide  { height: 360px; width: 540px; }
+  .galeria__item--small { height: 320px; width: 240px; }
 
   /* hover: agranda */
   .galeria__item:hover {
@@ -1945,7 +2003,8 @@
   <a class="navbar__brand" href="#hero">
     BRUTA <small>Lab</small>
   </a>
-  <div class="navbar__nav" role="tablist">
+  <div class="navbar__nav" id="navbar-nav" role="tablist">
+    <button class="navbar__close" id="navbar-close" aria-label="Cerrar menú">✕</button>
     <a class="navbar__link" href="#hero" data-nav="hero">INICIO</a>
     <a class="navbar__link" href="#galeria" data-nav="galeria">Galería</a>
     <a class="navbar__link" href="#configurador" data-nav="configurador">Configurador</a>
@@ -1956,6 +2015,7 @@
     <a class="navbar__link" href="#manifiesto" data-nav="manifiesto">Manifiesto</a>
     <a class="navbar__link" href="#stats" data-nav="stats">Cifras</a>
   </div>
+  <button class="navbar__hamburger" id="navbar-hamburger" aria-label="Abrir menú">☰</button>
   <div class="navbar__meta" style="opacity: 0">T. 2024
 31°25′S · 64°11′W</div>
 </nav>
@@ -2046,20 +2106,20 @@ HIERRO MACIZO</div>
       <figure class="galeria__item galeria__item--small"><img src="assets/galeria/plato-blanco.jpg" alt=""></figure>
       <figure class="galeria__item"><img src="assets/galeria/estante-verde-celeste.jpg" alt=""></figure>
       <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/20251122_112851.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/detalle-patas.jpg" alt=""></figure>
+      <figure class="galeria__item"><img src="assets/galeria/detalle-patas.jpg" alt=""></figure>
       <figure class="galeria__item"><img src="assets/galeria/IMG_0436.jpg" alt=""></figure>
       <figure class="galeria__item galeria__item--small"><img src="assets/galeria/estanteria-norma-03.jpg" alt=""></figure>
       <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/plato-verde.jpg" alt=""></figure>
       <figure class="galeria__item"><img src="assets/galeria/render-01.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/estante-blanco-costado.jpg" alt=""></figure>
+      <figure class="galeria__item"><img src="assets/galeria/estante-blanco-costado.jpg" alt=""></figure>
       <figure class="galeria__item"><img src="assets/galeria/render-05.jpg" alt=""></figure>
       <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/img-0435.jpg" alt=""></figure>
       <figure class="galeria__item galeria__item--small"><img src="assets/galeria/estante-verde-costado.jpg" alt=""></figure>
       <figure class="galeria__item"><img src="assets/galeria/20260301_160725.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/estanteria-norma-04.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/visual-01.jpg" alt=""></figure>
+      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/estanteria-norma-04.jpg" alt=""></figure>
+      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/visual-01.jpg" alt=""></figure>
       <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/render-02.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/visual-02.jpg" alt=""></figure>
+      <figure class="galeria__item"><img src="assets/galeria/visual-02.jpg" alt=""></figure>
       <figure class="galeria__item"><img src="assets/galeria/galeria-04.jpg" alt=""></figure>
       <figure class="galeria__item galeria__item--small"><img src="assets/galeria/render-04.jpg" alt=""></figure>
       <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/visual-03.jpg" alt=""></figure>
@@ -2071,7 +2131,7 @@ HIERRO MACIZO</div>
       <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/plato-blanco.jpg" alt="" loading="lazy"></figure>
       <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/estante-verde-celeste.jpg" alt="" loading="lazy"></figure>
       <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/20251122_112851.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/detalle-patas.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/detalle-patas.jpg" alt="" loading="lazy"></figure>
       <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/IMG_0436.jpg" alt="" loading="lazy"></figure>
       <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/estanteria-norma-03.jpg" alt="" loading="lazy"></figure>
       <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/plato-verde.jpg" alt="" loading="lazy"></figure>
@@ -2082,7 +2142,7 @@ HIERRO MACIZO</div>
       <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/estante-verde-costado.jpg" alt="" loading="lazy"></figure>
       <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/20260301_160725.jpg" alt="" loading="lazy"></figure>
       <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/estanteria-norma-04.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/visual-01.jpg" alt="" loading="lazy"></figure>
+      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/visual-01.jpg" alt="" loading="lazy"></figure>
       <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/render-02.jpg" alt="" loading="lazy"></figure>
       <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/visual-02.jpg" alt="" loading="lazy"></figure>
       <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/galeria-04.jpg" alt="" loading="lazy"></figure>
@@ -2722,6 +2782,19 @@ HIERRO MACIZO</div>
         ev.preventDefault();
         target.scrollIntoView({ behavior: "smooth", block: "start" });
       });
+    });
+  })();
+
+  // ===== HAMBURGER MENU (MOBILE) ============================================
+  (function setupHamburger() {
+    const hamburger = document.getElementById("navbar-hamburger");
+    const navMenu   = document.getElementById("navbar-nav");
+    const navClose  = document.getElementById("navbar-close");
+    if (!hamburger || !navMenu) return;
+    hamburger.addEventListener("click", () => navMenu.classList.add("is-open"));
+    navClose?.addEventListener("click", () => navMenu.classList.remove("is-open"));
+    navMenu.querySelectorAll(".navbar__link").forEach(link => {
+      link.addEventListener("click", () => navMenu.classList.remove("is-open"));
     });
   })();
 
