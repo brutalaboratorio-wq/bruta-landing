@@ -3076,55 +3076,52 @@ HIERRO MACIZO</div>
       },
     });
 
-  // ANIM: galeria-marquee — drag + tap abre lightbox
+  // ANIM: galeria-marquee — drag horizontal + tap abre lightbox
   (function() {
     const marquee = document.getElementById('galeria-marquee');
     const track   = document.getElementById('galeria-track');
     if (!marquee || !track) return;
 
+    // pan-y: deja que swipe vertical haga scroll de página normalmente
+    marquee.style.touchAction = 'pan-y';
+
     let x = 0, vel = -1.5, targetVel = -1.5;
     const BASE = -1.5;
-    let isDragging = false, dragLastX = 0, totalDrag = 0, paused = false;
-    let tapStartX = 0, tapStartY = 0, tapStartTime = 0;
+    let isDragging = false, dragLastX = 0, dragDistX = 0, paused = false;
+    let tapItem = null; // guardado en pointerdown, ANTES del capture
 
     track.style.animation = 'none';
     function halfW() { return track.scrollWidth / 2; }
 
-    // Drag
     marquee.addEventListener('pointerdown', e => {
       if (e.button !== 0 && e.pointerType === 'mouse') return;
       isDragging = true;
-      totalDrag = 0;
-      dragLastX = e.clientX;
-      tapStartX = e.clientX;
-      tapStartY = e.clientY;
-      tapStartTime = Date.now();
+      dragDistX  = 0;
+      dragLastX  = e.clientX;
+      tapItem    = e.target.closest('.galeria__item'); // target real, antes del capture
       marquee.setPointerCapture(e.pointerId);
     });
+
     marquee.addEventListener('pointermove', e => {
       if (!isDragging) return;
       const dx = e.clientX - dragLastX;
-      totalDrag += Math.abs(dx);
+      dragDistX += Math.abs(dx);
+      if (dragDistX > 8) tapItem = null; // fue drag, no tap
       x += dx * 1.6;
-      targetVel = dx * 1.0;
-      dragLastX = e.clientX;
+      targetVel  = dx * 1.0;
+      dragLastX  = e.clientX;
       const hw = halfW();
       if (hw > 0) { while (x < -hw) x += hw; while (x > 0) x -= hw; }
       track.style.transform = `translate3d(${x}px,0,0)`;
     });
-    marquee.addEventListener('pointerup', e => {
-      isDragging = false;
-      const dt = Date.now() - tapStartTime;
-      const dist = Math.hypot(e.clientX - tapStartX, e.clientY - tapStartY);
-      // tap: movimiento < 18px y duración < 350ms
-      if (dist < 18 && dt < 350) {
-        const item = e.target.closest('.galeria__item');
-        if (item) openLb(item);
-      }
-    });
-    marquee.addEventListener('pointercancel', () => { isDragging = false; });
 
-    // Loop
+    marquee.addEventListener('pointerup', () => {
+      isDragging = false;
+      if (tapItem) { openLb(tapItem); tapItem = null; }
+    });
+    marquee.addEventListener('pointercancel', () => { isDragging = false; tapItem = null; });
+
+    // Loop autoplay
     (function tick() {
       if (!isDragging && !paused) {
         vel += (targetVel - vel) * 0.08;
@@ -3154,7 +3151,7 @@ HIERRO MACIZO</div>
       lb.classList.remove('is-open');
       paused = false;
     }
-    lb      && lb.addEventListener('click',   e => { if (e.target === lb) closeLb(); });
+    lb      && lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
     lbClose && lbClose.addEventListener('click', closeLb);
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
   })();
