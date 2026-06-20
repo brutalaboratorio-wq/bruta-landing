@@ -3106,7 +3106,6 @@ HIERRO MACIZO</div>
     marquee.addEventListener('mousedown', e => {
       if (e.button !== 0) return;
       dragging = true; dragDist = 0; lastX = e.clientX;
-      e.preventDefault();
     });
     window.addEventListener('mousemove', e => {
       if (!dragging) return;
