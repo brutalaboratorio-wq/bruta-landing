@@ -2082,9 +2082,7 @@ HIERRO MACIZO</div>
   </div>
 
   <div class="galeria__scrubber">
-    <span>Lento</span>
-    <input type="range" id="galeria-speed" class="galeria__speed-range" min="0" max="100" value="30">
-    <span>Rápido</span>
+    <input type="range" id="galeria-scrub" class="galeria__speed-range" min="0" max="1000" value="0">
   </div>
 
   <div class="galeria__foot">
@@ -3009,25 +3007,36 @@ HIERRO MACIZO</div>
     // ── Autoplay ───────────────────────────────────────────────
     let x = 0, vel = -1.5, targetVel = -1.5, paused = false;
     let dragging = false, dragDist = 0, lastX = 0;
-    let BASE = -1.5;
+    const BASE = -1.5;
+    const scrub = document.getElementById('galeria-scrub');
+    let scrubbing = false;
 
-    const speedRange = document.getElementById('galeria-speed');
-    if (speedRange) {
-      speedRange.addEventListener('input', function() {
-        BASE = -(speedRange.value / 20);
-        if (!dragging && !paused) targetVel = BASE;
+    if (scrub) {
+      scrub.addEventListener('mousedown',  function() { scrubbing = true; });
+      scrub.addEventListener('touchstart', function() { scrubbing = true; }, { passive: true });
+      scrub.addEventListener('mouseup',    function() { scrubbing = false; });
+      scrub.addEventListener('touchend',   function() { scrubbing = false; });
+      scrub.addEventListener('input', function() {
+        var hw = halfW();
+        if (hw > 0) x = -(scrub.value / 1000) * hw;
+        track.style.transform = 'translate3d(' + x + 'px,0,0)';
       });
     }
     function halfW() { return track.scrollWidth / 2; }
 
     (function tick() {
-      if (!dragging && !paused) {
+      if (!dragging && !paused && !scrubbing) {
         vel += (targetVel - vel) * 0.08;
         targetVel += (BASE - targetVel) * 0.03;
         x += vel;
         const hw = halfW();
         if (hw > 0) { while (x < -hw) x += hw; while (x > 0) x -= hw; }
         track.style.transform = 'translate3d(' + x + 'px,0,0)';
+      }
+      // sincroniza scrubber con posición actual
+      if (scrub && !scrubbing) {
+        const hw = halfW();
+        if (hw > 0) scrub.value = (-x / hw) * 1000;
       }
       requestAnimationFrame(tick);
     })();
