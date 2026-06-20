@@ -1651,17 +1651,22 @@
   }
   .galeria__slide-wrap {
     flex: 1;
+    height: 520px;
     border-radius: 6px;
     overflow: hidden;
-    background: var(--porfido);
+    background: rgba(40,37,34,0.6);
     cursor: zoom-in;
-    aspect-ratio: 4 / 3;
     box-shadow: 0 30px 60px -20px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .galeria__slide-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
     display: block;
     transition: opacity 0.25s ease;
   }
@@ -2619,6 +2624,11 @@ HIERRO MACIZO</div>
   </div>
 </footer>
 
+<div id="galeria-lightbox" role="dialog" aria-modal="true">
+  <button id="galeria-lightbox-close" aria-label="Cerrar">×</button>
+  <img src="" alt="">
+</div>
+
 <script>
   // ===== NAV STICKY + SCROLLSPY ============================================
   (function setupNav() {
@@ -3364,11 +3374,6 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 if (configSection) observer.observe(configSection);
 </script>
-
-<div id="galeria-lightbox" role="dialog" aria-modal="true">
-  <button id="galeria-lightbox-close" aria-label="Cerrar">×</button>
-  <img src="" alt="">
-</div>
 
 </body>
 </html>
