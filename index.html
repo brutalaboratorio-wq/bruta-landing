@@ -3131,20 +3131,7 @@ HIERRO MACIZO</div>
       if (hw > 0) { while (x < -hw) x += hw; while (x > 0) x -= hw; }
       track.style.transform = `translate3d(${x}px,0,0)`;
     }, { passive: true });
-    marquee.addEventListener('touchend', e => {
-      dragging = false;
-      // Tap detectado directamente: no depende de ghost click
-      if (dragDist < 10 && e.changedTouches.length > 0) {
-        const t = e.changedTouches[0];
-        const el = document.elementFromPoint(t.clientX, t.clientY);
-        const item = el && el.closest('.galeria__item');
-        if (item) {
-          tapped = true;
-          openLb(item);
-          setTimeout(() => { tapped = false; }, 600);
-        }
-      }
-    });
+    marquee.addEventListener('touchend', () => { dragging = false; });
 
     // ── Lightbox ───────────────────────────────────────────────
     const lb      = document.getElementById('galeria-lightbox');
@@ -3164,12 +3151,21 @@ HIERRO MACIZO</div>
       paused = false;
     }
 
-    // click para desktop; en mobile el touchend ya lo maneja
-    marquee.addEventListener('click', e => {
-      if (tapped) return;
-      if (dragDist > 10) return;
-      const item = e.target.closest('.galeria__item');
-      if (item) openLb(item);
+    // Listener directo en cada figure: funciona en mobile y desktop
+    track.querySelectorAll('.galeria__item').forEach(item => {
+      // Mobile: touchend con dragDist para distinguir tap vs drag
+      item.addEventListener('touchend', () => {
+        if (dragDist < 8) {
+          tapped = true;
+          openLb(item);
+          setTimeout(() => { tapped = false; }, 600);
+        }
+      });
+      // Desktop: click nativo (el browser lo suprime después de drag)
+      item.addEventListener('click', () => {
+        if (tapped || dragDist > 8) return;
+        openLb(item);
+      });
     });
 
     lb      && lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
