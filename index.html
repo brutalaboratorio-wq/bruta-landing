@@ -1637,144 +1637,67 @@
   }
 
   /* contenedor del marquee — full bleed, sin scroll horizontal del body */
-  .galeria__marquee {
+  /* slider */
+  .galeria__slider {
     position: relative;
     width: 100%;
-    overflow: visible;
-    padding: 60px 0;
-    /* máscara: desvanece los bordes laterales */
-    -webkit-mask-image: linear-gradient(to right,
-      transparent 0, #000 6%, #000 94%, transparent 100%);
-            mask-image: linear-gradient(to right,
-      transparent 0, #000 6%, #000 94%, transparent 100%);
-  }
-
-  /* track horizontal — se duplica el contenido para loop infinito */
-  .galeria__track {
+    max-width: 860px;
+    margin: 48px auto 0;
     display: flex;
     align-items: center;
-    gap: 28px;
-    width: max-content;
-    will-change: transform;
-    /* ANIM: galeria-marquee — desplazamiento continuo izq→der */
-    animation: galeriaMarquee 48s linear infinite;
+    gap: 16px;
+    padding: 0 48px;
+    box-sizing: border-box;
   }
-  @keyframes galeriaMarquee {
-    from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(-50%, 0, 0); }
+  .galeria__slide-wrap {
+    flex: 1;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--porfido);
+    cursor: zoom-in;
+    aspect-ratio: 4 / 3;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.5);
   }
-  .galeria__marquee { cursor: grab; touch-action: none; user-select: none; }
-  .galeria__marquee:active { cursor: grabbing; }
-  .galeria__item img {
+  .galeria__slide-wrap img {
     width: 100%;
     height: 100%;
-    display: block;
     object-fit: cover;
-    object-position: center;
-    pointer-events: none;
+    display: block;
+    transition: opacity 0.25s ease;
   }
-
-  /* ítem — tamaño fijo, imagen cubre sin espacios ni cortes */
-  .galeria__item {
-    position: relative;
+  .galeria__arrow {
     flex: 0 0 auto;
-    height: 400px;
-    width: 300px;
-    margin: 0;
-    border-radius: 4px;
-    overflow: hidden;
-    background: var(--c, var(--porfido));
-    cursor: zoom-in;
-    box-shadow:
-      0 30px 60px -28px rgba(0, 0, 0, 0.55),
-      0 8px 18px -10px rgba(0, 0, 0, 0.5);
-    transition:
-      transform 0.6s cubic-bezier(.2,.8,.2,1),
-      box-shadow 0.6s ease,
-      z-index 0s linear 0.6s;
-    transform-origin: center center;
-  }
-  /* tamaños alternativos para ritmo visual */
-  .galeria__item--tall  { height: 460px; width: 310px; }
-  .galeria__item--wide  { height: 360px; width: 540px; }
-  .galeria__item--small { height: 320px; width: 240px; }
-
-  /* hover: agranda */
-  .galeria__item:hover {
-    transform: scale(1.18);
-    z-index: 5;
-    box-shadow:
-      0 60px 100px -36px rgba(0, 0, 0, 0.75),
-      0 18px 40px -16px rgba(0, 0, 0, 0.55);
-    transition:
-      transform 0.6s cubic-bezier(.2,.8,.2,1),
-      box-shadow 0.6s ease,
-      z-index 0s linear 0s;
-  }
-
-  /* "foto" placeholder — color sólido + textura terrazo (puntitos) */
-  .galeria__foto {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(circle at 22% 30%, rgba(232,228,222,0.18) 0 4px, transparent 5px),
-      radial-gradient(circle at 68% 18%, rgba(44,44,44,0.22) 0 3px, transparent 4px),
-      radial-gradient(circle at 80% 62%, rgba(232,228,222,0.14) 0 5px, transparent 6px),
-      radial-gradient(circle at 35% 78%, rgba(44,44,44,0.2) 0 3px, transparent 4px),
-      radial-gradient(circle at 52% 48%, rgba(232,228,222,0.1) 0 6px, transparent 7px),
-      radial-gradient(circle at 14% 88%, rgba(196,150,126,0.4) 0 4px, transparent 5px);
-    background-size: 180px 180px, 220px 220px, 200px 200px, 240px 240px, 260px 260px, 200px 200px;
-  }
-  /* etiqueta esquinera tipo foto técnica */
-  .galeria__item::after {
-    content: attr(data-tag);
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    font-family: var(--ff-mono);
-    font-size: 9px;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    color: rgba(232,228,222,0.85);
-    z-index: 2;
-    mix-blend-mode: difference;
-  }
-  /* caption inferior */
-  .galeria__cap {
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    padding: 18px 18px 16px;
-    background: linear-gradient(to top,
-      rgba(0,0,0,0.55) 0%,
-      rgba(0,0,0,0.0)  100%);
-    color: var(--hierro-blanco);
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-    z-index: 2;
-    pointer-events: none;
-  }
-  .galeria__cap em {
-    font-family: var(--ff-display);
-    font-style: italic;
-    font-weight: 500;
-    font-size: 17px;
-    line-height: 1.1;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(232,228,222,0.25);
+    background: rgba(232,228,222,0.08);
     color: var(--tiza);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    user-select: none;
   }
-  .galeria__cap small {
+  .galeria__arrow:hover { background: rgba(232,228,222,0.18); }
+  .galeria__counter {
+    position: absolute;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%);
     font-family: var(--ff-mono);
-    font-size: 9px;
+    font-size: 10px;
     letter-spacing: 0.28em;
-    text-transform: uppercase;
     color: var(--porfido);
+    text-transform: uppercase;
   }
 
   /* footer técnico de la galería */
   .galeria__foot {
-    max-width: 1280px;
-    margin: 56px auto 0;
+    max-width: 860px;
+    margin: 72px auto 0;
     padding: 0 48px;
     display: flex;
     align-items: center;
@@ -1799,11 +1722,9 @@
     .galeria__head, .galeria__foot { padding: 0 22px; }
     .galeria__head { flex-direction: column; align-items: flex-start; }
     .galeria__meta { text-align: left; padding-bottom: 0; }
-    .galeria__item       { width: 240px; height: 320px; }
-    .galeria__item--tall { height: 360px; }
-    .galeria__item--wide { width: 320px; height: 280px; }
-    .galeria__item--small{ width: 220px; height: 280px; }
-    .galeria__track { gap: 18px; }
+    .galeria__slider { padding: 0 22px; gap: 10px; }
+    .galeria__arrow { width: 36px; height: 36px; font-size: 15px; }
+    .galeria__foot { margin-top: 64px; }
   }
 
   /* ======================================================================
@@ -2098,67 +2019,19 @@ HIERRO MACIZO</div>
     </div>
   </header>
 
-  <!-- marquee: JS-driven para wheel speed control -->
-  <div class="galeria__marquee" id="galeria-marquee">
-    <div class="galeria__track" id="galeria-track">
-
-      <!-- pasada 1 -->
-      <figure class="galeria__item"><img src="assets/galeria/estanteria-madre.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/IMG_0441.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--wide"><img src="assets/galeria/render-03.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/plato-blanco.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/estante-verde-celeste.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/20251122_112851.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/detalle-patas.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/IMG_0436.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/estanteria-norma-03.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/plato-verde.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/render-01.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/estante-blanco-costado.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/render-05.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/img-0435.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/estante-verde-costado.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/20260301_160725.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/estanteria-norma-04.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/visual-01.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/render-02.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/visual-02.jpg" alt=""></figure>
-      <figure class="galeria__item"><img src="assets/galeria/galeria-04.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--small"><img src="assets/galeria/render-04.jpg" alt=""></figure>
-      <figure class="galeria__item galeria__item--tall"><img src="assets/galeria/visual-03.jpg" alt=""></figure>
-
-      <!-- pasada 2 (duplicada para loop infinito) -->
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/estanteria-madre.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/IMG_0441.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/render-03.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/plato-blanco.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/estante-verde-celeste.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/20251122_112851.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/detalle-patas.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/IMG_0436.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/estanteria-norma-03.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/plato-verde.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/render-01.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/estante-blanco-costado.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/render-05.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/img-0435.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/estante-verde-costado.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/20260301_160725.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/estanteria-norma-04.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/visual-01.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/render-02.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--wide" aria-hidden="true"><img src="assets/galeria/visual-02.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item" aria-hidden="true"><img src="assets/galeria/galeria-04.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--small" aria-hidden="true"><img src="assets/galeria/render-04.jpg" alt="" loading="lazy"></figure>
-      <figure class="galeria__item galeria__item--tall" aria-hidden="true"><img src="assets/galeria/visual-03.jpg" alt="" loading="lazy"></figure>
-
+  <div class="galeria__slider" id="galeria-slider">
+    <button class="galeria__arrow" id="galeria-prev" aria-label="Anterior">&#8592;</button>
+    <div class="galeria__slide-wrap" id="galeria-slide-wrap">
+      <img id="galeria-slide-img" src="assets/galeria/estanteria-madre.jpg" alt="">
     </div>
+    <button class="galeria__arrow" id="galeria-next" aria-label="Siguiente">&#8594;</button>
+    <span class="galeria__counter" id="galeria-counter">1 / 23</span>
   </div>
 
   <div class="galeria__foot">
     <span>Galería</span>
     <hr />
-    <span>Arrastrá · click para ampliar</span>
+    <span>Clic en la imagen para ampliar</span>
   </div>
 
 </section>
@@ -3060,119 +2933,76 @@ HIERRO MACIZO</div>
   });
   gsap.set(".galeria__eyebrow, .galeria__title, .galeria__meta", { y: 24 });
 
-  // ANIM: galeria-track-in — el track entra como persiana horizontal
-  // (clip-path desde la derecha) al aparecer en pantalla
-  gsap.fromTo("#galeria-track",
-    { clipPath: "inset(0% 100% 0% 0%)", webkitClipPath: "inset(0% 100% 0% 0%)" },
-    {
-      clipPath: "inset(0% 0% 0% 0%)",
-      webkitClipPath: "inset(0% 0% 0% 0%)",
-      duration: 1.4,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".galeria__marquee",
-        start: "top 80%",
-        toggleActions: "play none none none",
-      },
-    });
-
-  // ANIM: galeria-marquee
+  // GALERIA: slider simple
   (function() {
-    const marquee = document.getElementById('galeria-marquee');
-    const track   = document.getElementById('galeria-track');
-    if (!marquee || !track) return;
+    const imgs = [
+      'assets/galeria/estanteria-madre.jpg',
+      'assets/galeria/IMG_0441.jpg',
+      'assets/galeria/render-03.jpg',
+      'assets/galeria/plato-blanco.jpg',
+      'assets/galeria/estante-verde-celeste.jpg',
+      'assets/galeria/20251122_112851.jpg',
+      'assets/galeria/detalle-patas.jpg',
+      'assets/galeria/IMG_0436.jpg',
+      'assets/galeria/estanteria-norma-03.jpg',
+      'assets/galeria/plato-verde.jpg',
+      'assets/galeria/render-01.jpg',
+      'assets/galeria/estante-blanco-costado.jpg',
+      'assets/galeria/render-05.jpg',
+      'assets/galeria/img-0435.jpg',
+      'assets/galeria/estante-verde-costado.jpg',
+      'assets/galeria/20260301_160725.jpg',
+      'assets/galeria/estanteria-norma-04.jpg',
+      'assets/galeria/visual-01.jpg',
+      'assets/galeria/render-02.jpg',
+      'assets/galeria/visual-02.jpg',
+      'assets/galeria/galeria-04.jpg',
+      'assets/galeria/render-04.jpg',
+      'assets/galeria/visual-03.jpg',
+    ];
 
-    let x = 0, vel = -1.5, targetVel = -1.5;
-    const BASE = -1.5;
-    let paused = false, dragging = false, dragDist = 0, lastX = 0, tapped = false;
+    let current = 0;
+    const slideImg = document.getElementById('galeria-slide-img');
+    const counter  = document.getElementById('galeria-counter');
+    const prevBtn  = document.getElementById('galeria-prev');
+    const nextBtn  = document.getElementById('galeria-next');
+    const wrap     = document.getElementById('galeria-slide-wrap');
 
-    track.style.animation = 'none';
-    function halfW() { return track.scrollWidth / 2; }
+    function show(i) {
+      current = (i + imgs.length) % imgs.length;
+      slideImg.style.opacity = '0';
+      setTimeout(() => {
+        slideImg.src = imgs[current];
+        slideImg.style.opacity = '1';
+      }, 150);
+      counter.textContent = (current + 1) + ' / ' + imgs.length;
+    }
 
-    // ── Autoplay loop ──────────────────────────────────────────
-    (function tick() {
-      if (!dragging && !paused) {
-        vel += (targetVel - vel) * 0.08;
-        targetVel += (BASE - targetVel) * 0.03;
-        x += vel;
-        const hw = halfW();
-        if (hw > 0) { while (x < -hw) x += hw; while (x > 0) x -= hw; }
-        track.style.transform = `translate3d(${x}px,0,0)`;
-      }
-      requestAnimationFrame(tick);
-    })();
+    prevBtn.onclick = () => show(current - 1);
+    nextBtn.onclick = () => show(current + 1);
 
-    // ── Drag (mouse) ───────────────────────────────────────────
-    marquee.addEventListener('mousedown', e => {
-      if (e.button !== 0) return;
-      dragging = true; dragDist = 0; lastX = e.clientX;
-    });
-    window.addEventListener('mousemove', e => {
-      if (!dragging) return;
-      const dx = e.clientX - lastX;
-      dragDist += Math.abs(dx);
-      x += dx * 1.6; targetVel = dx; lastX = e.clientX;
-      const hw = halfW();
-      if (hw > 0) { while (x < -hw) x += hw; while (x > 0) x -= hw; }
-      track.style.transform = `translate3d(${x}px,0,0)`;
-    });
-    window.addEventListener('mouseup', () => { dragging = false; });
-
-    // ── Drag (touch) ───────────────────────────────────────────
-    marquee.addEventListener('touchstart', e => {
-      dragging = true; dragDist = 0; lastX = e.touches[0].clientX;
-    }, { passive: true });
-    marquee.addEventListener('touchmove', e => {
-      if (!dragging) return;
-      const dx = e.touches[0].clientX - lastX;
-      dragDist += Math.abs(dx);
-      x += dx * 1.4; targetVel = dx * 0.8; lastX = e.touches[0].clientX;
-      const hw = halfW();
-      if (hw > 0) { while (x < -hw) x += hw; while (x > 0) x -= hw; }
-      track.style.transform = `translate3d(${x}px,0,0)`;
-    }, { passive: true });
-    marquee.addEventListener('touchend', () => { dragging = false; });
-
-    // ── Lightbox ───────────────────────────────────────────────
+    // Lightbox
     const lb      = document.getElementById('galeria-lightbox');
-    const lbImg   = lb && lb.querySelector('img');
+    const lbImg   = lb.querySelector('img');
     const lbClose = document.getElementById('galeria-lightbox-close');
 
-    function openLb(src) {
-      if (!lb || !lbImg) return;
-      lbImg.src = src;
+    function openLb() {
+      lbImg.src = imgs[current];
       lb.style.display = 'flex';
-      paused = true;
     }
     function closeLb() {
-      if (!lb) return;
       lb.style.display = 'none';
-      paused = false;
     }
 
-    // Listener en cada img directamente, con pointer-events forzado
-    track.querySelectorAll('.galeria__item img').forEach(img => {
-      img.style.pointerEvents = 'auto';
-      img.style.cursor = 'pointer';
-
-      // Desktop: click (el browser lo suprime si hubo drag significativo)
-      img.addEventListener('click', () => {
-        if (dragDist > 8) return;
-        openLb(img.src);
-      });
-
-      // Mobile: touchend directo, sin depender de síntesis de click
-      img.addEventListener('touchend', e => {
-        if (dragDist < 8) {
-          e.preventDefault();
-          openLb(img.src);
-        }
-      }, { passive: false });
+    wrap.onclick    = openLb;
+    lbClose.onclick = closeLb;
+    lb.onclick      = function(e) { if (e.target === lb) closeLb(); };
+    document.addEventListener('keydown', function(e) {
+      if (!lb || lb.style.display === 'none') return;
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowLeft')  { show(current - 1); lbImg.src = imgs[current]; }
+      if (e.key === 'ArrowRight') { show(current + 1); lbImg.src = imgs[current]; }
     });
-
-    if (lbClose) lbClose.addEventListener('click', closeLb);
-    if (lb) lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
   })();
 
   // ANIM: galeria-foot — footer técnico aparece al final
