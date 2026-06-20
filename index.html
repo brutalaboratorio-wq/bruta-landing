@@ -3135,41 +3135,43 @@ HIERRO MACIZO</div>
 
     // ── Lightbox ───────────────────────────────────────────────
     const lb      = document.getElementById('galeria-lightbox');
-    const lbImg   = document.querySelector('#galeria-lightbox img');
+    const lbImg   = lb && lb.querySelector('img');
     const lbClose = document.getElementById('galeria-lightbox-close');
 
-    function openLb(item) {
-      const img = item.querySelector('img');
-      if (!img || !lb || !lbImg) return;
-      lbImg.src = img.src;
-      lb.classList.add('is-open');
+    function openLb(src) {
+      if (!lb || !lbImg) return;
+      lbImg.src = src;
+      lb.style.display = 'flex';
       paused = true;
     }
     function closeLb() {
       if (!lb) return;
-      lb.classList.remove('is-open');
+      lb.style.display = 'none';
       paused = false;
     }
 
-    // Listener directo en cada figure: funciona en mobile y desktop
-    track.querySelectorAll('.galeria__item').forEach(item => {
-      // Mobile: touchend con dragDist para distinguir tap vs drag
-      item.addEventListener('touchend', () => {
+    // Listener en cada img directamente, con pointer-events forzado
+    track.querySelectorAll('.galeria__item img').forEach(img => {
+      img.style.pointerEvents = 'auto';
+      img.style.cursor = 'pointer';
+
+      // Desktop: click (el browser lo suprime si hubo drag significativo)
+      img.addEventListener('click', () => {
+        if (dragDist > 8) return;
+        openLb(img.src);
+      });
+
+      // Mobile: touchend directo, sin depender de síntesis de click
+      img.addEventListener('touchend', e => {
         if (dragDist < 8) {
-          tapped = true;
-          openLb(item);
-          setTimeout(() => { tapped = false; }, 600);
+          e.preventDefault();
+          openLb(img.src);
         }
-      });
-      // Desktop: click nativo (el browser lo suprime después de drag)
-      item.addEventListener('click', () => {
-        if (tapped || dragDist > 8) return;
-        openLb(item);
-      });
+      }, { passive: false });
     });
 
-    lb      && lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
-    lbClose && lbClose.addEventListener('click', closeLb);
+    if (lbClose) lbClose.addEventListener('click', closeLb);
+    if (lb) lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
   })();
 
